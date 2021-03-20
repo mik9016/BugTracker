@@ -66,7 +66,7 @@ export default function Register() {
           </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2">
-          Need an account? <Link to="/signup">Sign Up</Link>
+          Need an account? <Link to="/login">Login</Link>
         </div>
       </>
     </Container>
