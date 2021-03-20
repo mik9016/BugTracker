@@ -43,7 +43,6 @@ export default function Login() {
                   className="w-100"
                   type="submit"
                   onClick={() => {
-                    checkLog(email, password);
                     Login(email, password);
                     clearInput(emailRef);
                     clearInput(passwordRef);
@@ -58,6 +57,8 @@ export default function Login() {
             Need an account? <Link to="/register">Sign Up</Link>
           </div>
         </>
+        {isAuthorized && <Button className=" m-2" onClick={()=> {LogOut()}}>LogOut</Button>}
+        
       </Container>
     </div>
   );
