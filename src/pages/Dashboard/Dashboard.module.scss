@@ -1,0 +1,23 @@
+.Dashboard{
+    
+}
+
+.StatCard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 1rem;
+
+}
+
+.StyleTypeOpen{
+    color: green;
+}
+
+.StyleTypeClosed{
+    color: black;
+}
+.StyleTypeToDo{
+    color: red;
+}

@@ -1,0 +1,16 @@
+.DashboardNav {
+  color: cadetblue;
+  justify-content: center;
+  width: 15vw;
+  margin-top: 1rem;
+}
+.List {
+  list-style-type: none;
+
+  li {
+    cursor: pointer;
+    &:hover {
+      color: chocolate;
+    }
+  }
+}

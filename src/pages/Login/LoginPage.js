@@ -1,22 +1,23 @@
 import React, { useRef, useState, useContext } from "react";
 import { Container, Row, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { UtilContext } from "../contexts/UtilitiesContext";
-import {AuthContext} from '../contexts/AuthContext';
+import { UtilContext } from "../../contexts/UtilitiesContext";
+import { AuthContext } from "../../contexts/AuthContext";
+import classes from "../Login/LoginPage.module.scss";
 
-export default function Login() {
+export default function LoginPage() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [clearInput, checkLog] = useContext(UtilContext);
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext)
+  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
 
   return (
-    <div>
-      <Container className="m-2 w-75 ">
+    <div className={classes.Login}>
+      <Container className="m-2 w-50 ">
         <>
-          <Card>
+          <Card className={classes.Card}>
             <Card.Body>
               <h1 className="text-center mb-4">Login</h1>
 
@@ -53,12 +54,20 @@ export default function Login() {
               </Form>
             </Card.Body>
           </Card>
-          <div className="w-100 text-center mt-2">
+          <div className={classes.Card}>
             Need an account? <Link to="/register">Sign Up</Link>
           </div>
         </>
-        {isAuthorized && <Button className=" m-2" onClick={()=> {LogOut()}}>LogOut</Button>}
-        
+        {isAuthorized && (
+          <Button
+            className=" m-2"
+            onClick={() => {
+              LogOut();
+            }}
+          >
+            LogOut
+          </Button>
+        )}
       </Container>
     </div>
   );

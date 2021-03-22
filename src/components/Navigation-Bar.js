@@ -1,4 +1,4 @@
-import { Navbar, Nav, Button } from "react-bootstrap";
+import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,11 @@ export default function NavigationBar() {
         <Nav.Link as={Link} to="/profile">
           Profile
         </Nav.Link>
+        <NavDropdown title="Tickets" id="basic-nav-dropdown">
+          <NavDropdown.Item href="#action/3.3">All Tickets</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.2">Open Tickets</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.1">Done Tickets</NavDropdown.Item>
+        </NavDropdown>
       </Nav>
       <Button
         className="d-flex justify-content-end m-2"

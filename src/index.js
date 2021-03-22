@@ -6,7 +6,7 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { UtilContextProvider } from "./contexts/UtilitiesContext";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import { UtilContext } from "./contexts/UtilitiesContext";
+
 
 ReactDOM.render(
   <React.StrictMode>
