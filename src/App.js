@@ -1,7 +1,8 @@
 import "./App.scss";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Home from "./pages/Home/Home";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import NavigationBar from "./components/Navigation-Bar";
 import LoginPage from "./pages/Login/LoginPage";
 import {
   BrowserRouter as Router,
@@ -17,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <NavigationBar />
         <Switch>
           <Route exact path="/">
             <Redirect to="/home" />

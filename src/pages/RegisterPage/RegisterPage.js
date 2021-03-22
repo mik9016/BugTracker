@@ -1,9 +1,10 @@
 import React, { useRef, useState, useContext } from "react";
 import { Container, Row, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import classes from "../RegisterPage/RegisterPage.module.scss";
 
-import { UtilContext } from "../contexts/UtilitiesContext";
-import { AuthContext } from "../contexts/AuthContext";
+import { UtilContext } from "../../contexts/UtilitiesContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Register() {
   const emailRef = useRef();
@@ -16,9 +17,9 @@ export default function Register() {
   const [clearInput, checkLog] = useContext(UtilContext);
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
   return (
-    <Container className="m-2 w-75 ">
+    <Container className={classes.Register}>
       <>
-        <Card>
+        <Card className={classes.Card}>
           <Card.Body>
             <h1 className="text-center mb-4">Register</h1>
 
@@ -64,10 +65,10 @@ export default function Register() {
               </Button>
             </Form>
           </Card.Body>
+          <div className="w-100 text-center mt-2">
+            Need an account? <Link to="/login">Login</Link>
+          </div>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Need an account? <Link to="/login">Login</Link>
-        </div>
       </>
     </Container>
   );

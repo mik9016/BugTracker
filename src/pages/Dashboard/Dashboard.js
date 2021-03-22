@@ -15,7 +15,7 @@ export default function Dashboard() {
   return (
     <div className={classes.Dashboard}>
       <Router>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <Button variant='outline-primary' className='m-2 d-flex justify-content-start'>Create Issue</Button>
         <Container>
           <Container className={classes.StatCard}>
