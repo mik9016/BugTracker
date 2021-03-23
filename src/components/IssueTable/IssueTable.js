@@ -5,6 +5,7 @@ import { Card, Table, Container } from "react-bootstrap";
 
 export default function IssueTable(props) {
   const hardcodedIssue = {
+    num:'#' + Math.random()*10,
     date: "22.01.2021",
     title: "Fixing Issue scss responsiveness",
     status: "open",
@@ -21,6 +22,7 @@ export default function IssueTable(props) {
           <Table responsive>
             <thead>
               <tr>
+                <th>Issue number</th>
                 <th>Date</th>
                 <th>Title</th>
                 <th>Status</th>

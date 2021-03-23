@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import NavigationBar from "./components/Navigation-Bar";
 import LoginPage from "./pages/Login/LoginPage";
+import CreateIssue from './pages/CreateIssue/Createissue';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -12,6 +13,9 @@ import {
 } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
+import Createissue from "./pages/CreateIssue/Createissue";
+import Profile from './pages/Profile/Profile';
+import CreateProject from './pages/CreateProject/CreateProject';
 
 function App() {
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
@@ -35,6 +39,15 @@ function App() {
           </Route>
           <Route path="/home">
             <Home />
+          </Route>
+          <Route path='/createIssue'>
+            <Createissue/>
+          </Route>
+          <Route path='/profile'>
+            <Profile/>
+          </Route>
+          <Route path='/createProject'>
+            <CreateProject/>
           </Route>
         </Switch>
       </Router>

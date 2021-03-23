@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function NavigationBar() {
   return (
     <Navbar bg="dark" variant="dark">
-      <Navbar.Brand href="#home">Bug-Tracker</Navbar.Brand>
+      <Navbar.Brand href="/home">Bug-Tracker</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link as={Link} to="/home">
           Home
@@ -15,6 +15,9 @@ export default function NavigationBar() {
         </Nav.Link>
         <Nav.Link as={Link} to="/profile">
           Profile
+        </Nav.Link>
+        <Nav.Link as={Link} to="/createProject">
+          Create Project
         </Nav.Link>
         <NavDropdown title="Tickets" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.3">All Tickets</NavDropdown.Item>
