@@ -13,6 +13,9 @@ export const UtilContextProvider = (props) => {
     console.log(`mail: ${email} , pass: ${password}, name: ${name}`);
   };
 
+ 
+
+
   return (
     <UtilContext.Provider value={[clearInput,checkLog]}>
       {props.children}

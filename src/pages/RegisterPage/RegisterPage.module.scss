@@ -1,11 +1,36 @@
-.Register{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20vh;
-
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+.Register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20vh;
 }
-.Card{
-    width: 40vw;
-    height: 48vh;
+.Card {
+  font-family: "Lato", sans-serif;
+  width: 40vw;
+  height: 48vh;
+}
+
+.Icon{
+    height: 150px;
+    
+    
+}
+
+@media screen and (max-width: 575px) {
+  .Card {
+     
+    width: 90vw;
+    height: auto;
+
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .Card {
+     
+        width: 80vw;
+        height: auto;
+    
+      }
 }

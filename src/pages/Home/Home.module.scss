@@ -1,7 +1,39 @@
-.Login{
-   
- 
+.Home {
+  width: 100vw;
+  height: 100vh;
 }
-.Button{
-    margin: 150px;
+.Button {
+  margin: 150px;
+}
+
+
+.Text {
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300&family=Roboto:wght@100&family=Train+One&display=swap');
+  height: 100wh;
+  display: grid;
+  align-items: center;
+  font-family: "Lato", sans-serif;
+  width: 100vw;
+  margin-top: 15%;
+ 
+ .Icon{
+    height: 150px;
+    margin-bottom: 16px;
+}
+
+}
+
+@media screen and (max-width: 575px) {
+    .Text {
+        margin-top: 20vh;
+    }
+    
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+
+    .Text {
+        margin-top: 28vh;
+    }
 }

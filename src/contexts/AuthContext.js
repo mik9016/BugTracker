@@ -22,7 +22,9 @@ export const AuthContextProvider = (props) => {
       .auth()
       .signOut()
       .then(console.log(`${user} signed out`))
+      .then(setIsAuthorized(false))
       .catch((err) => console.log(err));
+
   };
 
   const Register = (email, password) => {

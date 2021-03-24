@@ -8,6 +8,7 @@ import {
   FormLabel,
   Image,
 } from "react-bootstrap";
+import Pic from '../../assets/pic.jpg'
 
 
 export default function Profile() {
@@ -17,22 +18,23 @@ export default function Profile() {
     }
   return (
     <div className={classes.Profile}>
+     
       <Container>
         <Card>
           <Card.Title as="h1">Profile</Card.Title>
           <Card.Body>
             <Form>
               <Form.Group>
-                <Image src="assets/pic.jpg" roundedCircle />
+                <Image src={Pic} roundedCircle  className={classes.Pic}/>
                 <Form.File id="exampleFormControlFile1" label="Avatar" />
               </Form.Group>
               <Form.Group>
                 <FormLabel>Name</FormLabel>
-                <FormControl type="text" />
+                <FormControl type="text"  />
               </Form.Group>
               <Form.Group>
                 <FormLabel>Email</FormLabel>
-                <FormControl type="email" />
+                <FormControl type="email"  />
               </Form.Group>
               <Form.Group>
                 <FormLabel>Role</FormLabel>

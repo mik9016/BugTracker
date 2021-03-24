@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { Container, Row, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Card, Form, Button , Image} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import classes from "../RegisterPage/RegisterPage.module.scss";
 
@@ -18,7 +18,7 @@ export default function Register() {
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
   return (
     <Container className={classes.Register}>
-      <>
+     
         <Card className={classes.Card}>
           <Card.Body>
             <h1 className="text-center mb-4">Register</h1>
@@ -29,6 +29,7 @@ export default function Register() {
                 <Form.Control
                   type="text"
                   ref={nameRef}
+                  placeholder='name'
                   required
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -38,6 +39,7 @@ export default function Register() {
                 <Form.Control
                   type="email"
                   ref={emailRef}
+                  placeholder='email'
                   required
                   onChange={() => setEmail(emailRef.current.value)}
                 />
@@ -47,6 +49,7 @@ export default function Register() {
                 <Form.Control
                   type="password"
                   ref={passwordRef}
+                  placeholder='password'
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -69,7 +72,7 @@ export default function Register() {
             Need an account? <Link to="/login">Login</Link>
           </div>
         </Card>
-      </>
+     
     </Container>
   );
 }

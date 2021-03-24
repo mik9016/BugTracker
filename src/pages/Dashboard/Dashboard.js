@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../../components/Navigation-Bar";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import StatCard from "../../components/StatCard/StatCard";
 import classes from "../Dashboard/Dashboard.module.scss";
