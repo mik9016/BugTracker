@@ -13,7 +13,7 @@ export default function Home() {
           <Image className={classes.Icon} src={Bug} />
           <h1>Welcome to Buggy</h1>
           <p>Manage your project and cooperate with team!</p>
-          <p>Register and Login to try out!</p>
+          <p>Register and Login to try this out!</p>
           <Button
             as={Link}
             to="/login"

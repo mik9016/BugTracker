@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = (props) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [user, setUser] = useState("");
+  const [userId, setUserId] = useState("");
 
   const Login = (email, password) => {
     fire
@@ -13,8 +14,7 @@ export const AuthContextProvider = (props) => {
       .signInWithEmailAndPassword(email, password)
       .then(setIsAuthorized(true))
       .then(console.log("logged in"))
-      .then((userCredential) => setUser(userCredential.user))
-      .then(console.log(user))
+      .then(setUserId(fire.auth().currentUser.uid))
       .catch((err) => console.log(err));
   };
   const LogOut = () => {
@@ -36,7 +36,7 @@ export const AuthContextProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={[isAuthorized, Login, LogOut, Register]}>
+    <AuthContext.Provider value={[isAuthorized, Login, LogOut, Register,userId]}>
       {props.children}
     </AuthContext.Provider>
   );

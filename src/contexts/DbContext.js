@@ -6,12 +6,12 @@ export const DbContext = createContext();
 
 export const DbContextProvider = (props) => {
   //Variables
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
+  const [isAuthorized, Login, LogOut, Register,userId] = useContext(AuthContext);
   const [currentProject, setCurrentProject] = useState("");
   //FUNCTIONS
 
   const CreateNewProject = async (projectName, projectRole) => {
-    const form = fire.database().ref("Projects");
+    const form = fire.database().ref("Projects/" + userId);
 
     const template = {
       projectName: projectName,
@@ -34,7 +34,7 @@ export const DbContextProvider = (props) => {
     creator,
     currentlyWorking
   ) => {
-    const form = fire.database().ref("Projects").child();
+    const form = fire.database().ref("Projects/" + userId).child();
 
     const template = {
       issueName: issueName,

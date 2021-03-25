@@ -12,7 +12,7 @@ export default function NavigationBar() {
   const history = useHistory();
   return (
     <Navbar bg="light" variant="light">
-      <Navbar.Brand href="/home">
+      <Navbar.Brand as={Link} to="/home">
         <img
           alt=""
           src={Bug}
