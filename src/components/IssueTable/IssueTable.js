@@ -1,27 +1,35 @@
 import React, { useState, useContext, useEffect } from "react";
 import classes from "../IssueTable/IssueTable.module.scss";
-import { Card, Table, Container } from "react-bootstrap";
+import { Card, Table, Container, Button } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
+import { useHistory } from "react-router-dom";
+import { Link, BrowserRouter as Router } from "react-router-dom";
 
 export default function IssueTable(props) {
+  const history = useHistory();
   const [
     CreateNewProject,
     CreateNewIssue,
     currentProject,
     getProjects,
     getIssues,
+    setCurrentProject,
+    statusNumHandler,
+    pickedIssue,
+    setPickedIssue,
   ] = useContext(DbContext);
+
   const [issues, setIssues] = useState([]);
+  
 
   useEffect(() => {
     getIssues(setIssues);
     return () => {
       getIssues(setIssues);
-      
     };
   }, []);
 
-  console.log(issues)
+  console.log(issues);
 
   //HARDCODED ISSUE
   const hardcodedIssue = {
@@ -42,7 +50,6 @@ export default function IssueTable(props) {
           <Table responsive>
             <thead>
               <tr>
-                <th>Issue number</th>
                 <th>Date</th>
                 <th>Title</th>
                 <th>Status</th>
@@ -53,24 +60,21 @@ export default function IssueTable(props) {
             </thead>
             <tbody>
               {issues.map((obj, index) => {
-                return (
-                  <tr className={classes.Issue} key={index}>
-                    {/* {Object.values(obj).map((item, index) => {
-                      return (
-                        <td key={index}>
-                          <a href="#cps">{item}</a>
-                        </td>
-                      );
-                    })} */}
-                    <td>{index+1}</td>
-                    <td>{obj.id}</td>
-                    <td>{obj.issueName}</td>
-                    <td>open</td>
-                    <td>{}</td>
-                    <td>{obj.creator}</td>
-                    <td>{obj.currentlyWorking}</td>
-                  </tr>
-                );
+                if (obj.project === currentProject) {
+                  return (
+                    <tr className={classes.Issue} key={index}>
+                      <td>{obj.date}</td>
+                      <td onClick={props.history} className={classes.IssueName}>
+                        {obj.issueName}
+                      </td>
+                      <td>{obj.status}</td>
+                      <td>{obj.time}</td>
+                      <td>{obj.creator}</td>
+                      <td>{obj.currentlyWorking}</td>
+                    </tr>
+                  );
+                }
+                return;
               })}
             </tbody>
           </Table>

@@ -7,3 +7,12 @@
   margin: 1rem;
   
 }
+.IssueName{
+  color: blue;
+  text-decoration: blue;
+  cursor: pointer;
+  &:hover{
+    color: deepskyblue;
+  }
+
+}

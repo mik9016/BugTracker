@@ -11,13 +11,14 @@ import {
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
+import { useHistory } from "react-router";
 
 export default function Createissue() {
   const [CreateNewProject, CreateNewIssue, currentProject] = useContext(
     DbContext
   );
   const [clearInput, checkLog] = useContext(UtilContext);
-
+  const history = useHistory();
   const hardcodedUsers = {
     first: "MIk Gru",
     second: "Jeff beck",
@@ -103,6 +104,7 @@ export default function Createissue() {
                   clearInput(issueDesc);
                   clearInput(issueCreator);
                   clearInput(issueWorker);
+                  history.push('/dashboard');
                 }}
               >
                 Create

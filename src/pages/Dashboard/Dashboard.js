@@ -16,18 +16,35 @@ export default function Dashboard() {
     currentProject,
     getProjects,
     getIssues,
+    setCurrentProject,
+    statusNumHandler,
   ] = useContext(DbContext);
 
   const [issues, setIssues] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [pendingNum, setPendingNum] = useState(0);
+  const [openNum, setOpenNum] = useState(0);
+  const [doneNum, setDoneNum] = useState(0);
 
   useEffect(() => {
     getIssues(setIssues);
     return () => {
       getIssues(setIssues);
-    }
+      
+    };
   }, []);
 
-  console.log(issues.length);
+  useEffect(() => {
+    statusNumHandler(issues,setPendingNum,'pending');
+    statusNumHandler(issues,setOpenNum,'open');
+    statusNumHandler(issues,setDoneNum,'done');
+    return () => {
+      statusNumHandler(issues,setPendingNum,'pending');
+      statusNumHandler(issues,setOpenNum,'open');
+      statusNumHandler(issues,setDoneNum,'done');
+    }
+  }, [issues])
+
   //HARDCODED DATA
   const hardcodedData = {
     title: "open:",
@@ -50,27 +67,29 @@ export default function Dashboard() {
         >
           Create Issue
         </Button>
+       
+        <h2>{currentProject}</h2>
         <Container>
           <Container className={classes.StatCard}>
             <Row className="offset-0">
               <StatCard
                 styleType={classes.StyleTypeOpen}
-                title={hardcodedData.title}
-                text={hardcodedData.text}
+                title="Done"
+                text={doneNum}
               />
               <StatCard
                 styleType={classes.StyleTypeClosed}
-                title={hardcodedData.title}
-                text={hardcodedData.text}
+                title="Open"
+                text={openNum}
               />
               <StatCard
                 styleType={classes.StyleTypeToDo}
-                title={hardcodedData.title}
-                text={hardcodedData.text}
+                title="Pending"
+                text={pendingNum}
               />
             </Row>
           </Container>
-          <IssueTable />
+          <IssueTable history={()=>{history.push('/details')}}/>
         </Container>
       </Router>
     </div>

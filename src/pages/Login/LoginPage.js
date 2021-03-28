@@ -51,7 +51,7 @@ export default function LoginPage() {
                 Login(email, password);
                 clearInput(emailRef);
                 clearInput(passwordRef);
-                history.push('/dashboard');
+                history.push('/projects');
               }}
             >
               Login

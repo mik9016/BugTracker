@@ -1,0 +1,15 @@
+.Projects{
+
+}
+
+.Card{
+    cursor: pointer;
+    margin: 1rem;
+    &:hover{
+        color: darkcyan;
+    }
+}
+
+.Btn{
+    margin: 2rem;
+}

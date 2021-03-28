@@ -15,8 +15,11 @@ import classes from "./CreateProject.module.scss";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
+import { useHistory } from "react-router-dom";
 
 export default function CreateProject() {
+  const history = useHistory();
+
   const [projectName, setProjectName] = useState("");
   const [projectRole, setProjectRole] = useState("");
 
@@ -66,6 +69,7 @@ export default function CreateProject() {
                 CreateNewProject(projectName, projectRole);
                 clearInput(name);
                 clearInput(role);
+                history.push('/projects')
               }}
             >
               Create
