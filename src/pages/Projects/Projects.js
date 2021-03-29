@@ -34,7 +34,7 @@ export default function Projects() {
     setPickedProjectId,
   ] = useContext(DbContext);
 
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
+  const [isAuthorized, Login, LogOut, Register,userId,setUserId] = useContext(AuthContext);
  
   const history = useHistory();
 
@@ -47,6 +47,7 @@ export default function Projects() {
       getProjects(setProjects);
     };
   }, []);
+
 
   return (
     <div className={classes.Projects}>
@@ -62,7 +63,7 @@ export default function Projects() {
           Create Project
         </Button>
         {projects.map((project, index) => {
-          if(project.user === fire.auth().currentUser.uid){
+          if(project.user === userId){
           return (
             <Card key={index} className={classes.Card}>
               <Card.Title

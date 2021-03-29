@@ -10,7 +10,7 @@ export const DbContextProvider = (props) => {
   const [clearInput, checkLog, setDateStamp, setTimeStamp] = useContext(
     UtilContext
   );
-  const [isAuthorized, Login, LogOut, Register,userId] = useContext(
+  const [isAuthorized, Login, LogOut, Register, userId] = useContext(
     AuthContext
   );
   const [currentProject, setCurrentProject] = useState("");
@@ -21,8 +21,6 @@ export const DbContextProvider = (props) => {
 
   const [pickedProject, setPickedProject] = useState("");
   const [pickedProjectId, setPickedProjectId] = useState("");
-
-  
 
   //FUNCTIONS
 

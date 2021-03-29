@@ -1,11 +1,11 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import { Container, Row, Card, Form, Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import classes from "../Login/LoginPage.module.scss";
 import { useHistory } from "react-router-dom";
-
+import { fire } from "../../Firebase";
 
 export default function LoginPage() {
   const emailRef = useRef();
@@ -18,7 +18,6 @@ export default function LoginPage() {
 
   return (
     <Container className={classes.Login}>
-     
       <Card className={classes.Card}>
         <Card.Body>
           <h1 className="text-center mb-4">Login</h1>
@@ -47,11 +46,12 @@ export default function LoginPage() {
             <Button
               className="w-100"
               type="submit"
-              onClick={() => {
+              onClick={async () => {
                 Login(email, password);
+
                 clearInput(emailRef);
                 clearInput(passwordRef);
-                history.push('/projects');
+                history.push("/projects");
               }}
             >
               Login
@@ -62,8 +62,6 @@ export default function LoginPage() {
           Need an account? <Link to="/register">Sign Up</Link>
         </div>
       </Card>
-
-    
     </Container>
   );
 }

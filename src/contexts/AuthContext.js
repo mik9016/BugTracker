@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState,useEffect } from "react";
 import { fire } from "../Firebase";
 
 
@@ -7,7 +7,8 @@ export const AuthContext = createContext();
 export const AuthContextProvider = (props) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
-  let [userId,setUserId] = useState('');
+  const [userId,setUserId] = useState('');
+
 
   const Login = (email, password) => {
    
@@ -15,8 +16,11 @@ export const AuthContextProvider = (props) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(setIsAuthorized(true))
+      .then(res=>{setUserId(res.user.uid)})
       .then(console.log("logged in"))
       .catch((err) => console.log(err));
+    
+      
   };
   const LogOut = () => {
     
@@ -25,6 +29,7 @@ export const AuthContextProvider = (props) => {
       .signOut()
       .then(console.log(`signed out`))
       .then(setIsAuthorized(false))
+      .then(res=>{setUserId('')})
       .catch((err) => console.log(err));
   };
 
@@ -36,12 +41,11 @@ export const AuthContextProvider = (props) => {
       .catch((err) => console.log(err));
   };
 
-  //Custom Hooks
-
+ 
 
   return (
     <AuthContext.Provider
-      value={[isAuthorized, Login, LogOut, Register]}
+      value={[isAuthorized, Login, LogOut, Register,userId,setUserId]}
     >
       {props.children}
     </AuthContext.Provider>
