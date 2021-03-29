@@ -1,8 +1,11 @@
 import React, { createContext } from "react";
 
+
 export const UtilContext = createContext();
 
 export const UtilContextProvider = (props) => {
+  
+
   const clearInput = (inputRef) => {
     inputRef.current.value = "";
   };
@@ -59,6 +62,7 @@ export const UtilContextProvider = (props) => {
     const sec = SetSecund(date);
     return `${hour}:${minute}:${sec}`;
   };
+  
 
   return (
     <UtilContext.Provider

@@ -17,6 +17,7 @@ import Createissue from "./pages/CreateIssue/Createissue";
 import Profile from "./pages/Profile/Profile";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import IssueDetails from './pages/IssueDetails/IssueDetails';
+import ProjectSettings from './pages/ProjectSettings/ProjectSettings';
 import Footer from "./components/Footer/Footer";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 import Projects from './pages/Projects/Projects';
@@ -71,6 +72,11 @@ function App() {
           <GuardedRoute
             path="/details"
             component={IssueDetails}
+            auth={isAuthorized}
+          />
+           <GuardedRoute
+            path="/projectSettings"
+            component={ProjectSettings}
             auth={isAuthorized}
           />
            

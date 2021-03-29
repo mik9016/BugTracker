@@ -1,13 +1,16 @@
 import React, { createContext, useState } from "react";
 import { fire } from "../Firebase";
 
+
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  
+
+  let [userId,setUserId] = useState('');
 
   const Login = (email, password) => {
+   
     fire
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -32,6 +35,9 @@ export const AuthContextProvider = (props) => {
       .then(console.log("user created"))
       .catch((err) => console.log(err));
   };
+
+  //Custom Hooks
+
 
   return (
     <AuthContext.Provider

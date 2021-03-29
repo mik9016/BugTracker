@@ -21,3 +21,9 @@
 .StyleTypeToDo{
     color: red;
 }
+.ProjectTitle{
+    cursor: pointer;
+    &:hover{
+        color: mediumaquamarine;
+    }
+}

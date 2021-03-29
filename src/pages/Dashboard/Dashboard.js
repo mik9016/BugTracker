@@ -10,6 +10,10 @@ import { DbContext } from "../../contexts/DbContext";
 
 export default function Dashboard() {
   const history = useHistory();
+  const pushHistory = () => {
+    history.push("/details");
+  };
+
   const [
     CreateNewProject,
     CreateNewIssue,
@@ -18,6 +22,22 @@ export default function Dashboard() {
     getIssues,
     setCurrentProject,
     statusNumHandler,
+    pickedIssue,
+    setPickedIssue,
+    pickedIssueTitle,
+    setPickedIssueTitle,
+    pickedIssueStatus,
+    setPickedIssueStatus,
+    pickedIssueId,
+    setPickedIssueId,
+    changeIssueDescription,
+    changeIssueStatus,
+    changeIssueTitle,
+    changeProjectTitle,
+    pickedProject,
+    setPickedProject,
+    pickedProjectId,
+    setPickedProjectId,
   ] = useContext(DbContext);
 
   const [issues, setIssues] = useState([]);
@@ -30,20 +50,19 @@ export default function Dashboard() {
     getIssues(setIssues);
     return () => {
       getIssues(setIssues);
-      
     };
   }, []);
 
   useEffect(() => {
-    statusNumHandler(issues,setPendingNum,'pending');
-    statusNumHandler(issues,setOpenNum,'open');
-    statusNumHandler(issues,setDoneNum,'done');
+    statusNumHandler(issues, setPendingNum, "pending");
+    statusNumHandler(issues, setOpenNum, "open");
+    statusNumHandler(issues, setDoneNum, "done");
     return () => {
-      statusNumHandler(issues,setPendingNum,'pending');
-      statusNumHandler(issues,setOpenNum,'open');
-      statusNumHandler(issues,setDoneNum,'done');
-    }
-  }, [issues])
+      statusNumHandler(issues, setPendingNum, "pending");
+      statusNumHandler(issues, setOpenNum, "open");
+      statusNumHandler(issues, setDoneNum, "done");
+    };
+  }, [issues]);
 
   //HARDCODED DATA
   const hardcodedData = {
@@ -67,8 +86,17 @@ export default function Dashboard() {
         >
           Create Issue
         </Button>
-       
-        <h2>{currentProject}</h2>
+
+        <h2
+          className={classes.ProjectTitle}
+          onClick={() => {
+            
+            setPickedProject(currentProject);
+            history.push("/projectSettings");
+          }}
+        >
+          {currentProject}
+        </h2>
         <Container>
           <Container className={classes.StatCard}>
             <Row className="offset-0">
@@ -89,7 +117,7 @@ export default function Dashboard() {
               />
             </Row>
           </Container>
-          <IssueTable history={()=>{history.push('/details')}}/>
+          <IssueTable history={() => pushHistory()} />
         </Container>
       </Router>
     </div>

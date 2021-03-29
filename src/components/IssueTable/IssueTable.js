@@ -2,11 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import classes from "../IssueTable/IssueTable.module.scss";
 import { Card, Table, Container, Button } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
-import { useHistory } from "react-router-dom";
+import { UtilContext } from "../../contexts/UtilitiesContext";
 import { Link, BrowserRouter as Router } from "react-router-dom";
 
 export default function IssueTable(props) {
-  const history = useHistory();
   const [
     CreateNewProject,
     CreateNewIssue,
@@ -17,10 +16,18 @@ export default function IssueTable(props) {
     statusNumHandler,
     pickedIssue,
     setPickedIssue,
+    pickedIssueTitle,
+    setPickedIssueTitle,
+    pickedIssueStatus,
+    setPickedIssueStatus,
+    pickedIssueId,
+    setPickedIssueId,
+    changeIssueDescription,
+    changeIssueStatus,
+    changeIssueTitle
   ] = useContext(DbContext);
 
   const [issues, setIssues] = useState([]);
-  
 
   useEffect(() => {
     getIssues(setIssues);
@@ -31,17 +38,6 @@ export default function IssueTable(props) {
 
   console.log(issues);
 
-  //HARDCODED ISSUE
-  const hardcodedIssue = {
-    num: "#" + Math.random() * 10,
-    date: "22.01.2021",
-    title: "Fixing Issue scss responsiveness",
-    status: "open",
-    openSince: "22h",
-    author: "Mik Gru",
-    responsible: "Mikolaj",
-  };
-  const arr = [hardcodedIssue, hardcodedIssue, hardcodedIssue];
 
   return (
     <div className={classes.IssueTable}>
@@ -62,11 +58,23 @@ export default function IssueTable(props) {
               {issues.map((obj, index) => {
                 if (obj.project === currentProject) {
                   return (
-                    <tr className={classes.Issue} key={index}>
+                    <tr
+                      onClick={() => {
+                        setPickedIssue(obj.issueDesc);
+                        setPickedIssueTitle(obj.issueName);
+                        setPickedIssueStatus(obj.status);
+                        setPickedIssueId(obj.id);
+                        
+                      }}
+                      className={classes.Issue}
+                      key={index}
+                    >
                       <td>{obj.date}</td>
+
                       <td onClick={props.history} className={classes.IssueName}>
                         {obj.issueName}
                       </td>
+
                       <td>{obj.status}</td>
                       <td>{obj.time}</td>
                       <td>{obj.creator}</td>

@@ -10,11 +10,20 @@ export const DbContextProvider = (props) => {
   const [clearInput, checkLog, setDateStamp, setTimeStamp] = useContext(
     UtilContext
   );
-  const [isAuthorized, Login, LogOut, Register, userId] = useContext(
+  const [isAuthorized, Login, LogOut, Register,userId] = useContext(
     AuthContext
   );
   const [currentProject, setCurrentProject] = useState("");
   const [pickedIssue, setPickedIssue] = useState("");
+  let [pickedIssueTitle, setPickedIssueTitle] = useState("");
+  const [pickedIssueStatus, setPickedIssueStatus] = useState("");
+  const [pickedIssueId, setPickedIssueId] = useState("");
+
+  const [pickedProject, setPickedProject] = useState("");
+  const [pickedProjectId, setPickedProjectId] = useState("");
+
+  
+
   //FUNCTIONS
 
   // CREATE
@@ -26,6 +35,7 @@ export const DbContextProvider = (props) => {
     const template = {
       projectName: projectName,
       projectRole: projectRole,
+      user: userId,
     };
 
     await form.push(template);
@@ -91,7 +101,7 @@ export const DbContextProvider = (props) => {
         setuseState(Issues);
       });
   };
-
+  // HANDLE STATS
   const statusNumHandler = (arr, setState, statusName) => {
     let sum = 0;
 
@@ -100,6 +110,38 @@ export const DbContextProvider = (props) => {
         sum++;
         setState(sum);
       }
+    });
+  };
+  //UPDATE
+  const changeIssueDescription = (id, value) => {
+    const desc = fire.database().ref("Issues").child(id);
+
+    desc.update({
+      issueDesc: value,
+    });
+  };
+
+  const changeIssueStatus = (id, value) => {
+    const desc = fire.database().ref("Issues").child(id);
+
+    desc.update({
+      status: value,
+    });
+  };
+
+  const changeIssueTitle = (id, value) => {
+    const desc = fire.database().ref("Issues").child(id);
+
+    desc.update({
+      issueName: value,
+    });
+  };
+
+  const changeProjectTitle = (id, value) => {
+    const desc = fire.database().ref("Projects").child(id);
+
+    desc.update({
+      projectName: value,
     });
   };
 
@@ -115,6 +157,20 @@ export const DbContextProvider = (props) => {
         statusNumHandler,
         pickedIssue,
         setPickedIssue,
+        pickedIssueTitle,
+        setPickedIssueTitle,
+        pickedIssueStatus,
+        setPickedIssueStatus,
+        pickedIssueId,
+        setPickedIssueId,
+        changeIssueDescription,
+        changeIssueStatus,
+        changeIssueTitle,
+        changeProjectTitle,
+        pickedProject,
+        setPickedProject,
+        pickedProjectId,
+        setPickedProjectId,
       ]}
     >
       {props.children}
