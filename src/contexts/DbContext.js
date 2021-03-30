@@ -142,6 +142,45 @@ export const DbContextProvider = (props) => {
       projectName: value,
     });
   };
+  //SET USER
+  const setUserInDB = async (userMail,userName) => {
+   const form = fire.database().ref('Users');
+
+   const template = {
+     userEmail:userMail,
+     userName:userName,
+     role:''
+   }
+
+   await form.push(template)
+  }
+
+  //GET USERS LIST
+
+  const getUsersListFromDB = async (setuseState) => {
+   await fire.database().ref('Users')
+    .on("value", (snapshot) => {
+      const users = snapshot.val();
+
+      const Users = [];
+
+      for (let id in users) {
+        Users.push({ id, ...users[id] });
+      }
+      setuseState(Users);
+    });
+  };
+
+  //UPDATE ROLE OF USER
+
+  
+  const updateUsersRole = (id, value) => {
+    const desc = fire.database().ref("Users").child(id);
+
+    desc.update({
+      role: value,
+    });
+  };
 
   return (
     <DbContext.Provider
@@ -169,6 +208,9 @@ export const DbContextProvider = (props) => {
         setPickedProject,
         pickedProjectId,
         setPickedProjectId,
+        setUserInDB,
+        getUsersListFromDB,
+        updateUsersRole
       ]}
     >
       {props.children}
