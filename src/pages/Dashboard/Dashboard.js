@@ -52,6 +52,16 @@ export default function Dashboard() {
   const [openNum, setOpenNum] = useState(0);
   const [doneNum, setDoneNum] = useState(0);
 
+ function filterProjectIssues(arr) {
+    let filteredIssues = [];
+    arr.map((issue)=>{
+      if(issue.project === currentProject){
+        filteredIssues.push(issue);
+      }
+    })
+    return filteredIssues;
+  };
+
   useEffect(() => {
     getIssues(setIssues);
     return () => {
@@ -59,22 +69,26 @@ export default function Dashboard() {
     };
   }, []);
 
+
   useEffect(() => {
-    statusNumHandler(issues, setPendingNum, "pending");
-    statusNumHandler(issues, setOpenNum, "open");
-    statusNumHandler(issues, setDoneNum, "done");
+    
+    statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
+    statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
+    statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
     return () => {
-      statusNumHandler(issues, setPendingNum, "pending");
-      statusNumHandler(issues, setOpenNum, "open");
-      statusNumHandler(issues, setDoneNum, "done");
+      statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
+      statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
+      statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
     };
   }, [issues]);
 
-  //HARDCODED DATA
-  const hardcodedData = {
-    title: "open:",
-    text: issues.length,
-  };
+  console.log(issues)
+
+  // //HARDCODED DATA
+  // const hardcodedData = {
+  //   title: "open:",
+  //   text: issues.length,
+  // };
 
   return (
     <div className={classes.Dashboard}>
