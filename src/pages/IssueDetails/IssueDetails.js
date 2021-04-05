@@ -44,6 +44,7 @@ export default function IssueDetails(props) {
     updateUserProjects,
     pickedIssueWorker,
     setPickedIssueWorker,
+    changeIssueWorker,
   ] = useContext(DbContext);
   const teamMembers = useGetTeamData();
 
@@ -116,6 +117,7 @@ export default function IssueDetails(props) {
               changeIssueStatus(pickedIssueId, pickedIssueStatus);
               changeIssueDescription(pickedIssueId, pickedIssue);
               changeIssueTitle(pickedIssueId, pickedIssueTitle);
+              changeIssueWorker(pickedIssueId,pickedIssueWorker);
               history.push("/dashboard");
             }}
           >

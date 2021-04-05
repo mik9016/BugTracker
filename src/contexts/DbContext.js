@@ -143,6 +143,14 @@ export const DbContextProvider = (props) => {
     });
   };
 
+  const changeIssueWorker= (id, value) => {
+    const desc = fire.database().ref("Issues").child(id);
+
+    desc.update({
+      currentlyWorking: value,
+    });
+  };
+
   const changeProjectTitle = (id, value) => {
     const desc = fire.database().ref("Projects").child(id);
 
@@ -233,7 +241,8 @@ export const DbContextProvider = (props) => {
         updateUsersRole,
         updateUserProjects,
         pickedIssueWorker, 
-        setPickedIssueWorker
+        setPickedIssueWorker,
+        changeIssueWorker
       ]}
     >
       {props.children}

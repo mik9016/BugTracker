@@ -14,10 +14,10 @@ export default function ManageTeam() {
           className="m-2  w-25"
           onClick={(e) => {
             e.preventDefault();
-            history.push("/projects");
+            history.push("/dashboard");
           }}
         >
-         back to projects
+         back to dashboard
         </Button>
       <Button 
           variant="outline-success"
