@@ -10,7 +10,14 @@ export const DbContextProvider = (props) => {
   const [clearInput, checkLog, setDateStamp, setTimeStamp] = useContext(
     UtilContext
   );
-  const [isAuthorized, Login, LogOut, Register, userId] = useContext(
+  const [   isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,] = useContext(
     AuthContext
   );
   const [currentProject, setCurrentProject] = useState("");
@@ -18,7 +25,7 @@ export const DbContextProvider = (props) => {
   let [pickedIssueTitle, setPickedIssueTitle] = useState("");
   const [pickedIssueStatus, setPickedIssueStatus] = useState("");
   const [pickedIssueId, setPickedIssueId] = useState("");
-
+  let [pickedIssueWorker, setPickedIssueWorker] = useState("");
   const [pickedProject, setPickedProject] = useState("");
   const [pickedProjectId, setPickedProjectId] = useState("");
 
@@ -34,6 +41,7 @@ export const DbContextProvider = (props) => {
       projectName: projectName,
       projectRole: projectRole,
       user: userId,
+      creatorEmail: userEmail,
     };
 
     await form.push(template);
@@ -143,42 +151,54 @@ export const DbContextProvider = (props) => {
     });
   };
   //SET USER
-  const setUserInDB = async (userMail,userName) => {
-   const form = fire.database().ref('Users');
+  const setUserInDB = async (userMail, userName) => {
+    const form = fire.database().ref("Users");
 
-   const template = {
-     userEmail:userMail,
-     userName:userName,
-     role:''
-   }
+    const template = {
+      userEmail: userMail,
+      userName: userName,
+      role: "",
+      projects: [],
+    };
 
-   await form.push(template)
-  }
+    await form.push(template);
+  };
 
   //GET USERS LIST
 
   const getUsersListFromDB = async (setuseState) => {
-   await fire.database().ref('Users')
-    .on("value", (snapshot) => {
-      const users = snapshot.val();
+    const Users = [];
+    await fire
+      .database()
+      .ref("Users")
+      .on("value", (snapshot) => {
+        const users = snapshot.val();
 
-      const Users = [];
+        for (let id in users) {
+          Users.push({ id, ...users[id] });
+        }
+      });
 
-      for (let id in users) {
-        Users.push({ id, ...users[id] });
-      }
-      setuseState(Users);
-    });
+    await setuseState(Users);
+
+    return Users;
   };
 
   //UPDATE ROLE OF USER
 
-  
   const updateUsersRole = (id, value) => {
     const desc = fire.database().ref("Users").child(id);
 
     desc.update({
       role: value,
+    });
+  };
+
+  const updateUserProjects = (id, value) => {
+    const desc = fire.database().ref("Users").child(id);
+
+    desc.update({
+      projects: [].push(value),
     });
   };
 
@@ -210,7 +230,10 @@ export const DbContextProvider = (props) => {
         setPickedProjectId,
         setUserInDB,
         getUsersListFromDB,
-        updateUsersRole
+        updateUsersRole,
+        updateUserProjects,
+        pickedIssueWorker, 
+        setPickedIssueWorker
       ]}
     >
       {props.children}

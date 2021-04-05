@@ -12,6 +12,9 @@ import {
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { useHistory } from "react-router";
+import useGetTeamData from '../../Hooks/useGetTeamData';
+import useGetUsers from '../../Hooks/useGetUsers';
+import useGetLoggedUser from '../../Hooks/useGetLoggedUser';
 
 export default function Createissue() {
   const [CreateNewProject, CreateNewIssue, currentProject] = useContext(
@@ -35,9 +38,18 @@ export default function Createissue() {
   const [creator, setCreator] = useState("");
   const [worker, setWorker] = useState("");
 
+  const teamMembers = useGetTeamData();
+  const Users = useGetUsers();
+  const loggedUser = useGetLoggedUser();
+
+
+
+
+
   return (
     <div className={classes.CreateIssue}>
       <Container>
+        <Button variant='outline-primary' onClick={()=> history.push('/dashboard')}>Back</Button>
         <Card>
           <Card.Title as="h1">Create Issue</Card.Title>
           <Card.Body>
@@ -73,9 +85,14 @@ export default function Createissue() {
                   }}
                 >
                   <option>Choose...</option>
-                  <option>{hardcodedUsers.first}</option>
-                  <option>{hardcodedUsers.second}</option>
-                  <option>{hardcodedUsers.third}</option>
+                  {Users.map((user, index)=>{
+                    if(user.userEmail === loggedUser.email){
+                     return(
+                       <option key={index}>{user.userName}</option>
+                     ) 
+                    }
+                  })}
+                  
                 </Form.Control>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridState">
@@ -88,9 +105,14 @@ export default function Createissue() {
                   }}
                 >
                   <option>Choose...</option>
-                  <option>{hardcodedUsers.first}</option>
-                  <option>{hardcodedUsers.second}</option>
-                  <option>{hardcodedUsers.third}</option>
+                  {teamMembers.map((member,index)=>{
+                    if (member.project === currentProject){
+                        return(
+                      <option key={index}>{member.memberEmail}</option>
+                    )
+                    }
+                  
+                  })}
                 </Form.Control>
               </Form.Group>
               <Button

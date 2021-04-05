@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import {
   Container,
   Row,
@@ -16,18 +16,28 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { useHistory } from "react-router-dom";
+import { TeamContext } from "../../contexts/TeamContext";
+import useGetLoggedUser from "../../Hooks/useGetLoggedUser";
+import useGetUsers from "../../Hooks/useGetUsers";
 
 export default function CreateProject() {
   const history = useHistory();
 
   const [projectName, setProjectName] = useState("");
   const [projectRole, setProjectRole] = useState("");
+  const [projectMainUser, setProjectMainUser] = useState("");
 
   const name = useRef("");
   const role = useRef("");
 
   const [CreateNewProject, CreateNewIssue] = useContext(DbContext);
+
   const [clearInput, checkLog] = useContext(UtilContext);
+  const [setTeamData] = useContext(TeamContext);
+
+  const loggedUser = useGetLoggedUser();
+  const Users = useGetUsers();
+
 
   return (
     <div className={classes.CreateProject}>
@@ -40,7 +50,7 @@ export default function CreateProject() {
               <FormControl
                 type="text"
                 ref={name}
-                placeholder='project name'
+                placeholder="project name"
                 onChange={(e) => {
                   setProjectName(e.target.value);
                 }}
@@ -67,9 +77,17 @@ export default function CreateProject() {
               onClick={(e) => {
                 e.preventDefault();
                 CreateNewProject(projectName, projectRole);
+                setTeamData(
+                  projectName,
+                  "memberUid",
+                  loggedUser.email,
+                  projectRole,
+                  "memberName"
+                );
                 clearInput(name);
                 clearInput(role);
-                history.push('/projects')
+               
+                history.push("/projects");
               }}
             >
               Create

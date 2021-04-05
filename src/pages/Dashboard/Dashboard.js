@@ -38,6 +38,12 @@ export default function Dashboard() {
     setPickedProject,
     pickedProjectId,
     setPickedProjectId,
+    setUserInDB,
+    getUsersListFromDB,
+    updateUsersRole,
+    updateUserProjects,
+    pickedIssueWorker, 
+    setPickedIssueWorker
   ] = useContext(DbContext);
 
   const [issues, setIssues] = useState([]);
@@ -81,12 +87,32 @@ export default function Dashboard() {
           className="m-2  w-25"
           onClick={(e) => {
             e.preventDefault();
+            history.push("/projects");
+          }}
+        >
+         back to projects
+        </Button>
+        
+        <Button
+          as={Link}
+          to="/createIssue"
+          variant="outline-success"
+          className="m-2  w-25"
+          onClick={(e) => {
+            e.preventDefault();
             history.push("/createIssue");
           }}
         >
           Create Issue
         </Button>
-
+        
+        <Button className={classes.Btn}
+          variant="outline-success"
+          onClick={() => {
+            history.push("/manageteam");
+          }}>
+          Team
+        </Button>
         <h2
           className={classes.ProjectTitle}
           onClick={() => {

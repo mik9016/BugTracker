@@ -24,7 +24,18 @@ export default function IssueTable(props) {
     setPickedIssueId,
     changeIssueDescription,
     changeIssueStatus,
-    changeIssueTitle
+    changeIssueTitle,
+    changeProjectTitle,
+    pickedProject,
+    setPickedProject,
+    pickedProjectId,
+    setPickedProjectId,
+    setUserInDB,
+    getUsersListFromDB,
+    updateUsersRole,
+    updateUserProjects,
+    pickedIssueWorker, 
+    setPickedIssueWorker
   ] = useContext(DbContext);
 
   const [issues, setIssues] = useState([]);
@@ -36,7 +47,7 @@ export default function IssueTable(props) {
     };
   }, []);
 
-  console.log(issues);
+  // console.log(issues);
 
 
   return (

@@ -1,0 +1,11 @@
+.SetTeamUserRole{
+    color: black;
+   
+};
+
+.Title{
+    &:hover{
+        cursor: pointer;
+        color: cadetblue;
+    }
+}

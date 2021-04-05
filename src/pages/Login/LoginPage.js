@@ -46,12 +46,12 @@ export default function LoginPage() {
             <Button
               className="w-100"
               type="submit"
-              onClick={async () => {
+              onClick={() => {
                 Login(email, password);
-
                 clearInput(emailRef);
                 clearInput(passwordRef);
                 history.push("/projects");
+                
               }}
             >
               Login

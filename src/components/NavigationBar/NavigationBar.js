@@ -30,9 +30,6 @@ export default function NavigationBar() {
           <Nav.Link as={Link} to="/profile">
             Profile
           </Nav.Link>
-          <Nav.Link as={Link} to="/team">
-            Team
-          </Nav.Link>
 
           <NavDropdown title="Tickets" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.3">All Tickets</NavDropdown.Item>
@@ -43,6 +40,7 @@ export default function NavigationBar() {
             className=""
             onClick={() => {
               LogOut();
+
               history.push("/");
             }}
           >

@@ -18,10 +18,11 @@ import Profile from "./pages/Profile/Profile";
 import CreateProject from "./pages/CreateProject/CreateProject";
 import IssueDetails from "./pages/IssueDetails/IssueDetails";
 import ProjectSettings from "./pages/ProjectSettings/ProjectSettings";
-import Team from "./pages/Team/Team";
 import Footer from "./components/Footer/Footer";
 import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 import Projects from "./pages/Projects/Projects";
+import ManageTeam from "./pages/ManageTeam/ManageTeam";
+import AddMember from "./pages/AddMember/AddMember";
 
 function App() {
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
@@ -79,9 +80,15 @@ function App() {
             component={ProjectSettings}
             auth={isAuthorized}
           />
+
           <GuardedRoute
-            path="/team"
-            component={Team}
+            path="/manageteam"
+            component={ManageTeam}
+            auth={isAuthorized}
+          />
+          <GuardedRoute
+            path="/addmember"
+            component={AddMember}
             auth={isAuthorized}
           />
         </Switch>
