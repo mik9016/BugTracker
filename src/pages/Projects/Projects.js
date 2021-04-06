@@ -59,7 +59,7 @@ export default function Projects() {
     };
   }, []);
 
-  console.log(teamData);
+  // console.log(teamData);
 
   function filterProjectsUserIsInvolvedIn() {
     let projects = [];

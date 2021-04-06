@@ -38,7 +38,7 @@ export const UtilContextProvider = (props) => {
     const month = setMonth(date);
     const year = date.getFullYear();
 
-    return `${today}.${month}.${year}`;
+    return `${today}.${month}.${year}`; 
   };
   //TIME HANDLING
   const SetHour = (date) => {
@@ -63,6 +63,8 @@ export const UtilContextProvider = (props) => {
     return `${hour}:${minute}:${sec}`;
   };
   
+
+
 
   return (
     <UtilContext.Provider

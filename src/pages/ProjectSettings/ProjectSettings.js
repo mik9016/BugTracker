@@ -10,8 +10,10 @@ import {
   Button
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
+import {useHistory} from 'react-router-dom'
 
 export default function ProjectSettings() {
+  const history = useHistory();
   const [
     CreateNewProject,
     CreateNewIssue,
@@ -42,6 +44,7 @@ export default function ProjectSettings() {
     <div className={classes.ProjectSettings}>
       <h1>ProjectSettings</h1>
       <Container>
+        <Button className='m-2' variant='outline-success' onClick={()=>{history.push('/dashboard')}}>Back</Button>
         <Card>
           <FormGroup>
             <FormLabel>Project Title</FormLabel>

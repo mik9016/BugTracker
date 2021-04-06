@@ -21,7 +21,7 @@ function useGetTeamData() {
         });
 
       setData(Teams);
-      console.log("data fetched Teams");
+      // console.log("data fetched Teams");
     };
 
     getTeamData();
@@ -30,7 +30,7 @@ function useGetTeamData() {
       isMounted = false;
     };
   }, []);
-  console.log(data);
+  // console.log(data);
   return data;
 }
 

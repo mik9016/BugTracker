@@ -158,6 +158,9 @@ export const DbContextProvider = (props) => {
       projectName: value,
     });
   };
+  //DELETE
+
+
   //SET USER
   const setUserInDB = async (userMail, userName) => {
     const form = fire.database().ref("Users");

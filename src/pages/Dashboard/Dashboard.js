@@ -3,10 +3,11 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import StatCard from "../../components/StatCard/StatCard";
 import classes from "../Dashboard/Dashboard.module.scss";
-import { Container, Row, Button } from "react-bootstrap";
+import { Container, Row, Button, Form } from "react-bootstrap";
 import IssueTable from "../../components/IssueTable/IssueTable";
 import DashboardNav from "../../components/DashboardNav/DashboardNav";
 import { DbContext } from "../../contexts/DbContext";
+import SortDropdown from "../../components/SortDropdown/SortDropdown";
 
 export default function Dashboard() {
   const history = useHistory();
@@ -42,25 +43,26 @@ export default function Dashboard() {
     getUsersListFromDB,
     updateUsersRole,
     updateUserProjects,
-    pickedIssueWorker, 
-    setPickedIssueWorker
+    pickedIssueWorker,
+    setPickedIssueWorker,
   ] = useContext(DbContext);
 
+  const [ticketValue, setTicketValue] = useState("pending");
   const [issues, setIssues] = useState([]);
   const [projects, setProjects] = useState([]);
   const [pendingNum, setPendingNum] = useState(0);
   const [openNum, setOpenNum] = useState(0);
   const [doneNum, setDoneNum] = useState(0);
 
- function filterProjectIssues(arr) {
+  function filterProjectIssues(arr) {
     let filteredIssues = [];
-    arr.map((issue)=>{
-      if(issue.project === currentProject){
+    arr.map((issue) => {
+      if (issue.project === currentProject) {
         filteredIssues.push(issue);
       }
-    })
+    });
     return filteredIssues;
-  };
+  }
 
   useEffect(() => {
     getIssues(setIssues);
@@ -69,9 +71,7 @@ export default function Dashboard() {
     };
   }, []);
 
-
   useEffect(() => {
-    
     statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
     statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
     statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
@@ -81,14 +81,6 @@ export default function Dashboard() {
       statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
     };
   }, [issues]);
-
-  console.log(issues)
-
-  // //HARDCODED DATA
-  // const hardcodedData = {
-  //   title: "open:",
-  //   text: issues.length,
-  // };
 
   return (
     <div className={classes.Dashboard}>
@@ -104,9 +96,9 @@ export default function Dashboard() {
             history.push("/projects");
           }}
         >
-         back to projects
+          back to projects
         </Button>
-        
+
         <Button
           as={Link}
           to="/createIssue"
@@ -119,24 +111,40 @@ export default function Dashboard() {
         >
           Create Issue
         </Button>
-        
-        <Button className={classes.Btn}
+
+        <Button
+          className={classes.Btn}
           variant="outline-success"
           onClick={() => {
             history.push("/manageteam");
-          }}>
+          }}
+        >
           Team
         </Button>
         <h2
           className={classes.ProjectTitle}
           onClick={() => {
-            
             setPickedProject(currentProject);
             history.push("/projectSettings");
           }}
         >
           {currentProject}
         </h2>
+        <Container>
+          <Form.Group>
+            <Form.Control
+              className={classes.SortDropdown}
+              as="select"
+              onChange={(e) => {
+                setTicketValue(e.target.value);
+              }}
+            >
+              <option>pending</option>
+              <option>open</option>
+              <option>done</option>
+            </Form.Control>
+          </Form.Group>
+        </Container>
         <Container>
           <Container className={classes.StatCard}>
             <Row className="offset-0">
@@ -157,7 +165,7 @@ export default function Dashboard() {
               />
             </Row>
           </Container>
-          <IssueTable history={() => pushHistory()} />
+          <IssueTable history={() => pushHistory()} status={ticketValue} />
         </Container>
       </Router>
     </div>

@@ -34,9 +34,16 @@ export default function IssueTable(props) {
     getUsersListFromDB,
     updateUsersRole,
     updateUserProjects,
-    pickedIssueWorker, 
-    setPickedIssueWorker
+    pickedIssueWorker,
+    setPickedIssueWorker,
   ] = useContext(DbContext);
+  const [
+    clearInput,
+    checkLog,
+    setDateStamp,
+    setTimeStamp,
+    compareTimes,
+  ] = useContext(UtilContext);
 
   const [issues, setIssues] = useState([]);
 
@@ -47,20 +54,18 @@ export default function IssueTable(props) {
     };
   }, []);
 
-  // console.log(issues);
-
-
   return (
     <div className={classes.IssueTable}>
       <Container>
-        <Card className="shadow">
+        <Card className={classes.Card} >
           <Table responsive>
             <thead>
               <tr>
                 <th>Date</th>
+                <th>Time</th>
                 <th>Title</th>
                 <th>Status</th>
-                <th>Open since</th>
+
                 <th>Author</th>
                 <th>Responsible</th>
               </tr>
@@ -68,30 +73,34 @@ export default function IssueTable(props) {
             <tbody>
               {issues.map((obj, index) => {
                 if (obj.project === currentProject) {
-                  return (
-                    <tr
-                      onClick={() => {
-                        setPickedIssue(obj.issueDesc);
-                        setPickedIssueTitle(obj.issueName);
-                        setPickedIssueStatus(obj.status);
-                        setPickedIssueId(obj.id);
-                        
-                      }}
-                      className={classes.Issue}
-                      key={index}
-                    >
-                      <td>{obj.date}</td>
+                  if (obj.status === props.status) {
+                    return (
+                      <tr
+                        onClick={() => {
+                          setPickedIssue(obj.issueDesc);
+                          setPickedIssueTitle(obj.issueName);
+                          setPickedIssueStatus(obj.status);
+                          setPickedIssueId(obj.id);
+                        }}
+                        className={classes.Issue}
+                        key={index}
+                      >
+                        <td>{obj.date}</td>
+                        <td>{obj.time}</td>
+                        <td
+                          onClick={props.history}
+                          className={classes.IssueName}
+                        >
+                          {obj.issueName}
+                        </td>
 
-                      <td onClick={props.history} className={classes.IssueName}>
-                        {obj.issueName}
-                      </td>
+                        <td>{obj.status}</td>
 
-                      <td>{obj.status}</td>
-                      <td>{obj.time}</td>
-                      <td>{obj.creator}</td>
-                      <td>{obj.currentlyWorking}</td>
-                    </tr>
-                  );
+                        <td>{obj.creator}</td>
+                        <td>{obj.currentlyWorking}</td>
+                      </tr>
+                    );
+                  }
                 }
                 return;
               })}
