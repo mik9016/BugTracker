@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
+@import "../../styles//util.scss";
 .Login {
   font-family: "Lato", sans-serif;
   display: flex;
@@ -9,7 +9,16 @@
 }
 .Card {
   width: 40vw;
-  height: 40vh;
+  height: 50vh;
+  box-shadow: $shadow;
+
+}
+
+.mine{
+  width: 40vw;
+  height: 50vh;
+  box-shadow: $shadow;
+  border-radius: 24px;
 }
 
 .Icon {
@@ -17,10 +26,20 @@
   margin-bottom: 16px;
 }
 
+.SmallIcon {
+  width: 3rem;
+  height: 3rem;
+}
+.Text {
+  margin: 8px;
+}
+
 @media screen and (max-width: 575px) {
   .Card {
     width: 90vw;
     height: auto;
+    box-shadow: $shadow;
+    border-radius: 24px;
   }
 }
 
@@ -28,5 +47,17 @@
   .Card {
     width: 80vw;
     height: auto;
+    box-shadow: $shadow;
+    border-radius: 24px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .Card {
+    margin-top: 16%;
+    width: 72vw;
+    height: auto;
+    box-shadow: $shadow;
+    border-radius: 24px;
   }
 }

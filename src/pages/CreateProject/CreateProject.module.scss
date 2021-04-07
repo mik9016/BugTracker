@@ -1,3 +1,31 @@
-.CreateProject{
-    margin-top: 15vh;
+@import "../../styles/util.scss";
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+.CreateProject {
+  height: 90vh;
+  font-family: "Lato", sans-serif;
+
+  img {
+    width: 42px;
+    height: 42px;
+    margin: 1rem;
+  }
+  .Image {
+    @include icons;
+  }
+
+  .Card {
+    @include card;
+    box-shadow: $shadow;
+    height: 40vh;
+  }
+  .Form {
+    width: 40vw;
+  }
+  .FormGr {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+  }
 }

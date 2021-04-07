@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@import '../../styles/util.scss';
 .Register {
   display: flex;
   align-items: center;
@@ -8,13 +9,16 @@
 .Card {
   font-family: "Lato", sans-serif;
   width: 40vw;
-  height: 48vh;
+  height: 60vh;
 }
 
 .Icon{
     height: 150px;
     
     
+}
+.Text{
+  margin: 8px;
 }
 
 @media screen and (max-width: 575px) {
@@ -33,4 +37,14 @@
         height: auto;
     
       }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .Card {
+    margin-top: 16%;
+    width: 72vw;
+    height: auto;
+    box-shadow: $shadow;
+    border-radius: $corners;
+  }
 }

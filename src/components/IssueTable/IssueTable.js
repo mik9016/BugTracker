@@ -58,7 +58,7 @@ export default function IssueTable(props) {
     <div className={classes.IssueTable}>
       <Container>
         <Card className={classes.Card} >
-          <Table responsive>
+          <Table responsive bordered hover>
             <thead>
               <tr>
                 <th>Date</th>

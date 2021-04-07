@@ -1,11 +1,19 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import { Container, Row, Card, Form, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Card,
+  Form,
+  Button,
+  Image,
+  Col,
+} from "react-bootstrap";
+import classes from "../Login/LoginPage.module.scss";
 import { Link } from "react-router-dom";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { AuthContext } from "../../contexts/AuthContext";
-import classes from "../Login/LoginPage.module.scss";
 import { useHistory } from "react-router-dom";
-import { fire } from "../../Firebase";
+import pic from "../../assets/bug.png";
 
 export default function LoginPage() {
   const emailRef = useRef();
@@ -20,7 +28,7 @@ export default function LoginPage() {
     <Container className={classes.Login}>
       <Card className={classes.Card}>
         <Card.Body>
-          <h1 className="text-center mb-4">Login</h1>
+          <h1 className='text-center m-2'>Login</h1>
 
           <Form.Group>
             <Form.Group id="email">
@@ -51,14 +59,13 @@ export default function LoginPage() {
                 clearInput(emailRef);
                 clearInput(passwordRef);
                 history.push("/projects");
-                
               }}
             >
               Login
             </Button>
           </Form.Group>
         </Card.Body>
-        <div>
+        <div className={classes.Text}>
           Need an account? <Link to="/register">Sign Up</Link>
         </div>
       </Card>

@@ -1,2 +1,48 @@
 $shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $corners: 24px;
+$backgroundColor: #8390a2;
+$darkColor: #1d2231;
+
+
+@mixin hoverColor {
+  &:hover {
+    cursor: pointer;
+    filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg)
+      brightness(103%) contrast(103%);
+  }
+}
+
+@mixin icons {
+  width: 42px;
+  height: 42px;
+  margin: 1rem;
+  &:hover {
+    cursor: pointer;
+    filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg)
+      brightness(103%) contrast(103%);
+  }
+}
+
+
+@mixin smallIcons {
+  width: 18px;
+  height: 18px;
+  &:hover {
+    cursor: pointer;
+    filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg)
+      brightness(103%) contrast(103%);
+  }
+}
+
+@mixin card {
+  width: 40vw;
+  height: 50vh;
+  box-shadow: $shadow;
+}
+
+@mixin centerCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20vh;
+}

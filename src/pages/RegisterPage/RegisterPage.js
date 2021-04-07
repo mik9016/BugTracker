@@ -95,7 +95,7 @@ export default function Register() {
             </Button>
           </Form>
         </Card.Body>
-        <div className="w-100 text-center mt-2">
+        <div className={classes.Text}>
           Need an account? <Link to="/login">Login</Link>
         </div>
       </Card>

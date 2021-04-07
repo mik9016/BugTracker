@@ -1,15 +1,84 @@
-.Projects{
+@import "../../styles//util.scss";
 
+.Projects {
+  height: 90vh;
 }
 
-.Card{
-    cursor: pointer;
+.Card {
+  cursor: pointer;
+  margin: 1rem;
+  &:hover {
+    color: #FFA987;
+  }
+}
+
+.Btn {
+  margin: 2rem;
+}
+
+.Subtitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 42px;
+    height: 42px;
     margin: 1rem;
-    &:hover{
-        color: darkcyan;
-    }
+  }
 }
 
-.Btn{
-    margin: 2rem;
+.ProjectName {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 1rem;
+  }
+  .ProjectText {
+    margin-top: 10px;
+  }
+}
+
+.ProjectTextAlignment {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.ProjectTextAlignmentSub1 {
+  margin-right: 7rem;
+}
+
+.PlusSign {
+  @include icons;
+  // width: 42px;
+  // height: 42px;
+  // margin: 1rem;
+  // &:hover {
+  //   cursor: pointer;
+  //   filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg) brightness(103%) contrast(103%);
+  // }
+}
+
+@media screen and (max-width: 575px) {
+   .Projects{
+       display: flex;
+       flex-direction: column;
+       justify-items: center;
+       
+   }
+  }
+  
+  @media screen and (min-width: 576px) and (max-width: 768px) {
+   
+  }
+  
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+  
 }

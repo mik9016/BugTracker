@@ -3,11 +3,15 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import StatCard from "../../components/StatCard/StatCard";
 import classes from "../Dashboard/Dashboard.module.scss";
-import { Container, Row, Button, Form } from "react-bootstrap";
+import { Container, Row, Button, Form, Col } from "react-bootstrap";
 import IssueTable from "../../components/IssueTable/IssueTable";
 import DashboardNav from "../../components/DashboardNav/DashboardNav";
 import { DbContext } from "../../contexts/DbContext";
 import SortDropdown from "../../components/SortDropdown/SortDropdown";
+import back from "../../assets/back.svg";
+import plus from "../../assets/plus.svg";
+import team from "../../assets/team.svg";
+import bug from "../../assets/bug.png";
 
 export default function Dashboard() {
   const history = useHistory();
@@ -84,67 +88,65 @@ export default function Dashboard() {
 
   return (
     <div className={classes.Dashboard}>
-      <Router>
-        {/* <NavigationBar /> */}
-        <Button
-          as={Link}
-          to="/createIssue"
-          variant="outline-success"
-          className="m-2  w-25"
-          onClick={(e) => {
-            e.preventDefault();
-            history.push("/projects");
-          }}
-        >
-          back to projects
-        </Button>
-
-        <Button
-          as={Link}
-          to="/createIssue"
-          variant="outline-success"
-          className="m-2  w-25"
-          onClick={(e) => {
-            e.preventDefault();
-            history.push("/createIssue");
-          }}
-        >
-          Create Issue
-        </Button>
-
-        <Button
-          className={classes.Btn}
-          variant="outline-success"
-          onClick={() => {
-            history.push("/manageteam");
-          }}
-        >
-          Team
-        </Button>
-        <h2
-          className={classes.ProjectTitle}
-          onClick={() => {
-            setPickedProject(currentProject);
-            history.push("/projectSettings");
-          }}
-        >
-          {currentProject}
-        </h2>
+      <Container>
         <Container>
-          <Form.Group>
-            <Form.Control
-              className={classes.SortDropdown}
-              as="select"
-              onChange={(e) => {
-                setTicketValue(e.target.value);
-              }}
-            >
-              <option>pending</option>
-              <option>open</option>
-              <option>done</option>
-            </Form.Control>
-          </Form.Group>
+          <Row>
+            <Col>
+              <Row className={classes.Back}>
+                <img
+                  src={back}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push("/projects");
+                  }}
+                />
+              </Row>
+            </Col>
+
+            <Col>
+              <Row className={classes.Title}>
+                <h2
+                  className={classes.ProjectTitle}
+                  onClick={() => {
+                    setPickedProject(currentProject);
+                    history.push("/projectSettings");
+                  }}
+                >
+                  {currentProject}
+                </h2>
+              </Row>
+            </Col>
+
+            <Col>
+              <Row className={classes.Utils}>
+                <div>
+                  <img
+                    src={plus}
+                    className={classes.PlusSign}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      history.push("/createIssue");
+                    }}
+                  />
+                  <h5> Create Issue</h5>
+                </div>
+
+                <div>
+                  <img
+                    src={team}
+                    onClick={() => {
+                      history.push("/manageteam");
+                    }}
+                  />
+                  <h5>Team</h5>
+                </div>
+              </Row>
+            </Col>
+          </Row>
         </Container>
+
+        <hr />
+
         <Container>
           <Container className={classes.StatCard}>
             <Row className="offset-0">
@@ -152,22 +154,46 @@ export default function Dashboard() {
                 styleType={classes.StyleTypeOpen}
                 title="Done"
                 text={doneNum}
+                icon={bug}
+                iconClass={classes.Icon}
               />
               <StatCard
                 styleType={classes.StyleTypeClosed}
                 title="Open"
                 text={openNum}
+                icon={bug}
+                iconClass={classes.Icon}
               />
               <StatCard
                 styleType={classes.StyleTypeToDo}
                 title="Pending"
                 text={pendingNum}
+                icon={bug}
+                iconClass={classes.Icon}
               />
             </Row>
           </Container>
+          <Container className={classes.Dropdown}>
+            <Form.Group>
+              <Row>
+                <Form.Label as="h4">Sort Tickets:</Form.Label>
+                <Form.Control
+                  className={classes.SortDropdown}
+                  as="select"
+                  onChange={(e) => {
+                    setTicketValue(e.target.value);
+                  }}
+                >
+                  <option>pending</option>
+                  <option>open</option>
+                  <option>done</option>
+                </Form.Control>
+              </Row>
+            </Form.Group>
+          </Container>
           <IssueTable history={() => pushHistory()} status={ticketValue} />
         </Container>
-      </Router>
+      </Container>
     </div>
   );
 }

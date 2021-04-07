@@ -19,6 +19,9 @@ import { useHistory } from "react-router-dom";
 import { TeamContext } from "../../contexts/TeamContext";
 import useGetLoggedUser from "../../Hooks/useGetLoggedUser";
 import useGetUsers from "../../Hooks/useGetUsers";
+import back from "../../assets/back.svg";
+import file from "../../assets/file.svg";
+import add from "../../assets/add.svg";
 
 export default function CreateProject() {
   const history = useHistory();
@@ -38,16 +41,31 @@ export default function CreateProject() {
   const loggedUser = useGetLoggedUser();
   const Users = useGetUsers();
 
-
   return (
     <div className={classes.CreateProject}>
       <Container>
-        <Card>
-          <Card.Title as="h1">Create Your Project</Card.Title>
-          <Form>
-            <FormGroup>
-              <FormLabel>Name of your Project:</FormLabel>
+        <Row>
+          <img
+            className={classes.Image}
+            src={back}
+            onClick={() => {
+              history.push("/projects");
+            }}
+          />
+        </Row>
+        <Container>
+          <img src={file} />
+          <h2>Create Your Project</h2>
+        </Container>
+      </Container>
+      <Container className={classes.Form}>
+        <Card className={classes.Card}>
+          {/* <Card.Title as="h1">Create Your Project</Card.Title> */}
+          <Form >
+            <FormGroup className={classes.FormGr} >
+              <FormLabel className="m-4">Name of your Project:</FormLabel>
               <FormControl
+                className=" w-75"
                 type="text"
                 ref={name}
                 placeholder="project name"
@@ -55,10 +73,11 @@ export default function CreateProject() {
                   setProjectName(e.target.value);
                 }}
               />
-            </FormGroup>
-            <Form.Group>
-              <FormLabel>Your Role:</FormLabel>
+            </FormGroup >
+            <Form.Group  className={classes.FormGr}>
+              <FormLabel className="m-2">Your Role:</FormLabel>
               <Form.Control
+                className="w-75"
                 as="select"
                 ref={role}
                 onChange={(e) => {
@@ -70,7 +89,28 @@ export default function CreateProject() {
                 <option>Developer</option>
               </Form.Control>
             </Form.Group>
-            <Button
+            <img src={add} 
+            className={classes.Image}
+            type="submit"
+           
+            onClick={(e) => {
+              e.preventDefault();
+              CreateNewProject(projectName, projectRole);
+              setTeamData(
+                projectName,
+                "memberUid",
+                loggedUser.email,
+                projectRole,
+                "memberName"
+              );
+              clearInput(name);
+              clearInput(role);
+
+              history.push("/projects");
+            }}
+          
+            />
+            {/* <Button
               className="m-2"
               type="submit"
               variant="success"
@@ -86,12 +126,12 @@ export default function CreateProject() {
                 );
                 clearInput(name);
                 clearInput(role);
-               
+
                 history.push("/projects");
               }}
             >
               Create
-            </Button>
+            </Button> */}
           </Form>
         </Card>
       </Container>

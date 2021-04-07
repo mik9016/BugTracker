@@ -1,10 +1,32 @@
 .Pic {
   height: 32px;
   width: 32px;
+  margin-left: 58vw;
+  margin-right: 1rem;
+  margin-top: 4px;
+  
+}
+.LogOutBtn {
+  margin-left: 8px;
 }
 
-.LogOutBtn {
+.LoggedAs {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  margin-right: 1rem;
+  align-items: center;
 }
+
+.Links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.LogoutBtn{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+
+

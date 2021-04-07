@@ -1,33 +1,78 @@
-.Dashboard{
-    
+@import "../../styles/util.scss";
+
+.Dashboard {
+  height: 90vh;
+  img {
+    @include icons;
+  }
 }
 
-.StatCard{
+.Img {
+  @include smallIcons;
+}
+
+.Back {
+  float: left;
+}
+
+.Utils {
+  float: right;
+}
+
+.PlusSign {
+  @include smallIcons;
+}
+
+.Title {
+  margin-top: 16px;
+    text-align: center;
+    margin-left: 16px;
+
+}
+
+.StatCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem;
+  margin-bottom: 3rem;
+}
+
+.StyleTypeOpen {
+  color: green;
+  font-size: 20px;
+  img{
+      &:hover{
+         color: none;
+      }
+  }
+}
+
+.StyleTypeClosed {
+  color: black;
+  font-size: 20px;
+}
+.StyleTypeToDo {
+  color: red;
+  font-size: 20px;
+}
+.Icon{
+    width: 24px;
+    height: 24px;
+}
+.ProjectTitle {
+
+    margin-left: 60px;
+  cursor: pointer;
+  @include hoverColor;
+}
+.Dropdown{
     display: flex;
+    flex-direction: column;
+    justify-items: center;
     align-items: center;
-    justify-content: center;
-    
-    margin: 1rem;
-
 }
-
-.StyleTypeOpen{
-    color: green;
-}
-
-.StyleTypeClosed{
-    color: black;
-}
-.StyleTypeToDo{
-    color: red;
-}
-.ProjectTitle{
-    cursor: pointer;
-    &:hover{
-        color: mediumaquamarine;
-    }
-}
-
-.Btn{
-    margin: 1rem;
+.SortDropdown{
+    margin-left: 3rem;
+    width: 14vw;
 }
