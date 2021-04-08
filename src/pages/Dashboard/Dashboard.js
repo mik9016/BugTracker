@@ -3,7 +3,14 @@ import NavigationBar from "../../components/NavigationBar/NavigationBar";
 import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import StatCard from "../../components/StatCard/StatCard";
 import classes from "../Dashboard/Dashboard.module.scss";
-import { Container, Row, Button, Form, Col } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Button,
+  Form,
+  Col,
+  FormControl,
+} from "react-bootstrap";
 import IssueTable from "../../components/IssueTable/IssueTable";
 import DashboardNav from "../../components/DashboardNav/DashboardNav";
 import { DbContext } from "../../contexts/DbContext";
@@ -67,6 +74,20 @@ export default function Dashboard() {
     });
     return filteredIssues;
   }
+
+  // function filterIssuesByLetters(arr, string) {
+  //   let filteredIssuesByLetter = [];
+  //   if (string !== 0) {
+  //     arr.map((issueName) => {
+  //       if (issueName.issueName.toLowerCase().includes(string)) {
+  //         filteredIssuesByLetter.push(issueName);
+  //       }
+  //     });
+  //   };
+
+  //   console.log(filteredIssuesByLetter);
+  //   return filteredIssuesByLetter;
+  // }
 
   useEffect(() => {
     getIssues(setIssues);
@@ -173,21 +194,38 @@ export default function Dashboard() {
               />
             </Row>
           </Container>
-          <Container className={classes.Dropdown}>
+          <Container>
             <Form.Group>
               <Row>
-                <Form.Label as="h4">Sort Tickets:</Form.Label>
-                <Form.Control
-                  className={classes.SortDropdown}
-                  as="select"
-                  onChange={(e) => {
-                    setTicketValue(e.target.value);
-                  }}
-                >
-                  <option>pending</option>
-                  <option>open</option>
-                  <option>done</option>
-                </Form.Control>
+                <Col>
+                  <Form.Label as="h4">Sort Tickets:</Form.Label>
+                </Col>
+                <Col>
+                  <Row>
+                    <Form.Control
+                      className='w-50 ml-4'
+                      type="text"
+                      placeholder="Search..."
+                      onChange={(e) => {
+                        // filterIssuesByLetters(
+                        //   filterProjectIssues(issues),
+                        //   e.target.value
+                        // );
+                      }}
+                    />
+                    <Form.Control
+                      className='w-25 ml-4'
+                      as="select"
+                      onChange={(e) => {
+                        setTicketValue(e.target.value);
+                      }}
+                    >
+                      <option>pending</option>
+                      <option>open</option>
+                      <option>done</option>
+                    </Form.Control>
+                  </Row>
+                </Col>
               </Row>
             </Form.Group>
           </Container>

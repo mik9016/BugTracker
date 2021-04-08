@@ -1,12 +1,40 @@
+@import '../../styles/util.scss';
+
 .Profile{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10vh;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // margin-top: 10vh;
     
+}
+.UploadIcon{
+    @include icons;
+    margin-left: 40px;
+}
+.Upload{
+    display: none;
+}
+
+.BackIcon{
+   @include iconBug;
 }
 
 .Pic{
-    height: 250px;
-    width: 250px;
+    height: 128px;
+    width: 128px;
+}
+
+.CardContainer{
+   @include centerCard(1vh);
+}
+
+.Form{
+    @include formGr;
+}
+.Card{
+    @include card(40vw,78vh);
+}
+
+.Input{
+    width: 30vw;
 }

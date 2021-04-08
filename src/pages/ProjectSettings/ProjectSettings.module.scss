@@ -1,4 +1,28 @@
-.ProjectSettings{
-    text-align: center;
-    color: deepskyblue;
+@import "../../styles/util.scss";
+.ProjectSettings {
+  text-align: center;
+}
+
+.BackIcon {
+  @include icons;
+}
+.Card {
+  @include card;
+  box-shadow: $shadow;
+  height: 30vh;
+}
+.Form {
+  width: 40vw;
+}
+.FormGr {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.CardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5vh;
 }

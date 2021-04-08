@@ -3,14 +3,17 @@ import classes from "./ProjectSettings.module.scss";
 import {
   Container,
   Card,
-  Form,
   FormGroup,
   FormLabel,
   FormControl,
-  Button
+  Button,
+  Row,
+  Col,
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
+import back from "../../assets/back.svg";
+import project from "../../assets/subtitle1.svg";
 
 export default function ProjectSettings() {
   const history = useHistory();
@@ -42,28 +45,45 @@ export default function ProjectSettings() {
 
   return (
     <div className={classes.ProjectSettings}>
-      <h1>ProjectSettings</h1>
       <Container>
-        <Button className='m-2' variant='outline-success' onClick={()=>{history.push('/dashboard')}}>Back</Button>
-        <Card>
-          <FormGroup>
-            <FormLabel>Project Title</FormLabel>
-            <FormControl
-              type="text"
-              value={pickedProject}
-              onChange={(e) => {
-                setPickedProject(e.target.value);
-              }}
-            />
-            <Button
-              onClick={() => {
-                changeProjectTitle(pickedProjectId,pickedProject);
-              }}
-            >
-              Save
-            </Button>
-          </FormGroup>
-        </Card>
+        <Row>
+          <img
+            src={back}
+            className={classes.BackIcon}
+            onClick={() => {
+              history.push("/dashboard");
+            }}
+          />
+        </Row>
+        <Container>
+          <img src={project} className={classes.BackIcon} />
+          <h2>ProjectSettings</h2>
+        </Container>
+
+        <Container className={classes.CardContainer}>
+          <Card className={classes.Card}>
+            <FormGroup className={classes.FormGr}>
+              <Card.Title className="mt-4">Project Title</Card.Title>
+              <FormControl
+                className="mt-4 text-center w-75"
+                type="text"
+                value={pickedProject}
+                onChange={(e) => {
+                  setPickedProject(e.target.value);
+                }}
+              />
+              <Button
+                className="mt-4 "
+                variant="outline-success"
+                onClick={() => {
+                  changeProjectTitle(pickedProjectId, pickedProject);
+                }}
+              >
+                Save
+              </Button>
+            </FormGroup>
+          </Card>
+        </Container>
       </Container>
     </div>
   );

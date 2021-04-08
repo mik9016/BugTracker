@@ -1,3 +1,19 @@
+@import '../../styles/util.scss';
 .CreateIssue{
-   margin: 2rem;
+}
+.BackIcon {
+   @include icons;
+ }
+
+ .BugIcon{
+   @include iconBug;
+ }
+
+
+.CardContainer{
+   @include centerCard(3vh);
+}
+
+.Card{
+   @include card(46vw,64vh);
 }

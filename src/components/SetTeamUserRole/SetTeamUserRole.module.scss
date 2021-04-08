@@ -1,11 +1,15 @@
-.SetTeamUserRole{
-    color: black;
-   
-};
+@import "../../styles/util.scss";
 
-.Title{
-    &:hover{
-        cursor: pointer;
-        color: cadetblue;
-    }
+.SetTeamUserRole {
+  color: black;
+}
+
+.Title {
+  margin-top: 1rem;
+}
+
+.Card {
+  @include card;
+  box-shadow: $shadow;
+  height: 30vh;
 }

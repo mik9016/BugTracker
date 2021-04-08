@@ -25,9 +25,8 @@
 
 .Title {
   margin-top: 16px;
-    text-align: center;
-    margin-left: 16px;
-
+  text-align: center;
+  margin-left: 16px;
 }
 
 .StatCard {
@@ -41,10 +40,11 @@
 .StyleTypeOpen {
   color: green;
   font-size: 20px;
-  img{
-      &:hover{
-         color: none;
-      }
+  img {
+    // &:hover {
+    //   color: none;
+    // }
+    @include iconBug;
   }
 }
 
@@ -56,23 +56,25 @@
   color: red;
   font-size: 20px;
 }
-.Icon{
-    width: 24px;
-    height: 24px;
+.Icon {
+  width: 24px;
+  height: 24px;
 }
 .ProjectTitle {
-
-    margin-left: 60px;
+  margin-left: 60px;
   cursor: pointer;
   @include hoverColor;
 }
-.Dropdown{
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
+.Dropdown {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
-.SortDropdown{
-    margin-left: 3rem;
-    width: 14vw;
+.SortDropdown {
+  margin-left: 3rem;
+  width: 14vw;
+}
+.Bars {
+  width: 200px;
 }

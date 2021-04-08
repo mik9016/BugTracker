@@ -54,7 +54,7 @@ export default function CreateProject() {
           />
         </Row>
         <Container>
-          <img src={file} />
+          <img src={file} className={classes.FileIcon}/>
           <h2>Create Your Project</h2>
         </Container>
       </Container>
@@ -89,31 +89,10 @@ export default function CreateProject() {
                 <option>Developer</option>
               </Form.Control>
             </Form.Group>
-            <img src={add} 
-            className={classes.Image}
-            type="submit"
-           
-            onClick={(e) => {
-              e.preventDefault();
-              CreateNewProject(projectName, projectRole);
-              setTeamData(
-                projectName,
-                "memberUid",
-                loggedUser.email,
-                projectRole,
-                "memberName"
-              );
-              clearInput(name);
-              clearInput(role);
-
-              history.push("/projects");
-            }}
-          
-            />
-            {/* <Button
-              className="m-2"
+            <Button
+              className="m-2 w-50"
               type="submit"
-              variant="success"
+              variant="outline-success"
               onClick={(e) => {
                 e.preventDefault();
                 CreateNewProject(projectName, projectRole);
@@ -131,7 +110,7 @@ export default function CreateProject() {
               }}
             >
               Create
-            </Button> */}
+            </Button>
           </Form>
         </Card>
       </Container>

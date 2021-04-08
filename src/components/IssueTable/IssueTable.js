@@ -57,7 +57,7 @@ export default function IssueTable(props) {
   return (
     <div className={classes.IssueTable}>
       <Container>
-        <Card className={classes.Card} >
+        <Card className={classes.Card}>
           <Table responsive bordered hover>
             <thead>
               <tr>

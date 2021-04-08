@@ -1,16 +1,22 @@
-// .IssueDetails {
-//   margin-top: 15vh;
-// }
+@import '../../styles/util.scss';
+.BackIcon{
+    @include icons;
+}
 
-// .TextArea {
-//   margin: 8px;
-//   width: 60%;
-// }
-// .Dropdown {
-//   margin: 8px;
-//   width: 60%;
-// }
-// .Text {
-//   margin: 8px;
-//   width: 60%;
-// }
+.InfoIcon{
+   @include iconBug;
+}
+.CardContainer{
+    @include centerCard(1vh);
+}
+.Card{
+   @include card(50vw,68vh);
+}
+.Form{
+    @include formGr;
+}
+.Input{
+    width: 30vw;
+}
+
+

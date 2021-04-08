@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Container, Card, Form, Button, FormControl } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Form,
+  Button,
+  FormControl,
+  Table,
+} from "react-bootstrap";
 import classes from "./SetTeamUserRole.module.scss";
 import useGetTeamData from "../../Hooks/useGetTeamData";
 import { DbContext } from "../../contexts/DbContext";
@@ -43,7 +50,7 @@ export default function SetTeamUserRole() {
   return (
     <div className={classes.SetTeamUserRole}>
       <Container>
-        <Card>
+        <Card className={classes.Card}>
           <Card.Title
             className={classes.Title}
             onClick={() => {
@@ -53,15 +60,25 @@ export default function SetTeamUserRole() {
             Team Members:
           </Card.Title>
           <Card.Body>
-            {teamMembers.map((member, index) => {
-              if (member.project === currentProject)
-                return (
-                  <p key={index}>
-                    {" "}
-                    {member.memberEmail} - {member.memberRole}
-                  </p>
-                );
-            })}
+            <Table>
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              {teamMembers.map((member, index) => {
+                if (member.project === currentProject)
+                  return (
+                    <tbody>
+                      <tr>
+                        <td key={index}>{member.memberEmail}</td>
+                        <td>{member.memberRole}</td>
+                      </tr>
+                    </tbody>
+                  );
+              })}
+            </Table>
           </Card.Body>
         </Card>
       </Container>

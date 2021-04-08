@@ -1,0 +1,20 @@
+@import "../../styles/util.scss";
+
+.BackIcon {
+  @include icons;
+}
+
+.UserIcon {
+  @include iconBug;
+}
+
+.CardContainer {
+  @include centerCard;
+}
+.CardBody {
+  margin: 0;
+}
+
+.Card {
+  @include card(40vw, 30vh);
+}

@@ -1,3 +1,15 @@
+@import '../../styles/util.scss';
 .ManageTeam{
-    color: blueviolet;
+   
+}
+
+.BackIcon {
+    @include icons;
+  }
+
+.Card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
 }

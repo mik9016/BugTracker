@@ -14,6 +14,9 @@ import { TeamContext } from "../../contexts/TeamContext";
 import { DbContext } from "../../contexts/DbContext";
 import useGetUsers from "../../Hooks/useGetUsers";
 import { UtilContext } from "../../contexts/UtilitiesContext";
+import classes from "./AddMember.module.scss";
+import back from "../../assets/back.svg";
+import user from "../../assets/user.svg";
 
 export default function AddMember() {
   const history = useHistory();
@@ -56,30 +59,35 @@ export default function AddMember() {
 
   return (
     <div>
-      <h1>Add Member</h1>
-      <Button
-        variant="outline-success"
-        className="m-2  w-25"
-        onClick={(e) => {
-          e.preventDefault();
-          history.push("/manageteam");
-        }}
-      >
-        back
-      </Button>
       <Container>
-        <Card>
-          <Card.Title>Manage team Member</Card.Title>
-          <Card.Body>
-            <p>
-              To add new member, add his/her email adress. <br />
-              Note that he/she needs to be registered to be part of the team
-            </p>
-          </Card.Body>
-          <FormGroup>
+        <Row>
+          <img
+            className={classes.BackIcon}
+            src={back}
+            onClick={(e) => {
+              e.preventDefault();
+              history.push("/manageteam");
+            }}
+          />
+        </Row>
+        <Container>
+          <img src={user} className={classes.UserIcon} />
+          <h2>Add Member</h2>
+        </Container>
+
+        <Container className={classes.CardContainer}>
+          <Card className={classes.Card}>
+            <Card.Title className="mt-4">Manage team Member</Card.Title>
+            <Card.Body className={classes.CardBody}>
+              <p>
+                To add new member, add his/her email adress. <br />
+                Note that he/she needs to be registered to be part of the team
+              </p>
+            </Card.Body>
+
             <Row className="m-4 ">
               <FormControl
-                className="w-75 m-2"
+                className="w-50 m-2"
                 type="text"
                 placeholder="email of new member"
                 ref={mailRef}
@@ -87,7 +95,7 @@ export default function AddMember() {
               />
               <Button
                 className="m-2"
-                variant="success"
+                variant="outline-success"
                 onClick={() => {
                   users.map((user) => {
                     if (user.userEmail === newMember) {
@@ -106,12 +114,12 @@ export default function AddMember() {
               >
                 Add
               </Button>
-              <Button className="m-2" variant="danger">
+              <Button className="m-2" variant="outline-danger">
                 Remove
               </Button>
             </Row>
-          </FormGroup>
-        </Card>
+          </Card>
+        </Container>
       </Container>
     </div>
   );
