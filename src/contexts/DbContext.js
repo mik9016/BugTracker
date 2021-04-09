@@ -159,7 +159,19 @@ export const DbContextProvider = (props) => {
     });
   };
   //DELETE
+  const deleteProjectTitle = (id) => {
+    const project = fire.database().ref("Projects").child(id);
 
+    project.remove();
+  };
+
+  const deleteIssue = (id) => {
+    const issue = fire.database().ref("Issues").child(id);
+
+    issue.remove();
+  };
+
+ 
 
   //SET USER
   const setUserInDB = async (userMail, userName) => {
@@ -245,7 +257,9 @@ export const DbContextProvider = (props) => {
         updateUserProjects,
         pickedIssueWorker, 
         setPickedIssueWorker,
-        changeIssueWorker
+        changeIssueWorker,
+        deleteProjectTitle,
+        deleteIssue
       ]}
     >
       {props.children}

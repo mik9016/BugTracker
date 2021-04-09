@@ -13,3 +13,15 @@
   box-shadow: $shadow;
   height: 30vh;
 }
+
+.MemberName{
+  color: blue;
+  text-decoration: blue;
+  cursor: pointer;
+  &:hover{
+    color: deepskyblue;
+  }
+
+ 
+  
+}

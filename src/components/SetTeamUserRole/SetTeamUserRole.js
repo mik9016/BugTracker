@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Container,
   Card,
@@ -10,8 +10,11 @@ import {
 import classes from "./SetTeamUserRole.module.scss";
 import useGetTeamData from "../../Hooks/useGetTeamData";
 import { DbContext } from "../../contexts/DbContext";
+import { TeamContext } from "../../contexts/TeamContext";
+import { useHistory } from "react-router-dom";
 
-export default function SetTeamUserRole() {
+export default function SetTeamUserRole(props) {
+  const history = useHistory();
   const [showMembers, setShowMembers] = useState(false);
 
   const teamMembers = useGetTeamData();
@@ -46,6 +49,15 @@ export default function SetTeamUserRole() {
     updateUserProjects,
   ] = useContext(DbContext);
   console.log(teamMembers);
+  const [
+    setTeamData,
+    getTeamData,
+    deleteTeamMember,
+    memberMail,
+    setMemberMail,
+    memberId,
+    setMemberId,
+  ] = useContext(TeamContext);
 
   return (
     <div className={classes.SetTeamUserRole}>
@@ -70,9 +82,18 @@ export default function SetTeamUserRole() {
               {teamMembers.map((member, index) => {
                 if (member.project === currentProject)
                   return (
-                    <tbody>
+                    <tbody key={index}>
                       <tr>
-                        <td key={index}>{member.memberEmail}</td>
+                        <td
+                          onClick={() => {
+                            history.push("/memberDetails");
+                            setMemberMail(member.memberEmail);
+                            setMemberId(member.id);
+                          }}
+                          className={classes.MemberName}
+                        >
+                          {member.memberEmail}
+                        </td>
                         <td>{member.memberRole}</td>
                       </tr>
                     </tbody>

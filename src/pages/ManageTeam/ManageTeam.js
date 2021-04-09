@@ -1,13 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Container, Card, Row, Col } from "react-bootstrap";
+import { Container,  Row } from "react-bootstrap";
 import classes from "./ManageTeam.module.scss";
 import SetTeamsUserRole from "../../components/SetTeamUserRole/SetTeamUserRole";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import back from "../../assets/back.svg";
 import add from "../../assets/add.svg";
 
+
 export default function ManageTeam() {
   const history = useHistory();
+  
   return (
     <div className={classes.ManageTeam}>
       <Container>

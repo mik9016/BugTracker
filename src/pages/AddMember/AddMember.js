@@ -8,6 +8,7 @@ import {
   Row,
   FormGroup,
   Col,
+  Alert,
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { TeamContext } from "../../contexts/TeamContext";
@@ -56,6 +57,7 @@ export default function AddMember() {
     updateUserProjects,
   ] = useContext(DbContext);
   const users = useGetUsers();
+  const [err, setError] = useState("");
 
   return (
     <div>
@@ -86,36 +88,41 @@ export default function AddMember() {
             </Card.Body>
 
             <Row className="m-4 ">
+              {err}
               <FormControl
                 className="w-50 m-2"
-                type="text"
+                type="email"
                 placeholder="email of new member"
                 ref={mailRef}
                 onChange={(e) => setNewMember(e.target.value)}
               />
+
               <Button
                 className="m-2"
                 variant="outline-success"
                 onClick={() => {
-                  users.map((user) => {
-                    if (user.userEmail === newMember) {
-                      setTeamData(
-                        currentProject,
-                        "memberUid",
-                        newMember,
-                        "Developer",
-                        "memberName"
-                      );
-                    }
-                  });
-                  alert("User added!");
-                  clearInput(mailRef);
+                  if (mailRef.current.value.length > 3) {
+                    users.map((user) => {
+                      if (user.userEmail === newMember) {
+                        setTeamData(
+                          currentProject,
+                          "memberUid",
+                          newMember,
+                          "Developer",
+                          "memberName"
+                        );
+                      }
+                    });
+                    alert("User added!");
+                    clearInput(mailRef);
+                  } else {
+                    return setError(
+                      <Alert variant="danger">email adress to short</Alert>
+                    );
+                  }
                 }}
               >
                 Add
-              </Button>
-              <Button className="m-2" variant="outline-danger">
-                Remove
               </Button>
             </Row>
           </Card>

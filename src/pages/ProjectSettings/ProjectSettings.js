@@ -41,6 +41,15 @@ export default function ProjectSettings() {
     setPickedProject,
     pickedProjectId,
     setPickedProjectId,
+    setUserInDB,
+    getUsersListFromDB,
+    updateUsersRole,
+    updateUserProjects,
+    pickedIssueWorker,
+    setPickedIssueWorker,
+    changeIssueWorker,
+    deleteProjectTitle,
+    deleteIssue
   ] = useContext(DbContext);
 
   return (
@@ -72,15 +81,27 @@ export default function ProjectSettings() {
                   setPickedProject(e.target.value);
                 }}
               />
-              <Button
-                className="mt-4 "
-                variant="outline-success"
-                onClick={() => {
-                  changeProjectTitle(pickedProjectId, pickedProject);
-                }}
-              >
-                Save
-              </Button>
+              <Row>
+                <Button
+                  className="mt-4 "
+                  variant="outline-success"
+                  onClick={() => {
+                    changeProjectTitle(pickedProjectId, pickedProject);
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  className="mt-4 ml-4 "
+                  variant="outline-danger"
+                  onClick={() => {
+                    deleteProjectTitle(pickedProjectId, pickedProject);
+                    history.push('/projects');
+                  }}
+                >
+                  Delete
+                </Button>
+              </Row>
             </FormGroup>
           </Card>
         </Container>

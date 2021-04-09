@@ -64,6 +64,7 @@ export default function Dashboard() {
   const [pendingNum, setPendingNum] = useState(0);
   const [openNum, setOpenNum] = useState(0);
   const [doneNum, setDoneNum] = useState(0);
+  const [filteredByWord, setFilteredByWord] = useState([]);
 
   function filterProjectIssues(arr) {
     let filteredIssues = [];
@@ -75,19 +76,22 @@ export default function Dashboard() {
     return filteredIssues;
   }
 
-  // function filterIssuesByLetters(arr, string) {
-  //   let filteredIssuesByLetter = [];
-  //   if (string !== 0) {
-  //     arr.map((issueName) => {
-  //       if (issueName.issueName.toLowerCase().includes(string)) {
-  //         filteredIssuesByLetter.push(issueName);
-  //       }
-  //     });
-  //   };
+  function filterIssuesByLetters(arr, string) {
+    let filteredIssuesByLetter = [];
+    if (string.length !== 0) {
+      arr.map((issueName) => {
+        if (
+          issueName.issueName.toLowerCase().includes(string) &&
+          issueName.status === ticketValue
+        ) {
+          filteredIssuesByLetter.push(issueName);
+        }
+      });
+    }
 
-  //   console.log(filteredIssuesByLetter);
-  //   return filteredIssuesByLetter;
-  // }
+    console.log(filteredIssuesByLetter);
+    return filteredIssuesByLetter;
+  }
 
   useEffect(() => {
     getIssues(setIssues);
@@ -107,6 +111,10 @@ export default function Dashboard() {
     };
   }, [issues]);
 
+ const FilteredIssueNames = filteredByWord.map((x)=>{
+   return(x.issueName) 
+  });
+  console.log(FilteredIssueNames);
   return (
     <div className={classes.Dashboard}>
       <Container>
@@ -203,18 +211,20 @@ export default function Dashboard() {
                 <Col>
                   <Row>
                     <Form.Control
-                      className='w-50 ml-4'
+                      className="w-50 ml-4"
                       type="text"
                       placeholder="Search..."
                       onChange={(e) => {
-                        // filterIssuesByLetters(
-                        //   filterProjectIssues(issues),
-                        //   e.target.value
-                        // );
+                        setFilteredByWord(
+                          filterIssuesByLetters(
+                            filterProjectIssues(issues),
+                            e.target.value
+                          )
+                        );
                       }}
                     />
                     <Form.Control
-                      className='w-25 ml-4'
+                      className="w-25 ml-4"
                       as="select"
                       onChange={(e) => {
                         setTicketValue(e.target.value);
@@ -229,7 +239,11 @@ export default function Dashboard() {
               </Row>
             </Form.Group>
           </Container>
-          <IssueTable history={() => pushHistory()} status={ticketValue} />
+          <IssueTable
+            history={() => pushHistory()}
+            status={ticketValue}
+            filter={FilteredIssueNames}
+          />
         </Container>
       </Container>
     </div>

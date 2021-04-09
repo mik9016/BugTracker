@@ -49,6 +49,8 @@ export default function IssueDetails(props) {
     pickedIssueWorker,
     setPickedIssueWorker,
     changeIssueWorker,
+    deleteProjectTitle,
+    deleteIssue,
   ] = useContext(DbContext);
   const teamMembers = useGetTeamData();
 
@@ -73,7 +75,7 @@ export default function IssueDetails(props) {
               {pickedIssueTitle}
             </Card.Title>
             <Form className={classes.Form}>
-              <Form.Group >
+              <Form.Group>
                 <FormLabel>Title</FormLabel>
                 <FormControl
                   className={classes.Input}
@@ -89,7 +91,7 @@ export default function IssueDetails(props) {
                 <FormControl
                   className={classes.Input}
                   as="textarea"
-                  rows={3} 
+                  rows={3}
                   value={pickedIssue}
                   onChange={(e) => {
                     setPickedIssue(e.target.value);
@@ -128,19 +130,31 @@ export default function IssueDetails(props) {
                     }
                   })}
                 </FormControl>
-                <Button
-                  className="mt-4 w-50"
-                  variant="outline-success"
-                  onClick={() => {
-                    changeIssueStatus(pickedIssueId, pickedIssueStatus);
-                    changeIssueDescription(pickedIssueId, pickedIssue);
-                    changeIssueTitle(pickedIssueId, pickedIssueTitle);
-                    changeIssueWorker(pickedIssueId, pickedIssueWorker);
-                    history.push("/dashboard");
-                  }}
-                >
-                  Save
-                </Button>
+                <Row className={classes.Btn}>
+                  <Button
+                    className="mt-4 w-25"
+                    variant="outline-success"
+                    onClick={() => {
+                      changeIssueStatus(pickedIssueId, pickedIssueStatus);
+                      changeIssueDescription(pickedIssueId, pickedIssue);
+                      changeIssueTitle(pickedIssueId, pickedIssueTitle);
+                      changeIssueWorker(pickedIssueId, pickedIssueWorker);
+                      history.push("/dashboard");
+                    }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    className="mt-4 ml-4 w-25"
+                    variant="outline-danger"
+                    onClick={() => {
+                      deleteIssue(pickedIssueId);
+                      history.push("/dashboard");
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Row>
               </Form.Group>
             </Form>
           </Card>

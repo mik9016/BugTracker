@@ -53,6 +53,9 @@ export default function IssueTable(props) {
       getIssues(setIssues);
     };
   }, []);
+// ARRAY OF FILTERED ISSUE NAME FROM SEARCHFILED IN DASHBOARD COMPONENT
+  const filteredProps = props.filter;
+  // console.log(filteredProps)
 
   return (
     <div className={classes.IssueTable}>
@@ -71,35 +74,39 @@ export default function IssueTable(props) {
               </tr>
             </thead>
             <tbody>
+             
               {issues.map((obj, index) => {
                 if (obj.project === currentProject) {
                   if (obj.status === props.status) {
-                    return (
-                      <tr
-                        onClick={() => {
-                          setPickedIssue(obj.issueDesc);
-                          setPickedIssueTitle(obj.issueName);
-                          setPickedIssueStatus(obj.status);
-                          setPickedIssueId(obj.id);
-                        }}
-                        className={classes.Issue}
-                        key={index}
-                      >
-                        <td>{obj.date}</td>
-                        <td>{obj.time}</td>
-                        <td
-                          onClick={props.history}
-                          className={classes.IssueName}
+                    //DISPLAY FILTERED BY LETTER ISSUES
+                    // if (obj.issueName === ) {
+                      return (
+                        <tr
+                          onClick={() => {
+                            setPickedIssue(obj.issueDesc);
+                            setPickedIssueTitle(obj.issueName);
+                            setPickedIssueStatus(obj.status);
+                            setPickedIssueId(obj.id);
+                          }}
+                          className={classes.Issue}
+                          key={index}
                         >
-                          {obj.issueName}
-                        </td>
+                          <td>{obj.date}</td>
+                          <td>{obj.time}</td>
+                          <td
+                            onClick={props.history}
+                            className={classes.IssueName}
+                          >
+                            {obj.issueName}
+                          </td>
 
-                        <td>{obj.status}</td>
+                          <td>{obj.status}</td>
 
-                        <td>{obj.creator}</td>
-                        <td>{obj.currentlyWorking}</td>
-                      </tr>
-                    );
+                          <td>{obj.creator}</td>
+                          <td>{obj.currentlyWorking}</td>
+                        </tr>
+                      );
+                    // }
                   }
                 }
                 return;

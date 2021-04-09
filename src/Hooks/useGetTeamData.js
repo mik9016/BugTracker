@@ -3,7 +3,7 @@ import { fire } from "../Firebase";
 
 function useGetTeamData() {
   const [data, setData] = useState([]);
-  const [teams, setTeams] = useState([]);
+  const [teamsy, setTeamsy] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -28,6 +28,7 @@ function useGetTeamData() {
 
     return () => {
       isMounted = false;
+      getTeamData();
     };
   }, []);
   // console.log(data);

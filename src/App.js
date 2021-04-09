@@ -23,6 +23,7 @@ import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 import Projects from "./pages/Projects/Projects";
 import ManageTeam from "./pages/ManageTeam/ManageTeam";
 import AddMember from "./pages/AddMember/AddMember";
+import MemberDetails from './pages/MemberDetails/MemberDetails';
 
 function App() {
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
@@ -89,6 +90,11 @@ function App() {
           <GuardedRoute
             path="/addmember"
             component={AddMember}
+            auth={isAuthorized}
+          />
+          <GuardedRoute
+            path="/memberDetails"
+            component={MemberDetails}
             auth={isAuthorized}
           />
         </Switch>

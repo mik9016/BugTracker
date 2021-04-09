@@ -1,9 +1,10 @@
-import React, { createContext } from "react";
+import React, { createContext ,useState} from "react";
 import { fire } from "../Firebase";
 
 export const TeamContext = createContext();
 
 export const TeamContextProvider = (props) => {
+
   const setTeamData = async (
     currentProject,
     memberUid,
@@ -41,8 +42,24 @@ export const TeamContextProvider = (props) => {
     console.log("data fetched Teams");
   };
 
+  const deleteTeamMember = (id) => {
+    const team = fire.database().ref("Teams").child(id);
+    team.remove();
+    console.log('member removed');
+  };
+
+  const [memberMail,setMemberMail] = useState('');
+  const [memberId,setMemberId] = useState('');
+
+  const metaObject = {
+      setTeamData: setTeamData,
+      getTeamData: getTeamData,
+      deleteTeamMember: deleteTeamMember,
+
+  };
+
   return (
-    <TeamContext.Provider value={[setTeamData, getTeamData]}>
+    <TeamContext.Provider value={[setTeamData, getTeamData,deleteTeamMember,memberMail,setMemberMail,memberId,setMemberId]}>
       {props.children}
     </TeamContext.Provider>
   );
