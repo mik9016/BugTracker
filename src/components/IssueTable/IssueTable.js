@@ -2,55 +2,18 @@ import React, { useState, useContext, useEffect } from "react";
 import classes from "../IssueTable/IssueTable.module.scss";
 import { Card, Table, Container, Button } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
-import { UtilContext } from "../../contexts/UtilitiesContext";
-import { Link, BrowserRouter as Router } from "react-router-dom";
+
 
 export default function IssueTable(props) {
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-    pickedIssueWorker,
-    setPickedIssueWorker,
-  ] = useContext(DbContext);
-  const [
-    clearInput,
-    checkLog,
-    setDateStamp,
-    setTimeStamp,
-    compareTimes,
-  ] = useContext(UtilContext);
+  const dbContextContent = useContext(DbContext);
+ 
 
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
-    getIssues(setIssues);
+    dbContextContent.getIssues(setIssues);
     return () => {
-      getIssues(setIssues);
+      dbContextContent.getIssues(setIssues);
     };
   }, []);
 // ARRAY OF FILTERED ISSUE NAME FROM SEARCHFILED IN DASHBOARD COMPONENT
@@ -76,17 +39,17 @@ export default function IssueTable(props) {
             <tbody>
              
               {issues.map((obj, index) => {
-                if (obj.project === currentProject) {
+                if (obj.project === dbContextContent.currentProject) {
                   if (obj.status === props.status) {
                     //DISPLAY FILTERED BY LETTER ISSUES
                     // if (obj.issueName === ) {
                       return (
                         <tr
                           onClick={() => {
-                            setPickedIssue(obj.issueDesc);
-                            setPickedIssueTitle(obj.issueName);
-                            setPickedIssueStatus(obj.status);
-                            setPickedIssueId(obj.id);
+                            dbContextContent.setPickedIssue(obj.issueDesc);
+                            dbContextContent.setPickedIssueTitle(obj.issueName);
+                            dbContextContent.setPickedIssueStatus(obj.status);
+                            dbContextContent.setPickedIssueId(obj.id);
                           }}
                           className={classes.Issue}
                           key={index}

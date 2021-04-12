@@ -11,46 +11,28 @@ import {
   Col,
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
+import { TeamContext } from "../../contexts/TeamContext";
+import { useGetIssues } from "../../Hooks/useGetIssues";
 import { useHistory } from "react-router-dom";
 import back from "../../assets/back.svg";
 import project from "../../assets/subtitle1.svg";
 
 export default function ProjectSettings() {
   const history = useHistory();
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-    pickedIssueWorker,
-    setPickedIssueWorker,
-    changeIssueWorker,
-    deleteProjectTitle,
-    deleteIssue
-  ] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
+  const teamContextContent = useContext(TeamContext);
+
+  const issuesFromHook = useGetIssues();
+
+  function updateProjectNameInAllIssues() {
+    issuesFromHook.map((issue) => {
+      if (issue.project === dbContextContent.currentProject)
+        dbContextContent.changeIssueProjectName(
+          issue.id,
+          dbContextContent.pickedProject
+        );
+    });
+  }
 
   return (
     <div className={classes.ProjectSettings}>
@@ -76,27 +58,39 @@ export default function ProjectSettings() {
               <FormControl
                 className="mt-4 text-center w-75"
                 type="text"
-                value={pickedProject}
+                disabled={!teamContextContent.loggedUserisManager}
+                value={dbContextContent.pickedProject}
                 onChange={(e) => {
-                  setPickedProject(e.target.value);
+                  dbContextContent.setPickedProject(e.target.value);
                 }}
               />
               <Row>
                 <Button
                   className="mt-4 "
                   variant="outline-success"
+                  disabled={!teamContextContent.loggedUserisManager}
                   onClick={() => {
-                    changeProjectTitle(pickedProjectId, pickedProject);
+                    dbContextContent.changeProjectTitle(
+                      dbContextContent.pickedProjectId,
+                      dbContextContent.pickedProject
+                    );
+                    updateProjectNameInAllIssues();
+                    alert("Project name changed");
+                    history.push("/projects");
                   }}
                 >
                   Save
                 </Button>
                 <Button
                   className="mt-4 ml-4 "
+                  disabled={!teamContextContent.loggedUserisManager}
                   variant="outline-danger"
                   onClick={() => {
-                    deleteProjectTitle(pickedProjectId, pickedProject);
-                    history.push('/projects');
+                    dbContextContent.deleteProjectTitle(
+                      dbContextContent.pickedProjectId,
+                      dbContextContent.pickedProject
+                    );
+                    history.push("/projects");
                   }}
                 >
                   Delete

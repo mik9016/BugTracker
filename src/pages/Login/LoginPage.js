@@ -20,7 +20,7 @@ export default function LoginPage() {
   const passwordRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [clearInput, checkLog] = useContext(UtilContext);
+  const metaObj = useContext(UtilContext);
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
   const history = useHistory();
 
@@ -56,8 +56,8 @@ export default function LoginPage() {
               type="submit"
               onClick={() => {
                 Login(email, password);
-                clearInput(emailRef);
-                clearInput(passwordRef);
+                metaObj.clearInput(emailRef);
+                metaObj.clearInput(passwordRef);
                 history.push("/projects");
               }}
             >

@@ -14,6 +14,7 @@ import {
 import IssueTable from "../../components/IssueTable/IssueTable";
 import DashboardNav from "../../components/DashboardNav/DashboardNav";
 import { DbContext } from "../../contexts/DbContext";
+import { TeamContext } from "../../contexts/TeamContext";
 import SortDropdown from "../../components/SortDropdown/SortDropdown";
 import back from "../../assets/back.svg";
 import plus from "../../assets/plus.svg";
@@ -26,37 +27,8 @@ export default function Dashboard() {
     history.push("/details");
   };
 
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-    pickedIssueWorker,
-    setPickedIssueWorker,
-  ] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
+  const teamContextContent = useContext(TeamContext);
 
   const [ticketValue, setTicketValue] = useState("pending");
   const [issues, setIssues] = useState([]);
@@ -66,10 +38,12 @@ export default function Dashboard() {
   const [doneNum, setDoneNum] = useState(0);
   const [filteredByWord, setFilteredByWord] = useState([]);
 
+ 
+
   function filterProjectIssues(arr) {
     let filteredIssues = [];
     arr.map((issue) => {
-      if (issue.project === currentProject) {
+      if (issue.project === dbContextContent.currentProject) {
         filteredIssues.push(issue);
       }
     });
@@ -94,20 +68,20 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    getIssues(setIssues);
+    dbContextContent.getIssues(setIssues);
     return () => {
-      getIssues(setIssues);
+      dbContextContent.getIssues(setIssues);
     };
   }, []);
 
   useEffect(() => {
-    statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
-    statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
-    statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
+    dbContextContent.statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
+    dbContextContent.statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
+    dbContextContent.statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
     return () => {
-      statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
-      statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
-      statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
+      dbContextContent.statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
+      dbContextContent.statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
+      dbContextContent.statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
     };
   }, [issues]);
 
@@ -126,6 +100,7 @@ export default function Dashboard() {
                   src={back}
                   onClick={(e) => {
                     e.preventDefault();
+                    teamContextContent.setLoggedUserisManager(false)
                     history.push("/projects");
                   }}
                 />
@@ -137,11 +112,11 @@ export default function Dashboard() {
                 <h2
                   className={classes.ProjectTitle}
                   onClick={() => {
-                    setPickedProject(currentProject);
+                    dbContextContent.setPickedProject(dbContextContent.currentProject);
                     history.push("/projectSettings");
                   }}
                 >
-                  {currentProject}
+                  {dbContextContent.currentProject}
                 </h2>
               </Row>
             </Col>

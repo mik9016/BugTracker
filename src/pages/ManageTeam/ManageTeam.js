@@ -1,15 +1,20 @@
-import React, { useContext, useState } from "react";
-import { Container,  Row } from "react-bootstrap";
+import React, { useContext } from "react";
+import { Container, Row } from "react-bootstrap";
 import classes from "./ManageTeam.module.scss";
 import SetTeamsUserRole from "../../components/SetTeamUserRole/SetTeamUserRole";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import back from "../../assets/back.svg";
 import add from "../../assets/add.svg";
-
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function ManageTeam() {
   const history = useHistory();
+
+
   
+
+
+
   return (
     <div className={classes.ManageTeam}>
       <Container>
@@ -23,7 +28,6 @@ export default function ManageTeam() {
             }}
           />
         </Row>
-
         <img
           className={classes.BackIcon}
           src={add}
@@ -32,9 +36,10 @@ export default function ManageTeam() {
             history.push("/addmember");
           }}
         />
-
         <h2>Manage Members</h2>
-        to add Member click on icon above
+        to add Member click on icon above.
+        <br />
+        Note that only managers can add and delete new member of the team.
         <Container className={classes.Card}>
           <SetTeamsUserRole />
         </Container>

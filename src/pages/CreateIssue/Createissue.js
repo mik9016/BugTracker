@@ -19,10 +19,10 @@ import back from "../../assets/back.svg";
 import bug from "../../assets/bug.png";
 
 export default function Createissue() {
-  const [CreateNewProject, CreateNewIssue, currentProject] = useContext(
+  const dbContextContent = useContext(
     DbContext
   );
-  const [clearInput, checkLog] = useContext(UtilContext);
+  const metaObj= useContext(UtilContext);
   const history = useHistory();
   const hardcodedUsers = {
     first: "MIk Gru",
@@ -111,7 +111,7 @@ export default function Createissue() {
                   >
                     <option>Choose...</option>
                     {teamMembers.map((member, index) => {
-                      if (member.project === currentProject) {
+                      if (member.project === dbContextContent.currentProject) {
                         return (
                           <option key={index}>{member.memberEmail}</option>
                         );
@@ -125,12 +125,12 @@ export default function Createissue() {
                   variant="outline-success"
                   onClick={(e) => {
                     e.preventDefault();
-                    CreateNewIssue(name, desc, creator, worker);
+                    dbContextContent.CreateNewIssue(name, desc, creator, worker);
                     console.log(name, desc, creator, worker);
-                    clearInput(issueName);
-                    clearInput(issueDesc);
-                    clearInput(issueCreator);
-                    clearInput(issueWorker);
+                    metaObj.clearInput(issueName);
+                    metaObj.clearInput(issueDesc);
+                    metaObj.clearInput(issueCreator);
+                    metaObj.clearInput(issueWorker);
                     history.push("/dashboard");
                   }}
                 >

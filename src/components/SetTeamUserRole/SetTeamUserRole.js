@@ -1,63 +1,34 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  Container,
-  Card,
-  Form,
-  Button,
-  FormControl,
-  Table,
-} from "react-bootstrap";
+import { Container, Card, Table, Button } from "react-bootstrap";
 import classes from "./SetTeamUserRole.module.scss";
 import useGetTeamData from "../../Hooks/useGetTeamData";
 import { DbContext } from "../../contexts/DbContext";
 import { TeamContext } from "../../contexts/TeamContext";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+
+import { fire } from "../../Firebase";
 
 export default function SetTeamUserRole(props) {
   const history = useHistory();
   const [showMembers, setShowMembers] = useState(false);
+  const [flag, setFlag] = useState(false);
+  const teamMembers = useGetTeamData(flag);
 
-  const teamMembers = useGetTeamData();
 
+  const dbContextContent = useContext(DbContext);
+  // console.log(teamMembers);
+  const teamContextContent = useContext(TeamContext);
   const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-  ] = useContext(DbContext);
-  console.log(teamMembers);
-  const [
-    setTeamData,
-    getTeamData,
-    deleteTeamMember,
-    memberMail,
-    setMemberMail,
-    memberId,
-    setMemberId,
-  ] = useContext(TeamContext);
+    isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,
+  ] = useContext(AuthContext);
 
   return (
     <div className={classes.SetTeamUserRole}>
@@ -77,24 +48,44 @@ export default function SetTeamUserRole(props) {
                 <tr>
                   <th>Member</th>
                   <th>Role</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               {teamMembers.map((member, index) => {
-                if (member.project === currentProject)
+                if (member.project === dbContextContent.currentProject)
                   return (
                     <tbody key={index}>
                       <tr>
                         <td
                           onClick={() => {
                             history.push("/memberDetails");
-                            setMemberMail(member.memberEmail);
-                            setMemberId(member.id);
+                            teamContextContent.setMemberMail(
+                              member.memberEmail
+                            );
+                            teamContextContent.setMemberId(member.id);
+                            teamContextContent.setMembersRole(
+                              member.memberRole
+                            );
                           }}
                           className={classes.MemberName}
                         >
                           {member.memberEmail}
                         </td>
                         <td>{member.memberRole}</td>
+
+                        <td>
+                          <Button
+                            variant="danger"
+                            disabled={!teamContextContent.loggedUserisManager}
+                            onClick={() => {
+                              teamContextContent.deleteTeamMember(member.id);
+
+                              setFlag(!flag);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </td>
                       </tr>
                     </tbody>
                   );

@@ -63,12 +63,17 @@ export const UtilContextProvider = (props) => {
     return `${hour}:${minute}:${sec}`;
   };
   
+  const metaObj = {
+    clearInput: clearInput,
+    checkLog: checkLog,
+    setDateStamp:setDateStamp,
+    setTimeStamp:setTimeStamp
+  }
 
-
-
+  // [clearInput, checkLog, setDateStamp, setTimeStamp]
   return (
     <UtilContext.Provider
-      value={[clearInput, checkLog, setDateStamp, setTimeStamp]}
+      value={metaObj}
     >
       {props.children}
     </UtilContext.Provider>

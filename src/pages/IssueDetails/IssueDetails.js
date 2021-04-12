@@ -18,40 +18,7 @@ import details from "../../assets/details.svg";
 
 export default function IssueDetails(props) {
   const history = useHistory();
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-    pickedIssueWorker,
-    setPickedIssueWorker,
-    changeIssueWorker,
-    deleteProjectTitle,
-    deleteIssue,
-  ] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
   const teamMembers = useGetTeamData();
 
   return (
@@ -72,7 +39,7 @@ export default function IssueDetails(props) {
         <Container className={classes.CardContainer}>
           <Card className={classes.Card}>
             <Card.Title as="h3" className="m-2">
-              {pickedIssueTitle}
+              {dbContextContent.pickedIssueTitle}
             </Card.Title>
             <Form className={classes.Form}>
               <Form.Group>
@@ -80,9 +47,9 @@ export default function IssueDetails(props) {
                 <FormControl
                   className={classes.Input}
                   type="text"
-                  value={pickedIssueTitle}
+                  value={dbContextContent.pickedIssueTitle}
                   onChange={(e) => {
-                    setPickedIssueTitle(e.target.value);
+                    dbContextContent.setPickedIssueTitle(e.target.value);
                   }}
                 />
               </Form.Group>
@@ -92,9 +59,9 @@ export default function IssueDetails(props) {
                   className={classes.Input}
                   as="textarea"
                   rows={3}
-                  value={pickedIssue}
+                  value={dbContextContent.pickedIssue}
                   onChange={(e) => {
-                    setPickedIssue(e.target.value);
+                    dbContextContent.setPickedIssue(e.target.value);
                   }}
                 />
               </Form.Group>
@@ -105,10 +72,10 @@ export default function IssueDetails(props) {
                   className={classes.Input}
                   as="select"
                   onChange={(e) => {
-                    setPickedIssueStatus(e.target.value);
+                    dbContextContent.setPickedIssueStatus(e.target.value);
                   }}
                 >
-                  <option>{pickedIssueStatus}</option>
+                  <option>{dbContextContent.pickedIssueStatus}</option>
                   <option>open</option>
                   <option>done</option>
                 </FormControl>
@@ -120,12 +87,12 @@ export default function IssueDetails(props) {
                   className={classes.Input}
                   as="select"
                   onChange={(e) => {
-                    setPickedIssueWorker(e.target.value);
+                    dbContextContent.setPickedIssueWorker(e.target.value);
                   }}
                 >
                   <option>choose..</option>
                   {teamMembers.map((member, index) => {
-                    if (member.project === currentProject) {
+                    if (member.project === dbContextContent.currentProject) {
                       return <option key={index}>{member.memberEmail}</option>;
                     }
                   })}
@@ -135,10 +102,10 @@ export default function IssueDetails(props) {
                     className="mt-4 w-25"
                     variant="outline-success"
                     onClick={() => {
-                      changeIssueStatus(pickedIssueId, pickedIssueStatus);
-                      changeIssueDescription(pickedIssueId, pickedIssue);
-                      changeIssueTitle(pickedIssueId, pickedIssueTitle);
-                      changeIssueWorker(pickedIssueId, pickedIssueWorker);
+                      dbContextContent.changeIssueStatus(dbContextContent.pickedIssueId, dbContextContent.pickedIssueStatus);
+                      dbContextContent.changeIssueDescription(dbContextContent.pickedIssueId, dbContextContent.pickedIssue);
+                      dbContextContent.changeIssueTitle(dbContextContent.pickedIssueId, dbContextContent.pickedIssueTitle);
+                      dbContextContent.changeIssueWorker(dbContextContent.pickedIssueId, dbContextContent.pickedIssueWorker);
                       history.push("/dashboard");
                     }}
                   >
@@ -148,7 +115,7 @@ export default function IssueDetails(props) {
                     className="mt-4 ml-4 w-25"
                     variant="outline-danger"
                     onClick={() => {
-                      deleteIssue(pickedIssueId);
+                      dbContextContent.deleteIssue(dbContextContent.pickedIssueId);
                       history.push("/dashboard");
                     }}
                   >

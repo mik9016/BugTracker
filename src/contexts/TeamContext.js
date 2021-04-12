@@ -1,9 +1,11 @@
-import React, { createContext ,useState} from "react";
+import React, { createContext, useState,useContext } from "react";
 import { fire } from "../Firebase";
+import {DbContext} from './DbContext';
 
 export const TeamContext = createContext();
 
 export const TeamContextProvider = (props) => {
+  const dbContextContent = useContext(DbContext);
 
   const setTeamData = async (
     currentProject,
@@ -19,47 +21,59 @@ export const TeamContextProvider = (props) => {
       memberUid: memberUid,
       memberEmail: memberEmail,
       memberRole: memberRole,
-      memberName: memberName
+      memberName: memberName,
     };
 
     await team.push(template);
   };
 
-  const getTeamData = async (setuseState) => {
-    const Teams = [];
-    await fire
-      .database()
-      .ref("Teams")
-      .on("value", (snapshot) => {
-        const teams = snapshot.val();
-
-        for (let id in teams) {
-          Teams.push({ id, ...teams[id] });
-        }
-      });
-
-    setuseState(Teams);
-    console.log("data fetched Teams");
-  };
-
+  //DELETE
   const deleteTeamMember = (id) => {
     const team = fire.database().ref("Teams").child(id);
     team.remove();
-    console.log('member removed');
+    console.log("member removed");
+  };
+  //UPDATE
+  const updateTeamMembersRole = (id, value) => {
+    const team = fire.database().ref("Teams").child(id);
+    team.update({
+      memberRole: value,
+    });
   };
 
-  const [memberMail,setMemberMail] = useState('');
-  const [memberId,setMemberId] = useState('');
+  const checkIfManager = (loggedUser,projectCreatorEmail,projectRole,setManager) => {
+    console.log(projectRole)
+    if(loggedUser === projectCreatorEmail){
+      dbContextContent.setUsersRoleInPickedProject(projectRole);
+      
+      setManager(true);
+       
+    }
+  
+  }
 
-  const metaObject = {
-      setTeamData: setTeamData,
-      getTeamData: getTeamData,
-      deleteTeamMember: deleteTeamMember,
+  const [memberMail, setMemberMail] = useState("");
+  const [memberId, setMemberId] = useState("");
+  const [membersRole, setMembersRole] = useState("");
+  const [loggedUserisManager, setLoggedUserisManager] = useState(false);
 
+  const teamContextContent = {
+    setTeamData: setTeamData,
+    deleteTeamMember: deleteTeamMember,
+    memberMail: memberMail,
+    setMemberMail: setMemberMail,
+    memberId: memberId,
+    setMemberId: setMemberId,
+    membersRole: membersRole,
+    setMembersRole: setMembersRole,
+    updateTeamMembersRole: updateTeamMembersRole,
+    checkIfManager: checkIfManager,
+    loggedUserisManager: loggedUserisManager, 
+    setLoggedUserisManager: setLoggedUserisManager
   };
 
   return (
-    <TeamContext.Provider value={[setTeamData, getTeamData,deleteTeamMember,memberMail,setMemberMail,memberId,setMemberId]}>
+    <TeamContext.Provider value={teamContextContent}>
       {props.children}
     </TeamContext.Provider>
   );

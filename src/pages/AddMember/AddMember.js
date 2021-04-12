@@ -3,11 +3,8 @@ import {
   Container,
   Button,
   Card,
-  Form,
   FormControl,
   Row,
-  FormGroup,
-  Col,
   Alert,
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -21,41 +18,11 @@ import user from "../../assets/user.svg";
 
 export default function AddMember() {
   const history = useHistory();
-  const [setTeamData, getTeamData] = useContext(TeamContext);
-  const [clearInput, checkLog, setDateStamp, setTimeStamp] = useContext(
-    UtilContext
-  );
+  const teamContextContent = useContext(TeamContext);
+  const metaObj = useContext(UtilContext);
   const [newMember, setNewMember] = useState("");
   const mailRef = useRef();
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-    getUsersListFromDB,
-    updateUsersRole,
-    updateUserProjects,
-  ] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
   const users = useGetUsers();
   const [err, setError] = useState("");
 
@@ -99,13 +66,14 @@ export default function AddMember() {
 
               <Button
                 className="m-2"
+                disabled={!teamContextContent.loggedUserisManager}
                 variant="outline-success"
                 onClick={() => {
                   if (mailRef.current.value.length > 3) {
                     users.map((user) => {
                       if (user.userEmail === newMember) {
-                        setTeamData(
-                          currentProject,
+                        teamContextContent.setTeamData(
+                          dbContextContent.currentProject,
                           "memberUid",
                           newMember,
                           "Developer",
@@ -114,7 +82,7 @@ export default function AddMember() {
                       }
                     });
                     alert("User added!");
-                    clearInput(mailRef);
+                    metaObj.clearInput(mailRef);
                   } else {
                     return setError(
                       <Alert variant="danger">email adress to short</Alert>

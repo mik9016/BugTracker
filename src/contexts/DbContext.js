@@ -3,23 +3,24 @@ import { fire } from "../Firebase";
 import { AuthContext } from "../contexts/AuthContext";
 import { UtilContext } from "../contexts/UtilitiesContext";
 
+
 export const DbContext = createContext();
 
 export const DbContextProvider = (props) => {
   //Variables
-  const [clearInput, checkLog, setDateStamp, setTimeStamp] = useContext(
-    UtilContext
-  );
-  const [   isAuthorized,
+  const metaObj = useContext(UtilContext);
+  const [
+    isAuthorized,
     Login,
     LogOut,
     Register,
     userId,
     setUserId,
     userName,
-    userEmail,] = useContext(
-    AuthContext
-  );
+    userEmail,
+  ] = useContext(AuthContext);
+  
+
   const [currentProject, setCurrentProject] = useState("");
   const [pickedIssue, setPickedIssue] = useState("");
   let [pickedIssueTitle, setPickedIssueTitle] = useState("");
@@ -28,6 +29,7 @@ export const DbContextProvider = (props) => {
   let [pickedIssueWorker, setPickedIssueWorker] = useState("");
   const [pickedProject, setPickedProject] = useState("");
   const [pickedProjectId, setPickedProjectId] = useState("");
+  const [usersRoleInPickedProject, setUsersRoleInPickedProject] = useState("");
 
   //FUNCTIONS
 
@@ -65,8 +67,8 @@ export const DbContextProvider = (props) => {
       creator: creator,
       currentlyWorking: currentlyWorking,
       project: currentProject,
-      date: setDateStamp(),
-      time: setTimeStamp(),
+      date: metaObj.setDateStamp(),
+      time: metaObj.setTimeStamp(),
       status: "pending",
     };
 
@@ -143,11 +145,18 @@ export const DbContextProvider = (props) => {
     });
   };
 
-  const changeIssueWorker= (id, value) => {
+  const changeIssueWorker = (id, value) => {
     const desc = fire.database().ref("Issues").child(id);
 
     desc.update({
       currentlyWorking: value,
+    });
+  };
+  // UPDATE PROJECT NAME IN ISSUES
+  const changeIssueProjectName = (id, value ) => {
+    const issue = fire.database().ref("Issues").child(id);
+    issue.update({
+      project: value,
     });
   };
 
@@ -170,8 +179,6 @@ export const DbContextProvider = (props) => {
 
     issue.remove();
   };
-
- 
 
   //SET USER
   const setUserInDB = async (userMail, userName) => {
@@ -225,43 +232,46 @@ export const DbContextProvider = (props) => {
     });
   };
 
+  const dbContextContent = {
+    CreateNewProject: CreateNewProject,
+    CreateNewIssue: CreateNewIssue,
+    currentProject: currentProject,
+    getProjects: getProjects,
+    getIssues: getIssues,
+    setCurrentProject: setCurrentProject,
+    statusNumHandler: statusNumHandler,
+    pickedIssue: pickedIssue,
+    setPickedIssue: setPickedIssue,
+    pickedIssueTitle: pickedIssueTitle,
+    setPickedIssueTitle: setPickedIssueTitle,
+    pickedIssueStatus: pickedIssueStatus,
+    setPickedIssueStatus: setPickedIssueStatus,
+    pickedIssueId: pickedIssueId,
+    setPickedIssueId: setPickedIssueId,
+    changeIssueDescription: changeIssueDescription,
+    changeIssueStatus: changeIssueStatus,
+    changeIssueTitle: changeIssueTitle,
+    changeProjectTitle: changeProjectTitle,
+    pickedProject: pickedProject,
+    setPickedProject: setPickedProject,
+    pickedProjectId: pickedProjectId,
+    setPickedProjectId: setPickedProjectId,
+    setUserInDB: setUserInDB,
+    getUsersListFromDB: getUsersListFromDB,
+    updateUsersRole: updateUsersRole,
+    updateUserProjects: updateUserProjects,
+    pickedIssueWorker: pickedIssueWorker,
+    setPickedIssueWorker: setPickedIssueWorker,
+    changeIssueWorker: changeIssueWorker,
+    deleteProjectTitle: deleteProjectTitle,
+    deleteIssue: deleteIssue,
+    usersRoleInPickedProject: usersRoleInPickedProject,
+    setUsersRoleInPickedProject: setUsersRoleInPickedProject,
+    changeIssueProjectName: changeIssueProjectName
+  };
+
   return (
-    <DbContext.Provider
-      value={[
-        CreateNewProject,
-        CreateNewIssue,
-        currentProject,
-        getProjects,
-        getIssues,
-        setCurrentProject,
-        statusNumHandler,
-        pickedIssue,
-        setPickedIssue,
-        pickedIssueTitle,
-        setPickedIssueTitle,
-        pickedIssueStatus,
-        setPickedIssueStatus,
-        pickedIssueId,
-        setPickedIssueId,
-        changeIssueDescription,
-        changeIssueStatus,
-        changeIssueTitle,
-        changeProjectTitle,
-        pickedProject,
-        setPickedProject,
-        pickedProjectId,
-        setPickedProjectId,
-        setUserInDB,
-        getUsersListFromDB,
-        updateUsersRole,
-        updateUserProjects,
-        pickedIssueWorker, 
-        setPickedIssueWorker,
-        changeIssueWorker,
-        deleteProjectTitle,
-        deleteIssue
-      ]}
-    >
+    <DbContext.Provider value={dbContextContent}>
       {props.children}
     </DbContext.Provider>
   );

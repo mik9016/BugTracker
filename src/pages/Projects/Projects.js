@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Container, Card, Button, Row, Col, Image } from "react-bootstrap";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { AuthContext } from "../../contexts/AuthContext";
+import { TeamContext } from "../../contexts/TeamContext";
 import { useHistory } from "react-router-dom";
 import classes from "./Projects.module.scss";
-import { fire } from "../../Firebase";
+
 import useGetLoggedUser from "../../Hooks/useGetLoggedUser";
 import useGetTeamData from "../../Hooks/useGetTeamData";
 import subtitle1 from "../../assets/subtitle1.svg";
@@ -13,31 +14,8 @@ import plus from "../../assets/plus.svg";
 import arrow from "../../assets/arrow.svg";
 
 export default function Projects() {
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-  ] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
+  const teamContextContent = useContext(TeamContext);
 
   const [
     isAuthorized,
@@ -56,14 +34,14 @@ export default function Projects() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    getProjects(setProjects);
+    dbContextContent.getProjects(setProjects);
 
     return () => {
-      getProjects(setProjects);
+      dbContextContent.getProjects(setProjects);
     };
   }, []);
 
-  // console.log(teamData);
+
 
   function filterProjectsUserIsInvolvedIn() {
     let projects = [];
@@ -76,6 +54,9 @@ export default function Projects() {
     return projects;
   }
 
+  
+  
+ 
   return (
     <div className={classes.Projects}>
       <Container>
@@ -111,8 +92,11 @@ export default function Projects() {
                         <Card.Title
                           className={classes.ProjectText}
                           onClick={() => {
-                            setPickedProjectId(project.id);
-                            setCurrentProject(project.projectName);
+                            dbContextContent.setPickedProjectId(project.id);
+                            dbContextContent.setCurrentProject(project.projectName);
+                            dbContextContent.setUsersRoleInPickedProject();
+                            teamContextContent.checkIfManager(userEmail,project.creatorEmail,project.projectRole,teamContextContent.setLoggedUserisManager);
+                            
                             history.push("/dashboard");
                           }}
                         >
@@ -152,8 +136,9 @@ export default function Projects() {
                               <Card.Title
                                 className={classes.ProjectText}
                                 onClick={() => {
-                                  setPickedProjectId(project.id);
-                                  setCurrentProject(project.projectName);
+                                  dbContextContent.setPickedProjectId(project.id);
+                                  dbContextContent.setCurrentProject(project.projectName);
+                                  teamContextContent.checkIfManager(userEmail,project.creatorEmail,project.projectRole,teamContextContent.setLoggedUserisManager);
                                   history.push("/dashboard");
                                 }}
                               >

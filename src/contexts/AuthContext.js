@@ -48,6 +48,17 @@ export const AuthContextProvider = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const authContextContent = {
+    isAuthorized: isAuthorized,
+    Login: Login,
+    LogOut: LogOut,
+    Register: Register,
+    userId: userId,
+    setUserId: setUserId,
+    userName: userName,
+    userEmail: userEmail,
+  };
+
   return (
     <AuthContext.Provider
       value={[

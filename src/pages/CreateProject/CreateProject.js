@@ -33,10 +33,10 @@ export default function CreateProject() {
   const name = useRef("");
   const role = useRef("");
 
-  const [CreateNewProject, CreateNewIssue] = useContext(DbContext);
+  const dbContextContent = useContext(DbContext);
 
-  const [clearInput, checkLog] = useContext(UtilContext);
-  const [setTeamData] = useContext(TeamContext);
+  const metaObj = useContext(UtilContext);
+  const teamContextContent = useContext(TeamContext);
 
   const loggedUser = useGetLoggedUser();
   const Users = useGetUsers();
@@ -95,16 +95,16 @@ export default function CreateProject() {
               variant="outline-success"
               onClick={(e) => {
                 e.preventDefault();
-                CreateNewProject(projectName, projectRole);
-                setTeamData(
+                dbContextContent.CreateNewProject(projectName, projectRole);
+                teamContextContent.setTeamData(
                   projectName,
                   "memberUid",
                   loggedUser.email,
                   projectRole,
                   "memberName"
                 );
-                clearInput(name);
-                clearInput(role);
+                metaObj.clearInput(name);
+                metaObj.clearInput(role);
 
                 history.push("/projects");
               }}

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { Container, Row, Card, Form, Button, Image } from "react-bootstrap";
+import { Container,  Card, Form, Button, } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import classes from "../RegisterPage/RegisterPage.module.scss";
 
@@ -15,33 +15,8 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [clearInput, checkLog] = useContext(UtilContext);
-  const [
-    CreateNewProject,
-    CreateNewIssue,
-    currentProject,
-    getProjects,
-    getIssues,
-    setCurrentProject,
-    statusNumHandler,
-    pickedIssue,
-    setPickedIssue,
-    pickedIssueTitle,
-    setPickedIssueTitle,
-    pickedIssueStatus,
-    setPickedIssueStatus,
-    pickedIssueId,
-    setPickedIssueId,
-    changeIssueDescription,
-    changeIssueStatus,
-    changeIssueTitle,
-    changeProjectTitle,
-    pickedProject,
-    setPickedProject,
-    pickedProjectId,
-    setPickedProjectId,
-    setUserInDB,
-  ] = useContext(DbContext);
+  const metaObj = useContext(UtilContext);
+  const dbContextContent = useContext(DbContext);
   const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
   return (
     <Container className={classes.Register}>
@@ -85,10 +60,10 @@ export default function Register() {
               type="submit"
               onClick={() => {
                 Register(email, password);
-                setUserInDB(email,name);
-                clearInput(nameRef);
-                clearInput(emailRef);
-                clearInput(passwordRef);
+                dbContextContent.setUserInDB(email,name);
+                metaObj.clearInput(nameRef);
+                metaObj.clearInput(emailRef);
+                metaObj.clearInput(passwordRef);
               }}
             >
               Register
@@ -96,7 +71,7 @@ export default function Register() {
           </Form>
         </Card.Body>
         <div className={classes.Text}>
-          Need an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </div>
       </Card>
     </Container>

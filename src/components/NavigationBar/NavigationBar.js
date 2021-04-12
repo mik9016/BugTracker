@@ -1,10 +1,11 @@
-import { Navbar, Nav, Button, NavDropdown, Image } from "react-bootstrap";
+import { Navbar, Nav, Button, Image } from "react-bootstrap";
 import classes from "../NavigationBar/NavigationBar.module.scss";
 import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Bug from "../../assets/bug.png";
 import Pic from "../../assets/pic.jpg";
 import { AuthContext } from "../../contexts/AuthContext";
+import {TeamContext} from '../../contexts/TeamContext';
 
 export default function NavigationBar() {
   const [
@@ -17,6 +18,7 @@ export default function NavigationBar() {
     userName,
     userEmail,
   ] = useContext(AuthContext);
+  const teamContextContent = useContext(TeamContext);
 
   const history = useHistory();
 
@@ -36,7 +38,9 @@ export default function NavigationBar() {
       <Navbar.Collapse id="navbar">
         {isAuthorized && (
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/projects" className={classes.Links}>
+            <Nav.Link as={Link} to="/projects" className={classes.Links}
+            onClick={()=>{teamContextContent.setLoggedUserisManager(false)}}
+            >
               Projects
             </Nav.Link>
             <Nav.Link as={Link} to="/profile" className={classes.Links}>
