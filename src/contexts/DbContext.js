@@ -30,6 +30,11 @@ export const DbContextProvider = (props) => {
   const [pickedProject, setPickedProject] = useState("");
   const [pickedProjectId, setPickedProjectId] = useState("");
   const [usersRoleInPickedProject, setUsersRoleInPickedProject] = useState("");
+  const [loggedUserEmail,setLoggedUserEmail] = useState("");
+  const [loggedUserPhoto,setLoggedUserPhoto] = useState("");
+  const [loggedUserName,setLoggedUserName] = useState("");
+  const [loggedUserId, setLoggedUserId] = useState("");
+
 
   //FUNCTIONS
 
@@ -120,7 +125,7 @@ export const DbContextProvider = (props) => {
       }
     });
   };
-  //UPDATE
+  //UPDATE ISSUES
   const changeIssueDescription = (id, value) => {
     const desc = fire.database().ref("Issues").child(id);
 
@@ -189,10 +194,13 @@ export const DbContextProvider = (props) => {
       userName: userName,
       role: "",
       projects: [],
+      photo:''
     };
 
     await form.push(template);
   };
+
+ 
 
   //GET USERS LIST
 
@@ -223,12 +231,37 @@ export const DbContextProvider = (props) => {
       role: value,
     });
   };
+// UDATE USERS PHOTO
+  const updateUsersPhoto = (id, value) => {
+    const desc = fire.database().ref("Users").child(id);
+
+    desc.update({
+      photo: value,
+    });
+  };
+
+  const updateUserName = (id, value) => {
+    const desc = fire.database().ref("Users").child(id);
+
+    desc.update({
+      userName: value,
+    });
+  };
+
 
   const updateUserProjects = (id, value) => {
     const desc = fire.database().ref("Users").child(id);
 
     desc.update({
       projects: [].push(value),
+    });
+  };
+
+  const getLoggedUserId = (arr,mail) => {
+    arr.map((user) => {
+      if (user.userEmail === mail) {
+        setLoggedUserId(user.id);
+      }
     });
   };
 
@@ -267,9 +300,20 @@ export const DbContextProvider = (props) => {
     deleteIssue: deleteIssue,
     usersRoleInPickedProject: usersRoleInPickedProject,
     setUsersRoleInPickedProject: setUsersRoleInPickedProject,
-    changeIssueProjectName: changeIssueProjectName
+    changeIssueProjectName: changeIssueProjectName,
+    updateUsersPhoto: updateUsersPhoto,
+    loggedUserEmail: loggedUserEmail,
+    setLoggedUserEmail: setLoggedUserEmail,
+    loggedUserPhoto: loggedUserPhoto,
+    setLoggedUserPhoto: setLoggedUserPhoto,
+    loggedUserName: loggedUserName,
+    setLoggedUserName: setLoggedUserName,
+    updateUserName: updateUserName,
+    loggedUserId: loggedUserId, 
+    setLoggedUserId:setLoggedUserId,
+    getLoggedUserId:getLoggedUserId
   };
-
+  
   return (
     <DbContext.Provider value={dbContextContent}>
       {props.children}

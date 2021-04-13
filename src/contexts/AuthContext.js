@@ -20,6 +20,7 @@ export const AuthContextProvider = (props) => {
       .then((res) => {
         setUserId(res.user.uid);
         setEmail(res.user.email);
+      
       })
       .then(console.log("logged in"))
       .catch((err) => {

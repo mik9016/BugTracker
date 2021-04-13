@@ -1,19 +1,10 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Card,
-  Form,
-  Button,
-  Image,
-  Col,
-} from "react-bootstrap";
+import { Container, Card, Form, Button } from "react-bootstrap";
 import classes from "../Login/LoginPage.module.scss";
 import { Link } from "react-router-dom";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import pic from "../../assets/bug.png";
 
 export default function LoginPage() {
   const emailRef = useRef();
@@ -21,14 +12,24 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const metaObj = useContext(UtilContext);
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
+  const [
+    isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,
+  ] = useContext(AuthContext);
   const history = useHistory();
+  
 
   return (
     <Container className={classes.Login}>
       <Card className={classes.Card}>
         <Card.Body>
-          <h1 className='text-center m-2'>Login</h1>
+          <h1 className="text-center m-2">Login</h1>
 
           <Form.Group>
             <Form.Group id="email">
