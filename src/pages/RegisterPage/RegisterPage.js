@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { Container,  Card, Form, Button, } from "react-bootstrap";
+import { Container,  Card, Form, Button,Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import classes from "../RegisterPage/RegisterPage.module.scss";
 
@@ -17,7 +17,18 @@ export default function Register() {
 
   const metaObj = useContext(UtilContext);
   const dbContextContent = useContext(DbContext);
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
+  const [       
+    isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,
+    err,
+    validate,
+    setErr] = useContext(AuthContext);
   return (
     <Container className={classes.Register}>
       <Card className={classes.Card}>
@@ -25,6 +36,11 @@ export default function Register() {
           <h1 className="text-center mb-4">Register</h1>
 
           <Form>
+          {err && (
+              <Alert className="mt-4" variant="danger">
+                {err}
+              </Alert>
+            )}
             <Form.Group id="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -58,12 +74,20 @@ export default function Register() {
             <Button
               className="w-100"
               type="submit"
-              onClick={() => {
-                Register(email, password);
-                dbContextContent.setUserInDB(email,name);
-                metaObj.clearInput(nameRef);
-                metaObj.clearInput(emailRef);
-                metaObj.clearInput(passwordRef);
+              onClick={(e) => {
+                if (
+                  validate(name, "Name") &&
+                  validate(email, "Email") &&
+                  validate(password, "password")
+                ){
+                  e.preventDefault();
+                  Register(email, password);
+                  dbContextContent.setUserInDB(email,name);
+                  metaObj.clearInput(nameRef);
+                  metaObj.clearInput(emailRef);
+                  metaObj.clearInput(passwordRef);
+                }
+         
               }}
             >
               Register

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import { Container, Card, Form, Button } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert } from "react-bootstrap";
 import classes from "../Login/LoginPage.module.scss";
 import { Link } from "react-router-dom";
 import { UtilContext } from "../../contexts/UtilitiesContext";
@@ -21,9 +21,10 @@ export default function LoginPage() {
     setUserId,
     userName,
     userEmail,
+    err,
+    validate,
   ] = useContext(AuthContext);
   const history = useHistory();
-  
 
   return (
     <Container className={classes.Login}>
@@ -32,6 +33,11 @@ export default function LoginPage() {
           <h1 className="text-center m-2">Login</h1>
 
           <Form.Group>
+            {err && (
+              <Alert className="mt-4" variant="danger">
+                {err}
+              </Alert>
+            )}
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -56,10 +62,15 @@ export default function LoginPage() {
               className="w-100"
               type="submit"
               onClick={() => {
-                Login(email, password);
-                metaObj.clearInput(emailRef);
-                metaObj.clearInput(passwordRef);
-                history.push("/projects");
+                if (
+                  validate(email, "Email") &&
+                  validate(password, "password")
+                ) {
+                  Login(email, password);
+                  metaObj.clearInput(emailRef);
+                  metaObj.clearInput(passwordRef);
+                  history.push("/projects");
+                }
               }}
             >
               Login

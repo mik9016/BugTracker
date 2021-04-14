@@ -11,6 +11,7 @@ export const AuthContextProvider = (props) => {
   const [userName, setUserName] = useState("");
   const [userEmail, setEmail] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [err, setErr] = useState("");
 
   const Login = (email, password) => {
     fire
@@ -20,12 +21,12 @@ export const AuthContextProvider = (props) => {
       .then((res) => {
         setUserId(res.user.uid);
         setEmail(res.user.email);
-      
       })
       .then(console.log("logged in"))
       .catch((err) => {
         setIsAuthorized(false);
         console.log(err);
+        setErr(err);
       });
   };
   const LogOut = () => {
@@ -38,7 +39,10 @@ export const AuthContextProvider = (props) => {
         setUserId("");
         setEmail("");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setErr(err);
+      });
   };
 
   const Register = (email, password) => {
@@ -46,7 +50,19 @@ export const AuthContextProvider = (props) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(console.log("user created"))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setErr(err);
+      });
+  };
+
+  const validate = (string, inputName) => {
+    let result = false;
+    if (string.length < 6) {
+      setErr("To short " + inputName);
+      return (result = false);
+    }
+    return (result = true);
   };
 
   const authContextContent = {
@@ -58,6 +74,9 @@ export const AuthContextProvider = (props) => {
     setUserId: setUserId,
     userName: userName,
     userEmail: userEmail,
+    setErr: setErr,
+    err: err,
+   
   };
 
   return (
@@ -71,6 +90,9 @@ export const AuthContextProvider = (props) => {
         setUserId,
         userName,
         userEmail,
+        err,
+        validate,
+        setErr
       ]}
     >
       {props.children}
