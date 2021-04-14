@@ -132,7 +132,7 @@ export default function Projects() {
                               <img src={arrow} />
                             </Col>
 
-                            <Col className={classes.ProjectTextAlignment}>
+                            <Col className={classes.ProjectYourPartOfTextAlignment}>
                               <Card.Title
                                 className={classes.ProjectText}
                                 onClick={() => {

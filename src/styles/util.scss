@@ -23,6 +23,28 @@ $darkColor: #1d2231;
   }
 }
 
+@mixin iconsDashboard {
+  width: 42px;
+  height: 42px;
+  margin: 1rem;
+  // &:hover {
+  //   cursor: pointer;
+  //   filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg)
+  //     brightness(103%) contrast(103%);
+  // }
+}
+
+@mixin iconsHover {
+  // width: 42px;
+  // height: 42px;
+  // margin: 1rem;
+  &:hover {
+    cursor: pointer;
+    filter: invert(93%) sepia(11%) saturate(5867%) hue-rotate(303deg)
+      brightness(103%) contrast(103%);
+  }
+}
+
 @mixin iconBug {
   width: 42px;
   height: 42px;

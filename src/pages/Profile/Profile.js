@@ -19,7 +19,7 @@ import { useStorage } from "../../Hooks/useStorage";
 import { DbContext } from "../../contexts/DbContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import useGetUsers from "../../Hooks/useGetUsers";
-import useGetPhoto from "../../Hooks/useGetPhoto";
+
 import {useHistory} from 'react-router-dom';
 
 export default function Profile() {

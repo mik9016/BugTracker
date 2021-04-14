@@ -10,19 +10,18 @@
     @include centerCard(1vh);
 }
 .Card{
-   @include card(50vw,68vh);
+   @include card(42vw,68vh);
+   padding: 1rem;
 }
-.Form{
-    @include formGr;
-    
-   
-}
+
 .Input{
-    width: 30vw;
+   
+    width:80%;
 }
 
 .Btn{
    @include centerCard(1vh);
+   margin: 1rem;
 }
 
 

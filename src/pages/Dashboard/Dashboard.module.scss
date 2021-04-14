@@ -3,8 +3,12 @@
 .Dashboard {
   height: 90vh;
   img {
-    @include icons;
+    @include iconsDashboard;
   }
+}
+
+.Hover{
+  @include iconsHover;
 }
 
 .Img {
@@ -57,8 +61,8 @@
   font-size: 20px;
 }
 .Icon {
-  width: 24px;
-  height: 24px;
+  // width: 24px;
+  // height: 24px;
 }
 .ProjectTitle {
   margin-left: 60px;

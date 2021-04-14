@@ -41,11 +41,10 @@ export default function IssueDetails(props) {
             <Card.Title as="h3" className="m-2">
               {dbContextContent.pickedIssueTitle}
             </Card.Title>
-            <Form className={classes.Form}>
+            <Form>
               <Form.Group>
                 <FormLabel>Title</FormLabel>
                 <FormControl
-                  className={classes.Input}
                   type="text"
                   value={dbContextContent.pickedIssueTitle}
                   onChange={(e) => {
@@ -56,7 +55,6 @@ export default function IssueDetails(props) {
               <Form.Group>
                 <FormLabel>Description</FormLabel>
                 <FormControl
-                  className={classes.Input}
                   as="textarea"
                   rows={3}
                   value={dbContextContent.pickedIssue}
@@ -69,7 +67,6 @@ export default function IssueDetails(props) {
               <Form.Group className={classes.Dropdown}>
                 <FormLabel>Status</FormLabel>
                 <FormControl
-                  className={classes.Input}
                   as="select"
                   onChange={(e) => {
                     dbContextContent.setPickedIssueStatus(e.target.value);
@@ -84,7 +81,6 @@ export default function IssueDetails(props) {
               <Form.Group>
                 <FormLabel>Currerntly working at</FormLabel>
                 <FormControl
-                  className={classes.Input}
                   as="select"
                   onChange={(e) => {
                     dbContextContent.setPickedIssueWorker(e.target.value);
@@ -99,23 +95,37 @@ export default function IssueDetails(props) {
                 </FormControl>
                 <Row className={classes.Btn}>
                   <Button
-                    className="mt-4 w-25"
+                    className={classes.Btn}
                     variant="outline-success"
                     onClick={() => {
-                      dbContextContent.changeIssueStatus(dbContextContent.pickedIssueId, dbContextContent.pickedIssueStatus);
-                      dbContextContent.changeIssueDescription(dbContextContent.pickedIssueId, dbContextContent.pickedIssue);
-                      dbContextContent.changeIssueTitle(dbContextContent.pickedIssueId, dbContextContent.pickedIssueTitle);
-                      dbContextContent.changeIssueWorker(dbContextContent.pickedIssueId, dbContextContent.pickedIssueWorker);
+                      dbContextContent.changeIssueStatus(
+                        dbContextContent.pickedIssueId,
+                        dbContextContent.pickedIssueStatus
+                      );
+                      dbContextContent.changeIssueDescription(
+                        dbContextContent.pickedIssueId,
+                        dbContextContent.pickedIssue
+                      );
+                      dbContextContent.changeIssueTitle(
+                        dbContextContent.pickedIssueId,
+                        dbContextContent.pickedIssueTitle
+                      );
+                      dbContextContent.changeIssueWorker(
+                        dbContextContent.pickedIssueId,
+                        dbContextContent.pickedIssueWorker
+                      );
                       history.push("/dashboard");
                     }}
                   >
                     Save
                   </Button>
                   <Button
-                    className="mt-4 ml-4 w-25"
+                    className={classes.Btn}
                     variant="outline-danger"
                     onClick={() => {
-                      dbContextContent.deleteIssue(dbContextContent.pickedIssueId);
+                      dbContextContent.deleteIssue(
+                        dbContextContent.pickedIssueId
+                      );
                       history.push("/dashboard");
                     }}
                   >

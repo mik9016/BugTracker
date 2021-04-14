@@ -97,6 +97,7 @@ export default function Dashboard() {
             <Col>
               <Row className={classes.Back}>
                 <img
+                className={classes.Hover}
                   src={back}
                   onClick={(e) => {
                     e.preventDefault();
@@ -137,6 +138,7 @@ export default function Dashboard() {
 
                 <div>
                   <img
+                    className={classes.Hover}
                     src={team}
                     onClick={() => {
                       history.push("/manageteam");
