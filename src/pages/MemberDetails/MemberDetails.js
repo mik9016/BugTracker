@@ -55,9 +55,11 @@ export default function MemberDetails() {
 
         <Container className={classes.CardContainer}>
           <Card className={classes.Card}>
+            <label >Member:</label>
             <Card.Title className="mt-4">{member}</Card.Title>
-            <div>
+            <div className={classes.Form}> 
               <Form.Control
+              className={classes.Input}
                 disabled={!teamContextContent.loggedUserisManager}
                 as="select"
                 ref={role}

@@ -21,4 +21,17 @@
 
 .Card {
   @include card(40vw, 30vh);
+  label{
+    margin-top: 1rem;
+  }
+}
+.Input{
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 1rem;
+
+}
+.Form{
+  justify-items: center;
+  
 }

@@ -1,21 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 import StatCard from "../../components/StatCard/StatCard";
 import classes from "../Dashboard/Dashboard.module.scss";
-import {
-  Container,
-  Row,
-  Button,
-  Form,
-  Col,
-  FormControl,
-} from "react-bootstrap";
+import { Container, Row, Form, Col } from "react-bootstrap";
 import IssueTable from "../../components/IssueTable/IssueTable";
-import DashboardNav from "../../components/DashboardNav/DashboardNav";
 import { DbContext } from "../../contexts/DbContext";
 import { TeamContext } from "../../contexts/TeamContext";
-import SortDropdown from "../../components/SortDropdown/SortDropdown";
 import back from "../../assets/back.svg";
 import plus from "../../assets/plus.svg";
 import team from "../../assets/team.svg";
@@ -23,6 +13,7 @@ import bug from "../../assets/bug.png";
 
 export default function Dashboard() {
   const history = useHistory();
+  const searchFieldRef = useRef();
   const pushHistory = () => {
     history.push("/details");
   };
@@ -36,10 +27,13 @@ export default function Dashboard() {
   const [pendingNum, setPendingNum] = useState(0);
   const [openNum, setOpenNum] = useState(0);
   const [doneNum, setDoneNum] = useState(0);
+
   const [filteredByWord, setFilteredByWord] = useState([]);
+  const [searchFieldStatusIsEmpty, setSearchFieldStatusIsEmpty] = useState(
+    true
+  );
 
- 
-
+  // SORTING FUNCTIONS
   function filterProjectIssues(arr) {
     let filteredIssues = [];
     arr.map((issue) => {
@@ -63,32 +57,55 @@ export default function Dashboard() {
       });
     }
 
-    console.log(filteredIssuesByLetter);
     return filteredIssuesByLetter;
   }
-
+  //GET NUMBERS OF ISSUES
   useEffect(() => {
     dbContextContent.getIssues(setIssues);
     return () => {
       dbContextContent.getIssues(setIssues);
     };
   }, []);
-
+  //FILTER ISSUES BY STATUS
   useEffect(() => {
-    dbContextContent.statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
-    dbContextContent.statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
-    dbContextContent.statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
+    dbContextContent.statusNumHandler(
+      filterProjectIssues(issues),
+      setPendingNum,
+      "pending"
+    );
+    dbContextContent.statusNumHandler(
+      filterProjectIssues(issues),
+      setOpenNum,
+      "open"
+    );
+    dbContextContent.statusNumHandler(
+      filterProjectIssues(issues),
+      setDoneNum,
+      "done"
+    );
     return () => {
-      dbContextContent.statusNumHandler(filterProjectIssues(issues), setPendingNum, "pending");
-      dbContextContent.statusNumHandler(filterProjectIssues(issues), setOpenNum, "open");
-      dbContextContent.statusNumHandler(filterProjectIssues(issues), setDoneNum, "done");
+      dbContextContent.statusNumHandler(
+        filterProjectIssues(issues),
+        setPendingNum,
+        "pending"
+      );
+      dbContextContent.statusNumHandler(
+        filterProjectIssues(issues),
+        setOpenNum,
+        "open"
+      );
+      dbContextContent.statusNumHandler(
+        filterProjectIssues(issues),
+        setDoneNum,
+        "done"
+      );
     };
   }, [issues]);
 
- const FilteredIssueNames = filteredByWord.map((x)=>{
-   return(x.issueName) 
+  const FilteredIssueNames = filteredByWord.map((x) => {
+    return x.issueName;
   });
-  console.log(FilteredIssueNames);
+  // console.log(FilteredIssueNames);
   return (
     <div className={classes.Dashboard}>
       <Container>
@@ -97,11 +114,11 @@ export default function Dashboard() {
             <Col>
               <Row className={classes.Back}>
                 <img
-                className={classes.Hover}
+                  className={classes.Hover}
                   src={back}
                   onClick={(e) => {
                     e.preventDefault();
-                    teamContextContent.setLoggedUserisManager(false)
+                    teamContextContent.setLoggedUserisManager(false);
                     history.push("/projects");
                   }}
                 />
@@ -113,7 +130,9 @@ export default function Dashboard() {
                 <h2
                   className={classes.ProjectTitle}
                   onClick={() => {
-                    dbContextContent.setPickedProject(dbContextContent.currentProject);
+                    dbContextContent.setPickedProject(
+                      dbContextContent.currentProject
+                    );
                     history.push("/projectSettings");
                   }}
                 >
@@ -190,8 +209,14 @@ export default function Dashboard() {
                     <Form.Control
                       className="w-50 ml-4"
                       type="text"
-                      placeholder="Search..."
+                      ref={searchFieldRef}
+                      placeholder="Search Title..."
                       onChange={(e) => {
+                        //CHECK IF SEARCH FIELD IS EMPTY
+                        e.target.value.length > 0
+                          ? setSearchFieldStatusIsEmpty(false)
+                          : setSearchFieldStatusIsEmpty(true);
+                        //SET
                         setFilteredByWord(
                           filterIssuesByLetters(
                             filterProjectIssues(issues),
@@ -220,6 +245,8 @@ export default function Dashboard() {
             history={() => pushHistory()}
             status={ticketValue}
             filter={FilteredIssueNames}
+            filteredByLetter={filteredByWord}
+            searchFieldIsEmpty={searchFieldStatusIsEmpty}
           />
         </Container>
       </Container>
