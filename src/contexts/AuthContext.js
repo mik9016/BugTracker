@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
 import { fire } from "../Firebase";
-import useGetLoggedUser from "../Hooks/useGetLoggedUser";
 
 export const AuthContext = createContext();
 
@@ -11,7 +10,8 @@ export const AuthContextProvider = (props) => {
   const [userName, setUserName] = useState("");
   const [userEmail, setEmail] = useState("");
   const [userRole, setUserRole] = useState("");
-  const [err, setErr] = useState("");
+  const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const Login = (email, password) => {
     fire
@@ -24,9 +24,10 @@ export const AuthContextProvider = (props) => {
       })
       .then(console.log("logged in"))
       .catch((err) => {
+        setErr(err.message);
         setIsAuthorized(false);
-        console.log(err);
-        setErr(err);
+        console.log(err.message);
+       
       });
   };
   const LogOut = () => {
@@ -51,8 +52,8 @@ export const AuthContextProvider = (props) => {
       .createUserWithEmailAndPassword(email, password)
       .then(console.log("user created"))
       .catch((err) => {
-        console.log(err);
-        setErr(err);
+        console.log(err.message);
+        setErr(err.message);
       });
   };
 
@@ -60,6 +61,15 @@ export const AuthContextProvider = (props) => {
     let result = false;
     if (string.length < 6) {
       setErr("To short " + inputName);
+      return (result = false);
+    }
+    return (result = true);
+  };
+
+  const validateEmail = (string) => {
+    let result = false;
+    if (!string.split("").includes("@")) {
+      setErr("To short or incorrect email");
       return (result = false);
     }
     return (result = true);
@@ -76,7 +86,10 @@ export const AuthContextProvider = (props) => {
     userEmail: userEmail,
     setErr: setErr,
     err: err,
-   
+    validateEmail: validateEmail,
+    validate: validate,
+    loading: loading,
+    setLoading: setLoading,
   };
 
   return (
@@ -90,9 +103,12 @@ export const AuthContextProvider = (props) => {
         setUserId,
         userName,
         userEmail,
+        setErr,
         err,
+        validateEmail,
         validate,
-        setErr
+        loading,
+        setLoading,
       ]}
     >
       {props.children}

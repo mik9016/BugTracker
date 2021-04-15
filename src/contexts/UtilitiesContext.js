@@ -1,10 +1,10 @@
-import React, { createContext } from "react";
+import React, { createContext,useState } from "react";
 
 
 export const UtilContext = createContext();
 
 export const UtilContextProvider = (props) => {
-  
+
 
   const clearInput = (inputRef) => {
     inputRef.current.value = "";
@@ -62,15 +62,22 @@ export const UtilContextProvider = (props) => {
     const sec = SetSecund(date);
     return `${hour}:${minute}:${sec}`;
   };
+
+  const validateField = (str,wordlength) => {
+    let passed;
+    return str.length > wordlength ? (passed = true) : (passed = false);
+  };
   
   const metaObj = {
     clearInput: clearInput,
     checkLog: checkLog,
     setDateStamp:setDateStamp,
-    setTimeStamp:setTimeStamp
+    setTimeStamp:setTimeStamp,
+    validateField: validateField
+
   }
 
-  // [clearInput, checkLog, setDateStamp, setTimeStamp]
+ 
   return (
     <UtilContext.Provider
       value={metaObj}

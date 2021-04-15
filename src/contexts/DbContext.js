@@ -3,7 +3,6 @@ import { fire } from "../Firebase";
 import { AuthContext } from "../contexts/AuthContext";
 import { UtilContext } from "../contexts/UtilitiesContext";
 
-
 export const DbContext = createContext();
 
 export const DbContextProvider = (props) => {
@@ -18,8 +17,13 @@ export const DbContextProvider = (props) => {
     setUserId,
     userName,
     userEmail,
+    setErr,
+    err,
+    validateEmail,
+    validate,
+    loading,
+    setLoading,
   ] = useContext(AuthContext);
-  
 
   const [currentProject, setCurrentProject] = useState("");
   const [pickedIssue, setPickedIssue] = useState("");
@@ -30,11 +34,10 @@ export const DbContextProvider = (props) => {
   const [pickedProject, setPickedProject] = useState("");
   const [pickedProjectId, setPickedProjectId] = useState("");
   const [usersRoleInPickedProject, setUsersRoleInPickedProject] = useState("");
-  const [loggedUserEmail,setLoggedUserEmail] = useState("");
-  const [loggedUserPhoto,setLoggedUserPhoto] = useState("");
-  const [loggedUserName,setLoggedUserName] = useState("");
+  const [loggedUserEmail, setLoggedUserEmail] = useState("");
+  const [loggedUserPhoto, setLoggedUserPhoto] = useState("");
+  const [loggedUserName, setLoggedUserName] = useState("");
   const [loggedUserId, setLoggedUserId] = useState("");
-
 
   //FUNCTIONS
 
@@ -158,7 +161,7 @@ export const DbContextProvider = (props) => {
     });
   };
   // UPDATE PROJECT NAME IN ISSUES
-  const changeIssueProjectName = (id, value ) => {
+  const changeIssueProjectName = (id, value) => {
     const issue = fire.database().ref("Issues").child(id);
     issue.update({
       project: value,
@@ -194,13 +197,11 @@ export const DbContextProvider = (props) => {
       userName: userName,
       role: "",
       projects: [],
-      photo:''
+      photo: "",
     };
 
     await form.push(template);
   };
-
- 
 
   //GET USERS LIST
 
@@ -231,7 +232,7 @@ export const DbContextProvider = (props) => {
       role: value,
     });
   };
-// UDATE USERS PHOTO
+  // UDATE USERS PHOTO
   const updateUsersPhoto = (id, value) => {
     const desc = fire.database().ref("Users").child(id);
 
@@ -248,7 +249,6 @@ export const DbContextProvider = (props) => {
     });
   };
 
-
   const updateUserProjects = (id, value) => {
     const desc = fire.database().ref("Users").child(id);
 
@@ -257,7 +257,7 @@ export const DbContextProvider = (props) => {
     });
   };
 
-  const getLoggedUserId = (arr,mail) => {
+  const getLoggedUserId = (arr, mail) => {
     arr.map((user) => {
       if (user.userEmail === mail) {
         setLoggedUserId(user.id);
@@ -309,11 +309,11 @@ export const DbContextProvider = (props) => {
     loggedUserName: loggedUserName,
     setLoggedUserName: setLoggedUserName,
     updateUserName: updateUserName,
-    loggedUserId: loggedUserId, 
-    setLoggedUserId:setLoggedUserId,
-    getLoggedUserId:getLoggedUserId
+    loggedUserId: loggedUserId,
+    setLoggedUserId: setLoggedUserId,
+    getLoggedUserId: getLoggedUserId,
   };
-  
+
   return (
     <DbContext.Provider value={dbContextContent}>
       {props.children}

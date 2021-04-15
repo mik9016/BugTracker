@@ -1,13 +1,15 @@
 import React, { useRef, useState, useContext } from "react";
-import { Container,  Card, Form, Button,Alert } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import classes from "../RegisterPage/RegisterPage.module.scss";
+import { useHistory } from "react-router-dom";
 
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { DbContext } from "../../contexts/DbContext";
 
 export default function Register() {
+  const history = useHistory();
   const emailRef = useRef();
   const passwordRef = useRef();
   const nameRef = useRef();
@@ -17,7 +19,13 @@ export default function Register() {
 
   const metaObj = useContext(UtilContext);
   const dbContextContent = useContext(DbContext);
-  const [       
+  // const authContextContent = useContext(AuthContext);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [
     isAuthorized,
     Login,
     LogOut,
@@ -26,17 +34,41 @@ export default function Register() {
     setUserId,
     userName,
     userEmail,
+    setErr,
     err,
+    validateEmail,
     validate,
-    setErr] = useContext(AuthContext);
+    loading,
+    setLoading,
+  ] = useContext(AuthContext);
+
   return (
     <Container className={classes.Register}>
+       <>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Register</Modal.Title>
+          </Modal.Header>
+          <Alert variant="success">You have registered successfully now go to Login</Alert>
+          <Modal.Footer>
+            <Button
+              variant="success"
+              onClick={() => {
+                handleClose();
+                history.push('/login');
+              }}
+            >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
       <Card className={classes.Card}>
         <Card.Body>
           <h1 className="text-center mb-4">Register</h1>
 
           <Form>
-          {err && (
+            {err && (
               <Alert className="mt-4" variant="danger">
                 {err}
               </Alert>
@@ -58,7 +90,7 @@ export default function Register() {
                 ref={emailRef}
                 placeholder="email"
                 required
-                onChange={() => setEmail(emailRef.current.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group id="password">
@@ -77,17 +109,19 @@ export default function Register() {
               onClick={(e) => {
                 if (
                   validate(name, "Name") &&
-                  validate(email, "Email") &&
+                  validateEmail(email) &&
                   validate(password, "password")
-                ){
+                ) {
                   e.preventDefault();
+                  setErr("");
                   Register(email, password);
-                  dbContextContent.setUserInDB(email,name);
+                  dbContextContent.setUserInDB(email, name);
+                  handleShow();
                   metaObj.clearInput(nameRef);
                   metaObj.clearInput(emailRef);
                   metaObj.clearInput(passwordRef);
+                  
                 }
-         
               }}
             >
               Register

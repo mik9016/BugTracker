@@ -17,24 +17,12 @@ import user from "../../assets/user.svg";
 import upload from "../../assets/upload.svg";
 import { useStorage } from "../../Hooks/useStorage";
 import { DbContext } from "../../contexts/DbContext";
-import { AuthContext } from "../../contexts/AuthContext";
-import useGetUsers from "../../Hooks/useGetUsers";
-
 import {useHistory} from 'react-router-dom';
 
 export default function Profile() {
   const history = useHistory();
   const dbContextContent = useContext(DbContext);
-  const [
-    isAuthorized,
-    Login,
-    LogOut,
-    Register,
-    userId,
-    setUserId,
-    userName,
-    userEmail,
-  ] = useContext(AuthContext);
+  
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
  

@@ -26,6 +26,12 @@ export default function Projects() {
     setUserId,
     userName,
     userEmail,
+    setErr,
+    err,
+    validateEmail,
+    validate,
+    loading,
+    setLoading,
   ] = useContext(AuthContext);
 
   const history = useHistory();
@@ -41,8 +47,6 @@ export default function Projects() {
     };
   }, []);
 
-
-
   function filterProjectsUserIsInvolvedIn() {
     let projects = [];
     teamData.map((member) => {
@@ -54,9 +58,6 @@ export default function Projects() {
     return projects;
   }
 
-  
-  
- 
   return (
     <div className={classes.Projects}>
       <Container>
@@ -86,17 +87,24 @@ export default function Projects() {
                   <Card key={index} className={classes.Card}>
                     <div className={classes.ProjectName}>
                       <Col className={classes.ProjectTextAlignment}>
-                        <img src={arrow} />
+                        <img src={arrow} alt="arrow" />
                       </Col>
                       <Col className={classes.ProjectTextAlignmentSub1}>
                         <Card.Title
                           className={classes.ProjectText}
                           onClick={() => {
                             dbContextContent.setPickedProjectId(project.id);
-                            dbContextContent.setCurrentProject(project.projectName);
+                            dbContextContent.setCurrentProject(
+                              project.projectName
+                            );
                             dbContextContent.setUsersRoleInPickedProject();
-                            teamContextContent.checkIfManager(userEmail,project.creatorEmail,project.projectRole,teamContextContent.setLoggedUserisManager);
-                            
+                            teamContextContent.checkIfManager(
+                              userEmail,
+                              project.creatorEmail,
+                              project.projectRole,
+                              teamContextContent.setLoggedUserisManager
+                            );
+
                             history.push("/dashboard");
                           }}
                         >
@@ -113,7 +121,7 @@ export default function Projects() {
           </Col>
           <Col>
             <div className={classes.Subtitle}>
-              <img src={subtitle2} />
+              <img src={subtitle2} alt="subtitle Icon" />
               <h4>Projects you are part of:</h4>
             </div>
             {/* check Projects in Db */}
@@ -122,33 +130,45 @@ export default function Projects() {
               return filterProjectsUserIsInvolvedIn().map(
                 (projectUserIsInvolvedIn) => {
                   //check list of projects which match to the projects user was involved in and created
-                  if (projectUserIsInvolvedIn === project.projectName) {
+                  if (
+                    projectUserIsInvolvedIn === project.projectName &&
+                    project.creatorEmail !== userEmail
+                  ) {
                     //check if user has created them if not return those projects
-                    if (project.creatorEmail !== userEmail) {
-                      return (
-                        <Card key={index} className={classes.Card}>
-                          <div className={classes.ProjectName}>
-                            <Col className={classes.ProjectTextAlignment}>
-                              <img src={arrow} />
-                            </Col>
+                    // if (project.creatorEmail !== authContextContent.userEmail) {
+                    return (
+                      <Card key={index} className={classes.Card}>
+                        <div className={classes.ProjectName}>
+                          <Col className={classes.ProjectTextAlignment}>
+                            <img src={arrow} alt="arrow" />
+                          </Col>
 
-                            <Col className={classes.ProjectYourPartOfTextAlignment}>
-                              <Card.Title
-                                className={classes.ProjectText}
-                                onClick={() => {
-                                  dbContextContent.setPickedProjectId(project.id);
-                                  dbContextContent.setCurrentProject(project.projectName);
-                                  teamContextContent.checkIfManager(userEmail,project.creatorEmail,project.projectRole,teamContextContent.setLoggedUserisManager);
-                                  history.push("/dashboard");
-                                }}
-                              >
-                                {projectUserIsInvolvedIn}
-                              </Card.Title>
-                            </Col>
-                          </div>
-                        </Card>
-                      );
-                    }
+                          <Col
+                            className={classes.ProjectYourPartOfTextAlignment}
+                          >
+                            <Card.Title
+                              className={classes.ProjectText}
+                              onClick={() => {
+                                dbContextContent.setPickedProjectId(project.id);
+                                dbContextContent.setCurrentProject(
+                                  project.projectName
+                                );
+                                teamContextContent.checkIfManager(
+                                  userEmail,
+                                  project.creatorEmail,
+                                  project.projectRole,
+                                  teamContextContent.setLoggedUserisManager
+                                );
+                                history.push("/dashboard");
+                              }}
+                            >
+                              {projectUserIsInvolvedIn}
+                            </Card.Title>
+                          </Col>
+                        </div>
+                      </Card>
+                    );
+                    // }
                   }
                 }
               );

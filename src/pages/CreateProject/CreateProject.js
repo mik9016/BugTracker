@@ -2,17 +2,15 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import {
   Container,
   Row,
-  Col,
   Form,
-  Image,
   Card,
   FormGroup,
   FormControl,
   FormLabel,
+  Alert,
   Button,
 } from "react-bootstrap";
 import classes from "./CreateProject.module.scss";
-import { AuthContext } from "../../contexts/AuthContext";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import { useHistory } from "react-router-dom";
@@ -29,6 +27,7 @@ export default function CreateProject() {
   const [projectName, setProjectName] = useState("");
   const [projectRole, setProjectRole] = useState("");
   const [projectMainUser, setProjectMainUser] = useState("");
+  const [err, setErr] = useState("");
 
   const name = useRef("");
   const role = useRef("");
@@ -40,6 +39,7 @@ export default function CreateProject() {
 
   const loggedUser = useGetLoggedUser();
   const Users = useGetUsers();
+
 
   return (
     <div className={classes.CreateProject}>
@@ -54,15 +54,19 @@ export default function CreateProject() {
           />
         </Row>
         <Container>
-          <img src={file} className={classes.FileIcon}/>
+          <img src={file} className={classes.FileIcon} />
           <h2>Create Your Project</h2>
         </Container>
       </Container>
       <Container className={classes.Form}>
         <Card className={classes.Card}>
-          {/* <Card.Title as="h1">Create Your Project</Card.Title> */}
-          <Form >
-            <FormGroup className={classes.FormGr} >
+          {err && (
+            <Alert className="m-2" variant="danger">
+              {err}
+            </Alert>
+          )}
+          <Form>
+            <FormGroup className={classes.FormGr}>
               <FormLabel className="m-4">Name of your Project:</FormLabel>
               <FormControl
                 className=" w-75"
@@ -73,8 +77,8 @@ export default function CreateProject() {
                   setProjectName(e.target.value);
                 }}
               />
-            </FormGroup >
-            <Form.Group  className={classes.FormGr}>
+            </FormGroup>
+            <Form.Group className={classes.FormGr}>
               <FormLabel className="m-2">Your Role:</FormLabel>
               <Form.Control
                 className="w-75"
@@ -95,18 +99,26 @@ export default function CreateProject() {
               variant="outline-success"
               onClick={(e) => {
                 e.preventDefault();
-                dbContextContent.CreateNewProject(projectName, projectRole);
-                teamContextContent.setTeamData(
-                  projectName,
-                  "memberUid",
-                  loggedUser.email,
-                  projectRole,
-                  "memberName"
-                );
-                metaObj.clearInput(name);
-                metaObj.clearInput(role);
+                if (
+                  metaObj.validateField(projectName, 0) &&
+                  metaObj.validateField(projectRole, 0)
+                ) {
+                  setErr("");
+                  dbContextContent.CreateNewProject(projectName, projectRole);
+                  teamContextContent.setTeamData(
+                    projectName,
+                    "memberUid",
+                    loggedUser.email,
+                    projectRole,
+                    "memberName"
+                  );
+                  metaObj.clearInput(name);
+                  metaObj.clearInput(role);
 
-                history.push("/projects");
+                  history.push("/projects");
+                } else {
+                  setErr("Fields can not be empty");
+                }
               }}
             >
               Create

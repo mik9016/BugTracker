@@ -23,10 +23,25 @@ import GuardedRoute from "./components/GuardedRoute/GuardedRoute";
 import Projects from "./pages/Projects/Projects";
 import ManageTeam from "./pages/ManageTeam/ManageTeam";
 import AddMember from "./pages/AddMember/AddMember";
-import MemberDetails from './pages/MemberDetails/MemberDetails';
+import MemberDetails from "./pages/MemberDetails/MemberDetails";
 
 function App() {
-  const [isAuthorized, Login, LogOut, Register] = useContext(AuthContext);
+  const [
+    isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,
+    setErr,
+    err,
+    validateEmail,
+    validate,
+    loading,
+    setLoading,
+  ] = useContext(AuthContext);
   return (
     <div className="App">
       <Router>

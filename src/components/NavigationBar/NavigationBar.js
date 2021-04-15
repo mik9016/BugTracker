@@ -19,6 +19,12 @@ export default function NavigationBar() {
     setUserId,
     userName,
     userEmail,
+    setErr,
+    err,
+    validateEmail,
+    validate,
+    loading,
+    setLoading,
   ] = useContext(AuthContext);
   const teamContextContent = useContext(TeamContext);
   const dbContextContent = useContext(DbContext);
@@ -92,12 +98,7 @@ export default function NavigationBar() {
               Profile
             </Nav.Link>
 
-            <Image
-       
-              src={Pic}
-              roundedCircle
-              className={classes.Pic}
-            />
+            <Image src={Pic} roundedCircle className={classes.Pic} />
             <Navbar.Text className={classes.LoggedAs}>
               Signed in as: {userEmail}
             </Navbar.Text>

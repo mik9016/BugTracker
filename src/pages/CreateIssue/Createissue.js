@@ -8,6 +8,7 @@ import {
   Form,
   FormControl,
   Button,
+  Alert,
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
@@ -19,16 +20,9 @@ import back from "../../assets/back.svg";
 import bug from "../../assets/bug.png";
 
 export default function Createissue() {
-  const dbContextContent = useContext(
-    DbContext
-  );
-  const metaObj= useContext(UtilContext);
+  const dbContextContent = useContext(DbContext);
+  const metaObj = useContext(UtilContext);
   const history = useHistory();
-  const hardcodedUsers = {
-    first: "MIk Gru",
-    second: "Jeff beck",
-    third: "Bob Patola",
-  };
 
   const issueName = useRef("");
   const issueDesc = useRef("");
@@ -39,6 +33,7 @@ export default function Createissue() {
   const [desc, setDesc] = useState("");
   const [creator, setCreator] = useState("");
   const [worker, setWorker] = useState("");
+  const [err, setErr] = useState("");
 
   const teamMembers = useGetTeamData();
   const Users = useGetUsers();
@@ -60,6 +55,11 @@ export default function Createissue() {
         </Container>
         <Container className={classes.CardContainer}>
           <Card className={classes.Card}>
+            {err && (
+              <Alert className="m-2" variant="danger">
+                {err}
+              </Alert>
+            )}
             <Card.Body>
               <Form>
                 <Form.Group>
@@ -120,18 +120,33 @@ export default function Createissue() {
                   </Form.Control>
                 </Form.Group>
                 <Button
-                className='mt-2 w-50'
+                  className="mt-2 w-50"
                   type="submit"
                   variant="outline-success"
                   onClick={(e) => {
                     e.preventDefault();
-                    dbContextContent.CreateNewIssue(name, desc, creator, worker);
-                    console.log(name, desc, creator, worker);
-                    metaObj.clearInput(issueName);
-                    metaObj.clearInput(issueDesc);
-                    metaObj.clearInput(issueCreator);
-                    metaObj.clearInput(issueWorker);
-                    history.push("/dashboard");
+                    if (
+                      metaObj.validateField(name, 0) &&
+                      metaObj.validateField(desc, 0) &&
+                      metaObj.validateField(creator, 0) &&
+                      metaObj.validateField(worker, 0)
+                    ) {
+                      setErr("");
+                      dbContextContent.CreateNewIssue(
+                        name,
+                        desc,
+                        creator,
+                        worker
+                      );
+                      console.log(name, desc, creator, worker);
+                      metaObj.clearInput(issueName);
+                      metaObj.clearInput(issueDesc);
+                      metaObj.clearInput(issueCreator);
+                      metaObj.clearInput(issueWorker);
+                      history.push("/dashboard");
+                    } else {
+                      setErr("Fields can not be empty");
+                    }
                   }}
                 >
                   Create

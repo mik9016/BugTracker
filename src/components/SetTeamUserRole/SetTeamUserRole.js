@@ -5,9 +5,9 @@ import useGetTeamData from "../../Hooks/useGetTeamData";
 import { DbContext } from "../../contexts/DbContext";
 import { TeamContext } from "../../contexts/TeamContext";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
 
-import { fire } from "../../Firebase";
+
+
 
 export default function SetTeamUserRole(props) {
   const history = useHistory();
@@ -19,16 +19,7 @@ export default function SetTeamUserRole(props) {
   const dbContextContent = useContext(DbContext);
   // console.log(teamMembers);
   const teamContextContent = useContext(TeamContext);
-  const [
-    isAuthorized,
-    Login,
-    LogOut,
-    Register,
-    userId,
-    setUserId,
-    userName,
-    userEmail,
-  ] = useContext(AuthContext);
+  
 
   return (
     <div className={classes.SetTeamUserRole}>

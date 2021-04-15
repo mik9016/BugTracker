@@ -5,7 +5,7 @@ import SetTeamsUserRole from "../../components/SetTeamUserRole/SetTeamUserRole";
 import { useHistory } from "react-router-dom";
 import back from "../../assets/back.svg";
 import add from "../../assets/add.svg";
-import { AuthContext } from "../../contexts/AuthContext";
+
 
 export default function ManageTeam() {
   const history = useHistory();

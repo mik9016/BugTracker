@@ -1,5 +1,13 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Form,
+  Button,
+  Alert,
+  Spinner,
+  Modal,
+} from "react-bootstrap";
 import classes from "../Login/LoginPage.module.scss";
 import { Link } from "react-router-dom";
 import { UtilContext } from "../../contexts/UtilitiesContext";
@@ -21,17 +29,65 @@ export default function LoginPage() {
     setUserId,
     userName,
     userEmail,
+    setErr,
     err,
+    validateEmail,
     validate,
+    loading,
+    setLoading,
   ] = useContext(AuthContext);
+
   const history = useHistory();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  async function handleSubmit() {
+    console.log(typeof err);
+
+    if (validateEmail(email) && validate(password, "password")) {
+      metaObj.clearInput(emailRef);
+      metaObj.clearInput(passwordRef);
+      await Login(email, password);
+      await console.log(err);
+      history.push("/projects");
+    } else {
+      console.log(err);
+      // setErr(null);
+    }
+  }
 
   return (
     <Container className={classes.Login}>
+      <>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Register</Modal.Title>
+          </Modal.Header>
+          <Alert variant="success">
+            You have registered successfully now go to Login
+          </Alert>
+          <Modal.Footer>
+            <Button
+              variant="success"
+              onClick={() => {
+                handleClose();
+                history.push("/projects");
+              }}
+            >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
       <Card className={classes.Card}>
+        <Form>
+
+    
         <Card.Body>
           <h1 className="text-center m-2">Login</h1>
-
           <Form.Group>
             {err && (
               <Alert className="mt-4" variant="danger">
@@ -44,6 +100,7 @@ export default function LoginPage() {
                 type="email"
                 ref={emailRef}
                 placeholder="email"
+                autoComplete="off"
                 required
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -54,6 +111,7 @@ export default function LoginPage() {
                 type="password"
                 ref={passwordRef}
                 placeholder="password"
+                autoComplete="off"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -62,15 +120,7 @@ export default function LoginPage() {
               className="w-100"
               type="submit"
               onClick={() => {
-                if (
-                  validate(email, "Email") &&
-                  validate(password, "password")
-                ) {
-                  Login(email, password);
-                  metaObj.clearInput(emailRef);
-                  metaObj.clearInput(passwordRef);
-                  history.push("/projects");
-                }
+                handleSubmit();
               }}
             >
               Login
@@ -80,6 +130,7 @@ export default function LoginPage() {
         <div className={classes.Text}>
           Need an account? <Link to="/register">Sign Up</Link>
         </div>
+        </Form>
       </Card>
     </Container>
   );
