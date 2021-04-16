@@ -20,16 +20,18 @@
     height: 40vh;
   }
   .Form {
+    @include formGr;
     width: 40vw;
   }
   .FormGr {
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
+    @include formGr;
   }
 }
 
-.FileIcon{
+.FileIcon {
   @include iconBug;
+}
+
+.TitlePosition {
+  @include formGr;
 }

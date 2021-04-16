@@ -3,6 +3,7 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { AuthContext } from "../../contexts/AuthContext";
 import { TeamContext } from "../../contexts/TeamContext";
+import { StyleContext } from "../../contexts/StyleContext";
 import { useHistory } from "react-router-dom";
 import classes from "./Projects.module.scss";
 
@@ -16,6 +17,7 @@ import arrow from "../../assets/arrow.svg";
 export default function Projects() {
   const dbContextContent = useContext(DbContext);
   const teamContextContent = useContext(TeamContext);
+  const styleContextContent = useContext(StyleContext);
 
   const [
     isAuthorized,
@@ -38,6 +40,9 @@ export default function Projects() {
   const teamData = useGetTeamData();
 
   const [projects, setProjects] = useState([]);
+  const [projectssad, setProjectssad] = useState(0);
+
+  let projectNumber = [];
 
   useEffect(() => {
     dbContextContent.getProjects(setProjects);
@@ -70,7 +75,14 @@ export default function Projects() {
             }}
           />
 
-          <h3>Create New Project</h3>
+          <h3
+            className={classes.CreateProjectTitle}
+            onClick={() => {
+              history.push("/createProject");
+            }}
+          >
+            Create New Project
+          </h3>
         </Container>
 
         <hr />
@@ -80,42 +92,48 @@ export default function Projects() {
               <img src={subtitle1} />
               <h4>Your Projects:</h4>
             </div>
+            
+            
 
             {projects.map((project, index) => {
               if (project.user === userId) {
-                return (
-                  <Card key={index} className={classes.Card}>
+                projectNumber.push(project);
+               return projectNumber.length === 0 ? (             
+                  <h2>
+                    No project created yet. <br/>
+                    To Create project click create project or plus sign.
+                  </h2>
+                ):
+                 (
+                  <Card
+                    key={index}
+                    className={classes.Card}
+                    onClick={() => {
+                      dbContextContent.setPickedProjectId(project.id);
+                      dbContextContent.setCurrentProject(project.projectName);
+                      dbContextContent.setUsersRoleInPickedProject();
+                      teamContextContent.checkIfManager(
+                        userEmail,
+                        project.creatorEmail,
+                        project.projectRole,
+                        teamContextContent.setLoggedUserisManager
+                      );
+
+                      history.push("/dashboard");
+                    }}
+                  >
                     <div className={classes.ProjectName}>
                       <Col className={classes.ProjectTextAlignment}>
                         <img src={arrow} alt="arrow" />
                       </Col>
                       <Col className={classes.ProjectTextAlignmentSub1}>
-                        <Card.Title
-                          className={classes.ProjectText}
-                          onClick={() => {
-                            dbContextContent.setPickedProjectId(project.id);
-                            dbContextContent.setCurrentProject(
-                              project.projectName
-                            );
-                            dbContextContent.setUsersRoleInPickedProject();
-                            teamContextContent.checkIfManager(
-                              userEmail,
-                              project.creatorEmail,
-                              project.projectRole,
-                              teamContextContent.setLoggedUserisManager
-                            );
-
-                            history.push("/dashboard");
-                          }}
-                        >
+                        <Card.Title className={classes.ProjectText}>
                           {project.projectName}
                         </Card.Title>
                       </Col>
                     </div>
                   </Card>
                 );
-              } else {
-                <h2>No projects created yet</h2>;
               }
             })}
           </Col>
@@ -124,12 +142,19 @@ export default function Projects() {
               <img src={subtitle2} alt="subtitle Icon" />
               <h4>Projects you are part of:</h4>
             </div>
+
+            <h2 style={styleContextContent.beInvolvedInProjectMessage}>
+              No projects your are involved in. <br /> To be involved in a
+              project you need to be added first.
+            </h2>
             {/* check Projects in Db */}
+
             {projects.map((project, index) => {
               // filter out projects users was added to the team
               return filterProjectsUserIsInvolvedIn().map(
                 (projectUserIsInvolvedIn) => {
                   //check list of projects which match to the projects user was involved in and created
+
                   if (
                     projectUserIsInvolvedIn === project.projectName &&
                     project.creatorEmail !== userEmail

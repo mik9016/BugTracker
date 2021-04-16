@@ -10,6 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { TeamContext } from "../../contexts/TeamContext";
 import { DbContext } from "../../contexts/DbContext";
+import { StyleContext } from "../../contexts/StyleContext";
 import useGetUsers from "../../Hooks/useGetUsers";
 import { UtilContext } from "../../contexts/UtilitiesContext";
 import classes from "./AddMember.module.scss";
@@ -19,6 +20,7 @@ import user from "../../assets/user.svg";
 export default function AddMember() {
   const history = useHistory();
   const teamContextContent = useContext(TeamContext);
+  const styleContextContent = useContext(StyleContext);
   const metaObj = useContext(UtilContext);
   const [newMember, setNewMember] = useState("");
   const mailRef = useRef();
@@ -72,6 +74,7 @@ export default function AddMember() {
                   if (mailRef.current.value.length > 3) {
                     users.map((user) => {
                       if (user.userEmail === newMember) {
+                        
                         teamContextContent.setTeamData(
                           dbContextContent.currentProject,
                           "memberUid",

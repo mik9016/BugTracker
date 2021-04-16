@@ -6,6 +6,8 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { UtilContextProvider } from "./contexts/UtilitiesContext";
 import { DbContextProvider } from "./contexts/DbContext";
 import { TeamContextProvider } from "./contexts/TeamContext";
+import { StyleContextProvider } from "./contexts/StyleContext";
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -15,7 +17,9 @@ ReactDOM.render(
       <AuthContextProvider>
         <DbContextProvider>
           <TeamContextProvider>
-            <App />
+            <StyleContextProvider>
+              <App />
+            </StyleContextProvider>
           </TeamContextProvider>
         </DbContextProvider>
       </AuthContextProvider>

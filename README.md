@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Buggy 🐛🐛🐛
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Buggy is an app to manage projects.<br/> 
+It is allows you to create projects, tickets and teams around the projects.
+Manage and see how the project is moving forward.<br/> 
+Was inspired by Jira 🔥🔥
 
-## Available Scripts
+## How to run the app
 
-In the project directory, you can run:
+1. Either fork or download the app an open the folder in the cli.
+2. Install all dependencies suing the `npm i` command.
+3. Create Firebase.js file.
+4. Login/Register to Firebase
+5. Create new project, new web app and copy Firebase SDK snippet.
+6. Copy into Firebase.js and initialize app
 
-### `yarn start`
+<code>   export const fire = firebase.initializeApp(firebaseConfig);
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   const projectStorage = firebase.storage();
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   export {projectStorage};
+</code>
 
-### `yarn test`
+7. Start the web server using the `npm start` command. The app will be served at http://localhost:3000/
+8. Go to http://localhost:3000/ in your browser and use the app.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Ok, but how to use it?
 
-### `yarn build`
+1. First you need to login. If you just want to try app the app go to www.buggybuggy.com to see the demo.
+2. Login using test credentials:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   email: usertester@gmail.com <br/>
+   password: GoTestBuggy4Now
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Start using the app!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `yarn eject`
+- Register
+- Login
+- Create Project
+- Update Project
+- Delete Project
+- See created Projects
+- See projects you are involved in
+- Create Issues
+- Update Issues
+- Delete Issues
+- Invite other users to the project
+- Delete other users from the project
+- Update roles of the users
+- Upload the avatar Photo
+- Sort Tickets to pending, open, done
+- Read Number of sorted Tickets
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies used
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- React JS
+- Firebase Authentication
+- Firebase Real Data Base
+- Firebase Storage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## How does the App looks like?
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Tux, the Linux mascot](./src/assets/BuggyHome.png)
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

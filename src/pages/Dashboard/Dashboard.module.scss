@@ -29,8 +29,16 @@
 
 .Title {
   margin-top: 16px;
-  text-align: center;
   margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.ProjectTitle {
+  cursor: pointer;
+  @include hoverColor;
 }
 
 .StatCard {
@@ -64,11 +72,7 @@
   // width: 24px;
   // height: 24px;
 }
-.ProjectTitle {
-  margin-left: 60px;
-  cursor: pointer;
-  @include hoverColor;
-}
+
 .Dropdown {
   display: flex;
   flex-direction: column;

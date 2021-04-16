@@ -60,7 +60,7 @@ export const AuthContextProvider = (props) => {
   const validate = (string, inputName) => {
     let result = false;
     if (string.length < 6) {
-      setErr("To short " + inputName);
+      setErr("To short " + inputName + ". Minimum 6 characters");
       return (result = false);
     }
     return (result = true);
@@ -74,6 +74,16 @@ export const AuthContextProvider = (props) => {
     }
     return (result = true);
   };
+
+  const validateName = (string) => {
+    let result = false;
+    if (string.length < 3) {
+      setErr("To short name. Minimum 3 characters");
+      return (result = false);
+    }
+    return (result = true);
+  };
+  
 
   const authContextContent = {
     isAuthorized: isAuthorized,
@@ -109,6 +119,7 @@ export const AuthContextProvider = (props) => {
         validate,
         loading,
         setLoading,
+        validateName
       ]}
     >
       {props.children}

@@ -57,7 +57,7 @@ export default function MemberDetails() {
           <Card className={classes.Card}>
             <label >Member:</label>
             <Card.Title className="mt-4">{member}</Card.Title>
-            <div className={classes.Form}> 
+            <Form className={classes.Form}> 
               <Form.Control
               className={classes.Input}
                 disabled={!teamContextContent.loggedUserisManager}
@@ -70,7 +70,10 @@ export default function MemberDetails() {
                 <option>Choose...</option>
                 {roleCheck(teamContextContent.membersRole)}
               </Form.Control>
-              <Button
+              
+            </Form>
+            <div className='text-center'>
+            <Button
                 className="w-50 mt-4"
                 disabled={!teamContextContent.loggedUserisManager}
                 variant="outline-success"
@@ -81,7 +84,7 @@ export default function MemberDetails() {
               >
                 Save
               </Button>
-            </div>
+              </div>
           </Card>
         </Container>
       </Container>

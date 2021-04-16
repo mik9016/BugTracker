@@ -3,9 +3,19 @@
 .Projects {
   height: 90vh;
 }
+.CreateProjectTitle{
+  cursor: pointer;
+  &:hover {
+    color: #ffa987;
+  }
+}
 
 .Card {
   margin: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: #ffa987;
+  }
 }
 
 .Btn {
@@ -65,6 +75,10 @@
 
 .PlusSign {
   @include icons;
+}
+
+.Message{
+  display: none;
 }
 
 @media screen and (max-width: 575px) {

@@ -13,6 +13,7 @@ import {
 import classes from "./CreateProject.module.scss";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
+import { StyleContext } from "../../contexts/StyleContext";
 import { useHistory } from "react-router-dom";
 import { TeamContext } from "../../contexts/TeamContext";
 import useGetLoggedUser from "../../Hooks/useGetLoggedUser";
@@ -33,6 +34,7 @@ export default function CreateProject() {
   const role = useRef("");
 
   const dbContextContent = useContext(DbContext);
+  const styleContextContent = useContext(StyleContext);
 
   const metaObj = useContext(UtilContext);
   const teamContextContent = useContext(TeamContext);
@@ -53,7 +55,7 @@ export default function CreateProject() {
             }}
           />
         </Row>
-        <Container>
+        <Container className={classes.TitlePosition}>
           <img src={file} className={classes.FileIcon} />
           <h2>Create Your Project</h2>
         </Container>
@@ -112,6 +114,7 @@ export default function CreateProject() {
                     projectRole,
                     "memberName"
                   );
+                 
                   metaObj.clearInput(name);
                   metaObj.clearInput(role);
 

@@ -40,6 +40,7 @@ export default function Register() {
     validate,
     loading,
     setLoading,
+    validateName
   ] = useContext(AuthContext);
 
   return (
@@ -101,6 +102,7 @@ export default function Register() {
                 placeholder="password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete='off'
               />
             </Form.Group>
             <Button
@@ -108,7 +110,7 @@ export default function Register() {
               type="submit"
               onClick={(e) => {
                 if (
-                  validate(name, "Name") &&
+                  validateName(name) &&
                   validateEmail(email) &&
                   validate(password, "password")
                 ) {

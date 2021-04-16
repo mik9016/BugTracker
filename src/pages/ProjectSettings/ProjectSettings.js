@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { TeamContext } from "../../contexts/TeamContext";
+import { StyleContext } from "../../contexts/StyleContext";
 import { useGetIssues } from "../../Hooks/useGetIssues";
 import { useHistory } from "react-router-dom";
 import back from "../../assets/back.svg";
@@ -20,6 +21,7 @@ export default function ProjectSettings() {
   const history = useHistory();
   const dbContextContent = useContext(DbContext);
   const teamContextContent = useContext(TeamContext);
+  const styleContextContent = useContext(StyleContext);
 
   const issuesFromHook = useGetIssues();
 
@@ -89,6 +91,7 @@ export default function ProjectSettings() {
                       dbContextContent.pickedProjectId,
                       dbContextContent.pickedProject
                     );
+                    styleContextContent.setCreateProjectMessage({ display: "block" });
                     history.push("/projects");
                   }}
                 >
