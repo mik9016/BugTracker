@@ -41,6 +41,7 @@ Was inspired by Jira 🔥🔥
 
     or just register and create your account.
 3. Start using the app!
+4. Create Projects, add issues and project members and move forward with the projects!
 
 ## Features
 
@@ -58,7 +59,7 @@ Was inspired by Jira 🔥🔥
 - Delete other users from the project
 - Update roles of the users
 - Upload the avatar Photo
-- Sort Tickets to pending, open, done
+- Sort Tickets by status
 - Read Number of sorted Tickets
 - Sort Tickets by letter
 
@@ -66,7 +67,7 @@ Was inspired by Jira 🔥🔥
 
 - React JS
 - Firebase Authentication
-- Firebase Real Data Base
+- Firebase Realtime Database
 - Firebase Storage
 
 ## How does the App looks like?
