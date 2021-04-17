@@ -69,6 +69,7 @@ Was inspired by Jira 🔥🔥
 - Firebase Authentication
 - Firebase Realtime Database
 - Firebase Storage
+- Sass
 
 ## How does the App looks like?
 
