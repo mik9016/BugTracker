@@ -11,10 +11,6 @@ export default function ManageTeam() {
   const history = useHistory();
 
 
-  
-
-
-
   return (
     <div className={classes.ManageTeam}>
       <Container>

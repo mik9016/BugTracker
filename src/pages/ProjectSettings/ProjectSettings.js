@@ -7,7 +7,6 @@ import {
   FormControl,
   Button,
   Row,
-
 } from "react-bootstrap";
 import { DbContext } from "../../contexts/DbContext";
 import { TeamContext } from "../../contexts/TeamContext";
@@ -21,7 +20,6 @@ export default function ProjectSettings() {
   const history = useHistory();
   const dbContextContent = useContext(DbContext);
   const teamContextContent = useContext(TeamContext);
-  const styleContextContent = useContext(StyleContext);
 
   const issuesFromHook = useGetIssues();
 
@@ -91,7 +89,7 @@ export default function ProjectSettings() {
                       dbContextContent.pickedProjectId,
                       dbContextContent.pickedProject
                     );
-                    styleContextContent.setCreateProjectMessage({ display: "block" });
+
                     history.push("/projects");
                   }}
                 >

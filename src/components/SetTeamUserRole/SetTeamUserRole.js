@@ -46,7 +46,7 @@ export default function SetTeamUserRole(props) {
                 if (member.project === dbContextContent.currentProject)
                   return (
                     <tbody key={index}>
-                      <tr>
+                      <tr >
                         <td
                           onClick={() => {
                             history.push("/memberDetails");
@@ -67,6 +67,7 @@ export default function SetTeamUserRole(props) {
                         <td>
                           <Button
                             variant="danger"
+                           
                             disabled={!teamContextContent.loggedUserisManager}
                             onClick={() => {
                               teamContextContent.deleteTeamMember(member.id);

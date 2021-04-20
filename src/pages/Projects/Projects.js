@@ -40,9 +40,6 @@ export default function Projects() {
   const teamData = useGetTeamData();
 
   const [projects, setProjects] = useState([]);
-  const [projectssad, setProjectssad] = useState(0);
-
-  let projectNumber = [];
 
   useEffect(() => {
     dbContextContent.getProjects(setProjects);
@@ -63,6 +60,28 @@ export default function Projects() {
     return projects;
   }
 
+  function showNoProjectMessage() {
+    if (styleContextContent.numberOfCreatedProjects.length === 0) {
+      return (
+        <p>
+          No project created yet. <br />
+          To Create project click create project or plus sign.
+        </p>
+      );
+    }
+  }
+
+  function showNoInvolvedProjectsMessage() {
+    if (styleContextContent.numberOfProjects.length === 0) {
+      return (
+        <p>
+          No projects your are involved in. <br /> To be involved in a project,
+          you need to be added first.
+        </p>
+      );
+    }
+  }
+
   return (
     <div className={classes.Projects}>
       <Container>
@@ -71,6 +90,7 @@ export default function Projects() {
             src={plus}
             className={classes.PlusSign}
             onClick={() => {
+              styleContextContent.setNumberOfCreatedProjects([]);
               history.push("/createProject");
             }}
           />
@@ -78,6 +98,7 @@ export default function Projects() {
           <h3
             className={classes.CreateProjectTitle}
             onClick={() => {
+              styleContextContent.setNumberOfCreatedProjects([]);
               history.push("/createProject");
             }}
           >
@@ -92,48 +113,43 @@ export default function Projects() {
               <img src={subtitle1} />
               <h4>Your Projects:</h4>
             </div>
-            
-            
-
+            {showNoProjectMessage()}
             {projects.map((project, index) => {
               if (project.user === userId) {
-                projectNumber.push(project);
-               return projectNumber.length === 0 ? (             
-                  <h2>
-                    No project created yet. <br/>
-                    To Create project click create project or plus sign.
-                  </h2>
-                ):
-                 (
-                  <Card
-                    key={index}
-                    className={classes.Card}
-                    onClick={() => {
-                      dbContextContent.setPickedProjectId(project.id);
-                      dbContextContent.setCurrentProject(project.projectName);
-                      dbContextContent.setUsersRoleInPickedProject();
-                      teamContextContent.checkIfManager(
-                        userEmail,
-                        project.creatorEmail,
-                        project.projectRole,
-                        teamContextContent.setLoggedUserisManager
-                      );
+                styleContextContent.numberOfCreatedProjects.push(project);
 
-                      history.push("/dashboard");
-                    }}
-                  >
-                    <div className={classes.ProjectName}>
-                      <Col className={classes.ProjectTextAlignment}>
-                        <img src={arrow} alt="arrow" />
-                      </Col>
-                      <Col className={classes.ProjectTextAlignmentSub1}>
-                        <Card.Title className={classes.ProjectText}>
-                          {project.projectName}
-                        </Card.Title>
-                      </Col>
-                    </div>
-                  </Card>
-                );
+                if (styleContextContent.numberOfCreatedProjects.length > 1) {
+                  return (
+                    <Card
+                      key={index}
+                      className={classes.Card}
+                      onClick={() => {
+                        dbContextContent.setPickedProjectId(project.id);
+                        dbContextContent.setCurrentProject(project.projectName);
+                        dbContextContent.setUsersRoleInPickedProject();
+                        teamContextContent.checkIfManager(
+                          userEmail,
+                          project.creatorEmail,
+                          project.projectRole,
+                          teamContextContent.setLoggedUserisManager
+                        );
+                        styleContextContent.setNumberOfCreatedProjects([]);
+                        history.push("/dashboard");
+                      }}
+                    >
+                      <div className={classes.ProjectName}>
+                        <Col className={classes.ProjectTextAlignment}>
+                          <img src={arrow} alt="arrow" />
+                        </Col>
+                        <Col className={classes.ProjectTextAlignmentSub1}>
+                          <Card.Title className={classes.ProjectText}>
+                            {project.projectName}
+                          </Card.Title>
+                        </Col>
+                      </div>
+                    </Card>
+                  );
+                }
               }
             })}
           </Col>
@@ -142,11 +158,7 @@ export default function Projects() {
               <img src={subtitle2} alt="subtitle Icon" />
               <h4>Projects you are part of:</h4>
             </div>
-
-            <h2 style={styleContextContent.beInvolvedInProjectMessage}>
-              No projects your are involved in. <br /> To be involved in a
-              project you need to be added first.
-            </h2>
+            {showNoInvolvedProjectsMessage()}
             {/* check Projects in Db */}
 
             {projects.map((project, index) => {
@@ -160,7 +172,11 @@ export default function Projects() {
                     project.creatorEmail !== userEmail
                   ) {
                     //check if user has created them if not return those projects
-                    // if (project.creatorEmail !== authContextContent.userEmail) {
+
+                    styleContextContent.numberOfProjects.push(
+                      projectUserIsInvolvedIn
+                    );
+
                     return (
                       <Card key={index} className={classes.Card}>
                         <div className={classes.ProjectName}>
@@ -193,7 +209,6 @@ export default function Projects() {
                         </div>
                       </Card>
                     );
-                    // }
                   }
                 }
               );

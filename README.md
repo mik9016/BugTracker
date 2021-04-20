@@ -70,6 +70,7 @@ Was inspired by Jira 🔥🔥
 - Firebase Realtime Database
 - Firebase Storage
 - Sass
+- Bootstrap
 
 ## How does the App looks like?
 

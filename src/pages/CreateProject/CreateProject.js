@@ -13,7 +13,6 @@ import {
 import classes from "./CreateProject.module.scss";
 import { DbContext } from "../../contexts/DbContext";
 import { UtilContext } from "../../contexts/UtilitiesContext";
-import { StyleContext } from "../../contexts/StyleContext";
 import { useHistory } from "react-router-dom";
 import { TeamContext } from "../../contexts/TeamContext";
 import useGetLoggedUser from "../../Hooks/useGetLoggedUser";
@@ -34,14 +33,12 @@ export default function CreateProject() {
   const role = useRef("");
 
   const dbContextContent = useContext(DbContext);
-  const styleContextContent = useContext(StyleContext);
 
   const metaObj = useContext(UtilContext);
   const teamContextContent = useContext(TeamContext);
 
   const loggedUser = useGetLoggedUser();
   const Users = useGetUsers();
-
 
   return (
     <div className={classes.CreateProject}>
@@ -114,7 +111,7 @@ export default function CreateProject() {
                     projectRole,
                     "memberName"
                   );
-                 
+
                   metaObj.clearInput(name);
                   metaObj.clearInput(role);
 

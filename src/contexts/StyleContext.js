@@ -6,17 +6,22 @@ export const StyleContext = createContext();
 export const StyleContextProvider = (props) => {
 
     const [createProjectMessage,setCreateProjectMessage] = useState({ display: "block" });
-    const [beInvolvedInProjectMessage,setBeInvolvedInProjectMessage] = useState({ display: "block" });
-    const [numberOfProjects,setNumberOfProjects] = useState(0);
+    const [beInvolvedInProjectMessage,setBeInvolvedInProjectMessage] = useState({ display: "none" });
+    const [numberOfProjects,setNumberOfProjects] = useState([]);
+    const [numberOfCreatedProjects,setNumberOfCreatedProjects] = useState([]);
+    const [projectLength, setProjectLength] = useState(0);
+
+   
 
     const styleCOntextContent = {
-        createProjectMessage: createProjectMessage,
-        setCreateProjectMessage: setCreateProjectMessage,
-        beInvolvedInProjectMessage: beInvolvedInProjectMessage,
-        setBeInvolvedInProjectMessage: setBeInvolvedInProjectMessage,
+     
         setNumberOfProjects: setNumberOfProjects,
-        numberOfProjects: numberOfProjects
-        
+        numberOfProjects: numberOfProjects,
+        numberOfCreatedProjects:numberOfCreatedProjects,
+        setNumberOfCreatedProjects:setNumberOfCreatedProjects,
+        projectLength:projectLength,
+        setProjectLength:setProjectLength
+
     }
 
     return(
