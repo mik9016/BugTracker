@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "honk-generator"
+  },
+  "targets": {
+    "honk-generator": {
+      "hosting": {
+        "honk-generator": [
+          "buggybuggy"
+        ]
+      }
+    }
+  }
+}

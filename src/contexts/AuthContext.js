@@ -102,6 +102,24 @@ export const AuthContextProvider = (props) => {
     setLoading: setLoading,
   };
 
+  const bigArr = [
+    isAuthorized,
+    Login,
+    LogOut,
+    Register,
+    userId,
+    setUserId,
+    userName,
+    userEmail,
+    setErr,
+    err,
+    validateEmail,
+    validate,
+    loading,
+    setLoading,
+    validateName
+  ];
+
   return (
     <AuthContext.Provider
       value={[

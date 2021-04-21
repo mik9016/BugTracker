@@ -34,8 +34,9 @@ export default function LoginPage() {
     validateEmail,
     validate,
     loading,
-    setLoading,
+    setLoading
   ] = useContext(AuthContext);
+
 
   const history = useHistory();
 

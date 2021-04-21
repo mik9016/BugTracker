@@ -33,7 +33,7 @@ Was inspired by Jira 🔥🔥
 
 ## Ok, but how to use it?
 
-1. First, you need to login. If you just want to try out the app go to www.buggybuggy.com to see the demo.
+1. First, you need to login. If you just want to try out the app go to https://buggybuggy.web.app to see the demo.
 2. Login using test credentials:
 
    email: usertester@gmail.com <br/>
