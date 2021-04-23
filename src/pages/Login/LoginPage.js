@@ -120,7 +120,8 @@ export default function LoginPage() {
             <Button
               className="w-100"
               type="submit"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 handleSubmit();
               }}
             >

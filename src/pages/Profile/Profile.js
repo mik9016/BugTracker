@@ -104,7 +104,7 @@ export default function Profile() {
               </Form.Group>
 
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form.Group className="w-75">
+              <Form.Group className='w-75'>
                 <FormLabel>Name</FormLabel>
                 <FormControl
                   type="text"
