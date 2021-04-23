@@ -113,7 +113,7 @@ export default function Projects() {
               <img src={subtitle1} />
               <h4>Your Projects:</h4>
             </div>
-            {showNoProjectMessage()}
+            
             {projects.map((project, index) => {
               if (project.user === userId) {
                 styleContextContent.numberOfCreatedProjects.push(project);
@@ -152,13 +152,14 @@ export default function Projects() {
                 }
               }
             })}
+            {showNoProjectMessage()}
           </Col>
           <Col>
             <div className={classes.Subtitle}>
               <img src={subtitle2} alt="subtitle Icon" />
               <h4>Projects you are part of:</h4>
             </div>
-            {showNoInvolvedProjectsMessage()}
+         
             {/* check Projects in Db */}
 
             {projects.map((project, index) => {
@@ -213,6 +214,7 @@ export default function Projects() {
                 }
               );
             })}
+               {showNoInvolvedProjectsMessage()}
           </Col>
         </Row>
       </Container>

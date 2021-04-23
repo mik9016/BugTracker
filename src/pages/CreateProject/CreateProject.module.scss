@@ -35,3 +35,46 @@
 .TitlePosition {
   @include formGr;
 }
+
+
+@media screen and (max-width: 575px) {
+  .CreateProject {
+    
+   
+  
+   
+    
+  
+    .Card {
+     width: 100vw;
+     height: 50vh;
+    }
+    .Form {
+      width: 90vw;
+    }
+    
+  }
+  
+  
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  .Card {
+    width: 80vw;
+    height: 40vh;
+   }
+   .Form {
+     width: 100vw;
+   }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+
+  .Card {
+    width: 80vw;
+    height: 40vh;
+   }
+   .Form {
+     width: 100vw;
+   }
+}

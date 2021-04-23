@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import bug from '../assets/bug.png';
 
 import { projectStorage } from "../Firebase";
 

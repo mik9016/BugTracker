@@ -72,8 +72,16 @@ Was inspired by Jira 🔥🔥
 - Sass
 - Bootstrap
 
+## To Do:
+- Test Components
+- Optimization
+- show avatar icon on dashboard
+- responsiveness
+
 ## How does the App looks like?
 
 ![Buggy](./src/assets/BuggyHome.png)
+
+### I know is not responsive, but is intended to be used on desktop..
 
 

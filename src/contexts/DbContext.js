@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext } from "react";
 import { fire } from "../Firebase";
 import { AuthContext } from "../contexts/AuthContext";
 import { UtilContext } from "../contexts/UtilitiesContext";
+import bug from '../assets/bug.png';
 
 export const DbContext = createContext();
 
@@ -35,10 +36,10 @@ export const DbContextProvider = (props) => {
   const [pickedProjectId, setPickedProjectId] = useState("");
   const [usersRoleInPickedProject, setUsersRoleInPickedProject] = useState("");
   const [loggedUserEmail, setLoggedUserEmail] = useState("");
-  const [loggedUserPhoto, setLoggedUserPhoto] = useState("");
+  const [loggedUserPhoto, setLoggedUserPhoto] = useState('');
   const [loggedUserName, setLoggedUserName] = useState("");
   const [loggedUserId, setLoggedUserId] = useState("");
-
+  
   //FUNCTIONS
 
   // CREATE
@@ -265,6 +266,8 @@ export const DbContextProvider = (props) => {
     });
   };
 
+  
+
   const dbContextContent = {
     CreateNewProject: CreateNewProject,
     CreateNewIssue: CreateNewIssue,
@@ -312,6 +315,7 @@ export const DbContextProvider = (props) => {
     loggedUserId: loggedUserId,
     setLoggedUserId: setLoggedUserId,
     getLoggedUserId: getLoggedUserId,
+    
   };
 
   return (

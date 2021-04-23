@@ -17,25 +17,23 @@ import user from "../../assets/user.svg";
 import upload from "../../assets/upload.svg";
 import { useStorage } from "../../Hooks/useStorage";
 import { DbContext } from "../../contexts/DbContext";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import bug from "../../assets/bug.png";
 
 export default function Profile() {
   const history = useHistory();
   const dbContextContent = useContext(DbContext);
-  
+
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
- 
 
-  
   const UserName = useRef();
 
-  const [User,setUser] = useState('');
-
-
- 
+  const [User, setUser] = useState("");
 
   const types = ["image/png", "image/jpeg", "image/jpg"];
+
+
 
   const handleChange = (e) => {
     let selectedFile = e.target.files[0];
@@ -51,8 +49,23 @@ export default function Profile() {
     }
   };
 
-  
   const { progress, url } = useStorage(file);
+
+
+  const checkPhotoPresence = () => {
+    if (file) {
+      return url;
+    } else {
+      if(dbContextContent.loggedUserPhoto === ''){
+        
+        return bug;
+      }
+    
+      return dbContextContent.loggedUserPhoto;
+    }
+    // file ? url : dbContextContent.loggedUserPhoto
+  };
+ 
   return (
     <div className={classes.Profile}>
       <Container>
@@ -66,11 +79,13 @@ export default function Profile() {
               <Form.Group>
                 <Col>
                   <Image
-                    src={file ? url : dbContextContent.loggedUserPhoto}
+                    src={checkPhotoPresence()}
                     roundedCircle
                     className={classes.Pic}
+                    alt="photo"
                   />
                 </Col>
+                
                 <Col>
                   <label>
                     {file && <p>{progress}% uploaded</p>}
@@ -89,37 +104,43 @@ export default function Profile() {
               </Form.Group>
 
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form.Group>
+              <Form.Group className="w-75">
                 <FormLabel>Name</FormLabel>
                 <FormControl
                   type="text"
                   className={classes.Input}
-                  disabled ={true}
+                  disabled={true}
                   value={dbContextContent.loggedUserName}
                   ref={UserName}
-                  
                 />
-                <FormLabel className='m-2'>Change Name</FormLabel>
-                 <FormControl
+                <FormLabel className="m-2">Change Name</FormLabel>
+                <FormControl
                   type="text"
-                  className={classes.Input}  
-                  
+                  className={classes.Input}
                   ref={UserName}
-                  onChange={(e)=>{setUser(e.target.value)}}
+                  onChange={(e) => {
+                    setUser(e.target.value);
+                  }}
                 />
-              
               </Form.Group>
 
               <Button
                 className="mt-4 mb-2"
                 variant="outline-success"
                 onClick={() => {
-                  
-                  User !== '' && dbContextContent.updateUserName(dbContextContent.loggedUserId,User);
-                
-                  file !== null && dbContextContent.updateUsersPhoto(dbContextContent.loggedUserId,url);  
-                               
-                  history.push('/projects');
+                  User !== "" &&
+                    dbContextContent.updateUserName(
+                      dbContextContent.loggedUserId,
+                      User
+                    );
+
+                  file !== null &&
+                    dbContextContent.updateUsersPhoto(
+                      dbContextContent.loggedUserId,
+                      url
+                    );
+
+                  history.push("/projects");
                 }}
               >
                 Update

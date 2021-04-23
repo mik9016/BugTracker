@@ -108,8 +108,8 @@ export default function Dashboard() {
   // console.log(FilteredIssueNames);
   return (
     <div className={classes.Dashboard}>
-      <Container>
-        <Container>
+      <Container >
+        <Container className={classes.ResponsiveHead}>
           <Row>
             <Col>
               <Row className={classes.Back}>
@@ -140,8 +140,8 @@ export default function Dashboard() {
                 </h2>
               </Row>
             </Col>
-
-            <Col>
+           
+            <Col className={classes.HandyUtils}>
               <Row className={classes.Utils}>
                 <div>
                   <img
@@ -172,7 +172,7 @@ export default function Dashboard() {
 
         <hr />
 
-        <Container>
+        <Container >
           <Container className={classes.StatCard}>
             <Row className="offset-0">
               <StatCard

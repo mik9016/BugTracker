@@ -29,11 +29,7 @@ export default function NavigationBar() {
   const teamContextContent = useContext(TeamContext);
   const dbContextContent = useContext(DbContext);
   const users = useGetUsers();
-  let flag = false;
-
-  // if(isAuthorized){
-  //   flag=!flag;
-  // }
+  let userPhoto;
 
   const [currentUserName, setCurrentUserName] = useState("");
 
@@ -58,8 +54,21 @@ export default function NavigationBar() {
     });
   };
 
-  const history = useHistory();
+  const getPhotoUrl = () => {
+    users.map((user) => {
+      if (user.userEmail === userEmail) {
+        if (user.photo == "") {
+          userPhoto = Bug;
+        } else {
+          userPhoto = user.photo;
+        }
+        return userPhoto;
+      }
+    });
+  };
 
+  const history = useHistory();
+  getPhotoUrl();
   return (
     <Navbar bg="light" variant="light" expand="lg">
       <Navbar.Brand as={Link} to="/projects">
@@ -98,7 +107,7 @@ export default function NavigationBar() {
               Profile
             </Nav.Link>
 
-            <Image src={Pic} roundedCircle className={classes.Pic} />
+            <Image src={userPhoto} roundedCircle className={classes.Pic} />
             <Navbar.Text className={classes.LoggedAs}>
               Signed in as: {userEmail}
             </Navbar.Text>
